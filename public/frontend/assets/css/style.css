@@ -3901,7 +3901,6 @@ CART Page
 
 .product-info {
   display: flex;
-  align-items: center;
   margin-top: 20px;
   margin-bottom: 20px;
   /* background: rgba(0, 0, 0, 0.1); */
@@ -3966,19 +3965,27 @@ CART Page
   width: 100%;
 }
 
-.color-btn {
+.color-btn,
+.size-btn {
   background-color: transparent;
   border: 1px solid #f0f0f0;
   margin-right: 5px;
   border-radius: 5px;
 }
 
-.color-btn:hover {
+.color-btn:hover,
+.size-btn:hover {
   background-color: #ddd;
 }
 
-.color-btn.active {
-  background-color: #ddd;
+.color-btn.active,
+.size-btn.active {
+  border: 2px solid #000;
+}
+
+.color-btn:focus,
+.size-btn:focus {
+  outline: none;
 }
 
 .quantity {

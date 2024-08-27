@@ -56,62 +56,44 @@
                 </div>
                 <div class="col-lg-5">
                     <div class="product_details">
-                        @php
-                            $product_variant_qty = $product->product_variants->sum('quantity');
-                        @endphp
-                        @if ($product_variant_qty > 0)
-                            <div class="bg-dark text-light px-2 d-table">
-                                In Stock
-                            </div>
-                        @else
-                            <div class="bg-dark text-danger px-2 d-table">
-                                Out of Stock
-                            </div>
-                        @endif
+
+                        <div class="bg-dark text-light px-2 d-table">
+                            In Stock
+                        </div>
+
+                        <div class="bg-dark text-danger px-2 d-table">
+                            Out of Stock
+                        </div>
 
                         <div class="product_details_title mt-2">
                             <h2>
                                 {{ $product->product_name }}</h2>
                         </div>
 
-                        @if ($product->discount_price)
-                            @php
-                                $discountPercentage =
-                                    (($product->selling_price - $product->discount_price) / $product->selling_price) *
-                                    100;
-                                $roundPercentage = round($discountPercentage);
-                            @endphp
 
-                            <div class="original_price mt-1">{{ $product->selling_price }} BDT</div>
-                            <div class="product_price">{{ $product->discount_price }} BDT</div>
-                            <p class="bg-dark text-light px-2 d-table">{{ $roundPercentage }}% Off</p>
-                        @else
-                            <div class="product_price">{{ $product->selling_price }} BDT</div>
-                        @endif
+                        <div class="product_price">100 BDT To 900 BDT</div>
 
                         <div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
                             <button class="main-border-button" id="openPopup"><a>Add to cart</a></button>
 
                             <div id="popup" class="popup">
                                 <div class="popup-content">
-                                    <span class="close">&times;</span>
+                                    <span class="close" id="close">&times;</span>
                                     <h2>Add to Cart</h2>
                                     <div class="product-info">
                                         <img class="productImage" src="{{ asset($product->multi_photos[0]->photo_name) }}"
                                             alt="Product Image">
                                         <div class="product-details">
-                                            <p style="    white-space: normal;">{{ $product->product_name }}</p>
+                                            <p class="text-capitalize" style="white-space: normal;">{{ $product->product_name }}</p>
                                             <div class="price">
-                                                @if ($product->discount_price)
-                                                    <p class="discount">
-                                                        <span class="discount-percent">{{ @$roundPercentage }}%</span>
-                                                        <span class="original-price">{{ $product->selling_price }}
-                                                            BDT</span>
-                                                    </p>
-                                                    <p class="main_price">{{ $product->discount_price }} BDT</p>
-                                                @else
-                                                    <p class="main_price">{{ $product->selling_price }} BDT</p>
-                                                @endif
+                                                <p class="discount">
+                                                    {{-- if has discount_price then parcentage --}}
+                                                    <span class="discount-percent"></span>
+                                                    {{-- Selling_price --}}
+                                                    <span class="original-price"></span>
+                                                </p>
+                                                {{-- discount_price --}}
+                                                <p class="discount-price"></p>
                                             </div>
                                         </div>
                                     </div>
@@ -119,14 +101,21 @@
                                         <p>Color: <span class="color_name"></span></p>
                                         <div class="btn_wrap">
                                             @foreach ($product->product_variants as $variant)
-                                                <button
-                                                    class="color-btn {{ $variant->quantity > 0 ? '' : 'color-out-stock' }} "
-                                                    color-stock="{{ $variant->quantity }}"
-                                                    data-color="{{ $variant->color }}"
+                                                <button class="color-btn" data-color="{{ $variant->color }}"
                                                     data-image="{{ asset($variant->photo) }}"
                                                     data-variant-id="{{ $variant->id }}"
-                                                    data-photo-url="{{ $variant->photo }}">{{ $variant->color }}</button>
+                                                    data-photo-url="{{ $variant->photo }}"
+                                                    data-sizes="{{ json_encode($variant->variantSizes) }}">
+                                                    {{ $variant->color }}
+                                                </button>
                                             @endforeach
+
+                                        </div>
+                                    </div>
+                                    <div class="product-sizes">
+                                        <p>Size: <span class="size_name"></span></p>
+                                        <div class="btn_wrap">
+                                            {{-- size buttons show here if click color-btn --}}
 
                                         </div>
                                     </div>
@@ -159,73 +148,189 @@
         </div>
     </section>
     <!-- ***** Product Area Ends ***** -->
+@endsection
 
+@push('script')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-
-            const addToCartBtn = document.querySelector('.add-to-cart-btn');
-            const outOfStockMessage = document.querySelector('.out-of-stock-message');
             const colorButtons = document.querySelectorAll('.color-btn');
+            const sizeContainer = document.querySelector('.product-sizes .btn_wrap');
+            const colorNameSpan = document.querySelector('.product-colors .color_name');
+            const sizeNameSpan = document.querySelector('.product-sizes .size_name');
+            const variantColorInput = document.querySelector('input[name="variant_color"]');
+            const variantIdInput = document.querySelector('input[name="variant_id"]');
+            const variantPhotoInput = document.querySelector('input[name="variant_photo"]');
+            const productImage = document.querySelector('.product-info .productImage');
 
-            colorButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    if (this.classList.contains('color-out-stock')) {
-                        addToCartBtn.style.display = 'none';
-                        outOfStockMessage.style.display = 'block';
-                    } else {
-                        addToCartBtn.style.display = 'block';
-                        outOfStockMessage.style.display = 'none';
-                    }
-                });
-            });
-            const quantityButtons = document.querySelectorAll('.quantity_btn');
-            quantityButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    document.querySelector('.quantity_value').value = document.querySelector(
-                        '.variant_qty').value;
-                });
-            });
-        });
-    </script>
-    <script>
-        // Function to handle button click
-        function updateVariantPhoto(event) {
-            // Get the data-image attribute from the clicked button
-            var image = event.target.getAttribute('data-photo-url');
-            var variant_id = event.target.getAttribute('data-variant-id');
-            var color = event.target.getAttribute('data-color');
-            var qty = event.target.getAttribute('color-stock');
+          
+            function showSizes(variant) {
+                sizeContainer.innerHTML = ''; // Clear previous sizes
 
-            // Find the variant_photo input field and update its value
-            document.querySelector('.variant_photo').value = image;
-            document.querySelector('.variant_id').value = variant_id;
-            document.querySelector('.variant_color').value = color;
+                if (variant && Array.isArray(variant.sizes)) {
+                    variant.sizes.forEach((size, index) => {
+                        const sizeButton = document.createElement('button');
+                        sizeButton.classList.add('size-btn');
+                        sizeButton.textContent = size.size;
+                        sizeButton.dataset.sizeId = size.id; // Assuming each size has an id
+                        sizeButton.dataset.sellingPrice = size.selling_price;
+                        sizeButton.dataset.discountPrice = size.discount_price;
+                       
 
-            const out_ofstock = document.querySelector('.out');
-            const low_ofstock = document.querySelector('.low');
+                        sizeContainer.appendChild(sizeButton);
 
-            var addToCartBtn = document.querySelector('.add-to-cart-btn')
-            if (qty < 4) {
-                low_ofstock.style.display = 'block';
-                out_ofstock.style.display = 'none';
-
-                if (qty < 1) {
-                    out_ofstock.style.display = 'block';
-                    low_ofstock.style.display = 'none';
-
+                        // Select the first size by default
+                        if (index === 0) {
+                            sizeButton.classList.add('active');
+                            sizeNameSpan.textContent = size.size; // Set default size name
+                            updatePrice(size.selling_price, size.discount_price);
+                        }
+                    });
+                } else {
+                    console.error("Sizes are not defined or not an array:", variant.sizes);
                 }
-
-            } else {
-                low_ofstock.style.display = 'none';
-                out_ofstock.style.display = 'none';
-
             }
 
+            
+            function selectColor(button) {
+                const color = button.dataset.color;
+                const imageUrl = button.dataset.image;
+                const variantId = button.dataset.variantId;
+                const variantPhotoUrl = button.dataset.photoUrl;
+
+                colorNameSpan.textContent = color;
+                productImage.src = imageUrl;
+                variantColorInput.value = color;
+                variantIdInput.value = variantId;
+                variantPhotoInput.value = variantPhotoUrl;
+
+                // Show sizes for the selected color
+                const selectedVariant = {
+                    sizes: JSON.parse(button.dataset.sizes ||
+                        '[]') // Default to an empty array if sizes are not defined
+                };
+                showSizes(selectedVariant);
+
+                // Select the first size by default if available
+                const firstSizeButton = sizeContainer.querySelector('.size-btn');
+                if (firstSizeButton) {
+                    firstSizeButton.click();
+                }
+            }
+
+            // Add event listeners to color buttons
+            colorButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    selectColor(button);
+                });
+            });
+
+            // Select the first color by default
+            if (colorButtons.length > 0) {
+                colorButtons[0].click();
+            }
+        });
+
+
+        /////////////////
+
+        // Function to update the price
+        function updatePrice(sellingPrice, discountPrice) {
+            const discountPercentElement = document.querySelector('.discount-percent');
+            const originalPriceElement = document.querySelector('.original-price');
+            const discountPriceElement = document.querySelector('.discount-price');
+
+            if (discountPrice > 0) {
+                // Calculate discount percentage
+                const discountPercent = Math.round(((sellingPrice - discountPrice) / sellingPrice) * 100);
+
+                // Update the DOM with the values
+                discountPercentElement.style.display = 'inline';
+                originalPriceElement.style.display = 'inline';
+                discountPriceElement.style.display = 'inline';
+
+                originalPriceElement.style.textDecoration = 'line-through';
+
+                discountPercentElement.textContent = `${discountPercent}%`;
+                originalPriceElement.textContent = `${sellingPrice} BDT`;
+                discountPriceElement.textContent = `${discountPrice} BDT`;
+            } else {
+
+                discountPriceElement.style.display = 'none';
+                // discountPercentElement.style.display = 'none';
+                // If there's no discount
+                discountPercentElement.style.display = 'none'; // Hide discount percent
+                originalPriceElement.style.display = 'inline'; // Hide original price
+                originalPriceElement.style.textDecoration = 'auto'; // Hide original price
+                originalPriceElement.textContent = `${sellingPrice} BDT`;
+
+            }
         }
 
-        // Add event listener to all buttons with class color-btn
-        document.querySelectorAll('.color-btn').forEach(button => {
-            button.addEventListener('click', updateVariantPhoto);
+        // Set the first color and size on page load
+        const firstColorBtn = document.querySelector('.color-btn');
+        if (firstColorBtn) {
+            firstColorBtn.click(); // Trigger click to select first color
+        }
+
+       
+        document.querySelector('.product-sizes .btn_wrap').addEventListener('click', function(event) {
+         
+            if (event.target.classList.contains('size-btn')) {
+                document.getElementById('quantity_value').value = 1;
+                // Remove 'active' class from all size buttons
+                document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+
+                // Add 'active' class to the clicked size button
+                event.target.classList.add('active');
+
+                // Update the size name
+                const selectedSizeName = event.target.textContent;
+                document.querySelector('.size_name').textContent = selectedSizeName;
+
+                // Get the selected size data
+                const sellingPrice = event.target.dataset.sellingPrice;
+                const discountPrice = event.target.dataset.discountPrice;
+
+                // Update the price
+                updatePrice(sellingPrice, discountPrice);
+            }
+        });
+
+        // Function to show sizes based on selected color
+        function showSizes(variantBtn) {
+            const sizes = JSON.parse(variantBtn.dataset.sizes);
+            const sizeContainer = document.querySelector('.product-sizes .btn_wrap');
+            sizeContainer.innerHTML = '';
+
+            sizes.forEach((size, index) => {
+                const sizeBtn = document.createElement('button');
+                sizeBtn.classList.add('size-btn');
+                sizeBtn.dataset.sellingPrice = size.selling_price;
+                sizeBtn.dataset.discountPrice = size.discount_price;
+                sizeBtn.dataset.sizeQuantity = size.quantity;
+                sizeBtn.textContent = size.size;
+
+                if (index === 0) {
+                    sizeBtn.classList.add('active');
+                    updatePrice(size.selling_price, size.discount_price);
+                }
+
+                sizeContainer.appendChild(sizeBtn);
+            });
+        }
+
+        // Event delegation for color buttons
+        document.querySelector('.product-colors .btn_wrap').addEventListener('click', function(event) {
+            if (event.target.classList.contains('color-btn')) {
+                // Remove 'active' class from all color buttons
+                document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('active'));
+
+                // Add 'active' class to the clicked color button
+                event.target.classList.add('active');
+
+                // Show the sizes for the selected color
+                showSizes(event.target);
+            }
         });
     </script>
-@endsection
+@endpush

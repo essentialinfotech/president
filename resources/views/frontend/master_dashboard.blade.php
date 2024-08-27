@@ -25,7 +25,7 @@
 
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/lightbox.css') }}">
     <!-- Toast -->
-    <link rel="stylesheet" href="{{ asset('frontend/assets/css/iziToast.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('frontend/assets/css/iziToast.min.css') }}"> --}}
     {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --}}
     <!-- Toast -->
     {{-- <script src="{{ asset('frontend/js/iziToast.min.js') }}"></script> --}}

@@ -2,7 +2,7 @@ function handleCart() {
     // DOM elements
     const popup = document.getElementById('popup');
     const btn = document.getElementById('openPopup');
-    const span = document.querySelector('.close');
+    const span = document.getElementById('close');
     const productImages = document.querySelectorAll('.productImage');
     const priceElement = document.querySelector('.price');
     const addToCartBtn = document.querySelector('.add-to-cart-btn');
@@ -28,6 +28,7 @@ function handleCart() {
 
     // Popup open/close functionality
     btn.onclick = () => {
+
         popup.style.display = 'block';
     };
 
@@ -50,7 +51,6 @@ function handleCart() {
 
             const newImage = this.getAttribute('data-image');
             const colorName = this.getAttribute('data-color');
-            const stock = parseInt(this.getAttribute('color-stock'));
 
             productImages.forEach((image) => {
                 image.src = newImage;
@@ -59,6 +59,7 @@ function handleCart() {
             priceElement.classList.add('active');
             addToCartBtn.classList.remove('disabled');
             document.querySelector('.color_name').textContent = colorName;
+
             quantityValueElement.value = '1';
         };
     });
@@ -74,7 +75,8 @@ function handleCart() {
 
     quantityPlusButton.addEventListener('click', () => {
         let currentValue = parseInt(quantityValueElement.value);
-        const stock = parseInt(document.querySelector('.color-btn.active').getAttribute('color-stock'));
+        const stock = parseInt(document.querySelector('.size-btn.active').getAttribute('data-size-quantity'));
+
         if (currentValue < stock) {
             quantityValueElement.value = currentValue + 1;
             document.querySelector('.variant_qty').value = quantityValueElement.value;

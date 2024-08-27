@@ -209,16 +209,16 @@
 		if ($('.plus').length && $('.minus').length) {
 			$('.plus').on('click', function () {
 				var $quantityInput = $(this).siblings('.quantity_value');
-				var $productContainer = $(this).closest('.stock');
-				var stock = parseInt($productContainer.attr('data-stock'));
+				// var $productContainer = $(this).closest('.stock');
+				// var stock = parseInt($productContainer.attr('data-stock'));
 				var currentValue = parseInt($quantityInput.val());
 
-				if (!isNaN(currentValue) && currentValue < stock) {
+				// if (!isNaN(currentValue) && currentValue < stock) {
 					$quantityInput.val(currentValue + 1);
-				} else {
-					// $quantityInput.val(1);
-					alert("Cannot add more than the available stock. Cart PAGE");
-				}
+				// } else {
+				// 	// $quantityInput.val(1);
+				// 	alert("Cannot add more than the available stock. Cart PAGE");
+				// }
 			});
 
 			$('.minus').on('click', function () {
@@ -231,7 +231,7 @@
 				}
 			});
 		} else {
-			console.error("One or more elements not found. Plus:", $('.plus').length, "Minus:", $('.minus').length, "Value:", $('.quantity_value').length);
+			console.error("One or more elements not found. Plus:");
 		}
 	}
 
@@ -239,48 +239,48 @@
 		initQuantity();
 	});
 
-	logreg();
+	// logreg();
 
-	function logreg() {
-		document.getElementById('signup').addEventListener('click', function () {
-			document.getElementById('registerForm').classList.add('show');
-			document.getElementById('overlay').classList.add('show');
-		});
+	// function logreg() {
+	// 	document.getElementById('signup').addEventListener('click', function () {
+	// 		document.getElementById('registerForm').classList.add('show');
+	// 		document.getElementById('overlay').classList.add('show');
+	// 	});
 
-		document.getElementById('showRegisterForm').addEventListener('click', function (event) {
-			event.preventDefault();
-			document.getElementById('loginForm').classList.remove('show');
-			document.getElementById('registerForm').classList.add('show');
-		});
+	// 	document.getElementById('showRegisterForm').addEventListener('click', function (event) {
+	// 		event.preventDefault();
+	// 		document.getElementById('loginForm').classList.remove('show');
+	// 		document.getElementById('registerForm').classList.add('show');
+	// 	});
 
-		document.getElementById('closeRegisterForm').addEventListener('click', function () {
-			document.getElementById('registerForm').classList.remove('show');
-			document.getElementById('overlay').classList.remove('show');
-		});
+	// 	document.getElementById('closeRegisterForm').addEventListener('click', function () {
+	// 		document.getElementById('registerForm').classList.remove('show');
+	// 		document.getElementById('overlay').classList.remove('show');
+	// 	});
 
-		document.getElementById('login').addEventListener('click', function () {
-			document.getElementById('loginForm').classList.add('show');
-			document.getElementById('overlay').classList.add('show');
-		});
+	// 	document.getElementById('login').addEventListener('click', function () {
+	// 		document.getElementById('loginForm').classList.add('show');
+	// 		document.getElementById('overlay').classList.add('show');
+	// 	});
 
-		document.getElementById('showLoginForm').addEventListener('click', function (event) {
-			event.preventDefault();
-			document.getElementById('registerForm').classList.remove('show');
-			document.getElementById('loginForm').classList.add('show');
-		});
+	// 	document.getElementById('showLoginForm').addEventListener('click', function (event) {
+	// 		event.preventDefault();
+	// 		document.getElementById('registerForm').classList.remove('show');
+	// 		document.getElementById('loginForm').classList.add('show');
+	// 	});
 
 
-		document.getElementById('closeLoginForm').addEventListener('click', function () {
-			document.getElementById('loginForm').classList.remove('show');
-			document.getElementById('overlay').classList.remove('show');
-		});
+	// 	document.getElementById('closeLoginForm').addEventListener('click', function () {
+	// 		document.getElementById('loginForm').classList.remove('show');
+	// 		document.getElementById('overlay').classList.remove('show');
+	// 	});
 
-		document.getElementById('overlay').addEventListener('click', function () {
-			document.getElementById('registerForm').classList.remove('show');
-			document.getElementById('loginForm').classList.remove('show');
-			document.getElementById('overlay').classList.remove('show');
-		});
-	}
+	// 	document.getElementById('overlay').addEventListener('click', function () {
+	// 		document.getElementById('registerForm').classList.remove('show');
+	// 		document.getElementById('loginForm').classList.remove('show');
+	// 		document.getElementById('overlay').classList.remove('show');
+	// 	});
+	// }
 
 	function initThumbnail() {
 		if ($('.single_product_thumbnails ul li').length) {

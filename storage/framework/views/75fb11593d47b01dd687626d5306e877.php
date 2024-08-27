@@ -25,7 +25,7 @@
 
     <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/lightbox.css')); ?>">
     <!-- Toast -->
-    <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/iziToast.min.css')); ?>">
+    
     
     <!-- Toast -->
     
