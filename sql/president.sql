@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 26, 2024 at 01:18 PM
+-- Generation Time: Aug 28, 2024 at 12:49 PM
 -- Server version: 8.0.31
 -- PHP Version: 8.2.0
 
@@ -192,7 +192,16 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `name`, `email`, `phone`, `adress`, `post_code`, `notes`, `payment_type`, `payment_method`, `transaction_id`, `sender_phone_number`, `amount`, `order_number`, `invoice_no`, `order_date`, `order_month`, `order_year`, `confirmed_date`, `processing_date`, `picked_date`, `shipped_date`, `delivered_date`, `cancel_date`, `return_date`, `return_reason`, `return_order`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Robiul Islam', 'admin@email.com', '02445454', 'Address', '1604', 'notes', NULL, 'Cash On Delivery', NULL, NULL, 2400.00, '66cf0e16f003b', 'CUST19925094', '28 August 2024', 'August', '2024', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'pending', '2024-08-28 11:46:30', '2024-08-28 11:46:30'),
+(2, 1, 'Rifat', 'user@email.com', '01609071300', 'sdfdsfdsf', '1230', 'sdfdsfds', NULL, 'Nagad', '84fd5g4dfg', '878787878787', 3800.00, '66cf0ee1b7e64', 'CUST11015894', '28 August 2024', 'August', '2024', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'deliverd', '2024-08-28 11:49:53', '2024-08-28 12:09:47'),
+(3, 1, 'Rana', 'user@email.com', '02445454', 'sdf', '1203', 'sdf', NULL, 'Cash On Delivery', NULL, NULL, 2000.00, '66cf157e2484a', 'CUST15078309', '28 August 2024', 'August', '2024', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'deliverd', '2024-08-28 12:18:06', '2024-08-28 12:18:32');
 
 -- --------------------------------------------------------
 
@@ -206,6 +215,7 @@ CREATE TABLE IF NOT EXISTS `order_items` (
   `order_id` bigint UNSIGNED NOT NULL,
   `product_id` bigint UNSIGNED NOT NULL,
   `color` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `size` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `qty` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` double(8,2) NOT NULL,
@@ -213,7 +223,18 @@ CREATE TABLE IF NOT EXISTS `order_items` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `order_items_order_id_foreign` (`order_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `color`, `size`, `image`, `qty`, `price`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, 'Gray', '', 'upload/product/1808453602289276.png', '2', 450.00, '2024-08-28 11:46:30', '2024-08-28 11:46:30'),
+(2, 1, 2, 'Blue', '', 'upload/product/1808454779781930.png', '1', 1500.00, '2024-08-28 11:46:30', '2024-08-28 11:46:30'),
+(3, 2, 2, 'Gray', '', 'upload/product/1808453602289276.png', '4', 450.00, '2024-08-28 11:49:53', '2024-08-28 11:49:53'),
+(4, 2, 2, 'Blue', '', 'upload/product/1808454779781930.png', '1', 2000.00, '2024-08-28 11:49:53', '2024-08-28 11:49:53'),
+(5, 3, 2, 'Blue', 'M', 'upload/product/1808454779781930.png', '1', 2000.00, '2024-08-28 12:18:06', '2024-08-28 12:18:06');
 
 -- --------------------------------------------------------
 
@@ -357,7 +378,7 @@ CREATE TABLE IF NOT EXISTS `products` (
 --
 
 INSERT INTO `products` (`id`, `product_category_id`, `product_name`, `product_slug`, `product_code`, `video_link`, `short_description`, `long_description`, `status`, `created_at`, `updated_at`) VALUES
-(2, '9', 'bag', 'bag', '111', NULL, NULL, NULL, '1', '2024-08-26 10:33:20', '2024-08-26 12:54:35');
+(2, '9', 'bag', 'bag', '111', NULL, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available.', '<p><span style=\"color: rgb(71, 71, 71); font-family: Arial, sans-serif; letter-spacing: normal;\">In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available.<br></span><br><span style=\"color: rgb(71, 71, 71); font-family: Arial, sans-serif; letter-spacing: normal;\">In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available.</span><br></p>', '1', '2024-08-26 10:33:20', '2024-08-28 04:36:13');
 
 -- --------------------------------------------------------
 
@@ -400,7 +421,7 @@ CREATE TABLE IF NOT EXISTS `product_multi_photos` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `product_multi_photos`
@@ -409,7 +430,14 @@ CREATE TABLE IF NOT EXISTS `product_multi_photos` (
 INSERT INTO `product_multi_photos` (`id`, `product_id`, `photo_name`, `created_at`, `updated_at`) VALUES
 (6, 2, 'upload/product/1808445893164410.png', '2024-08-26 10:33:21', '2024-08-26 10:33:21'),
 (5, 2, 'upload/product/1808445892930749.png', '2024-08-26 10:33:20', '2024-08-26 10:33:20'),
-(4, 2, 'upload/product/1808445892749678.jpeg', '2024-08-26 10:33:20', '2024-08-26 10:33:20');
+(4, 2, 'upload/product/1808445892749678.jpeg', '2024-08-26 10:33:20', '2024-08-26 10:33:20'),
+(7, 2, 'upload/product/1808604594362223.jpeg', '2024-08-28 04:35:51', '2024-08-28 04:35:51'),
+(8, 2, 'upload/product/1808604595919210.jpeg', '2024-08-28 04:35:51', '2024-08-28 04:35:51'),
+(9, 2, 'upload/product/1808604596188360.png', '2024-08-28 04:35:52', '2024-08-28 04:35:52'),
+(10, 2, 'upload/product/1808604596701527.png', '2024-08-28 04:35:52', '2024-08-28 04:35:52'),
+(11, 2, 'upload/product/1808604619067583.jpeg', '2024-08-28 04:36:14', '2024-08-28 04:36:14'),
+(12, 2, 'upload/product/1808604619371485.jpeg', '2024-08-28 04:36:14', '2024-08-28 04:36:14'),
+(13, 2, 'upload/product/1808604619610394.jpeg', '2024-08-28 04:36:14', '2024-08-28 04:36:14');
 
 -- --------------------------------------------------------
 
@@ -462,7 +490,7 @@ CREATE TABLE IF NOT EXISTS `product_variant_sizes` (
 --
 
 INSERT INTO `product_variant_sizes` (`id`, `product_variant_id`, `size`, `quantity`, `selling_price`, `discount_price`, `created_at`, `updated_at`) VALUES
-(8, 5, 'XL', 12, '600', NULL, '2024-08-26 12:35:53', '2024-08-26 12:35:53'),
+(8, 5, 'XL', 6, '600', NULL, '2024-08-26 12:35:53', '2024-08-28 12:18:32'),
 (7, 5, 'L', 4, '500', '450', '2024-08-26 12:35:53', '2024-08-26 12:35:53'),
 (10, 6, 'M', 12, '2000', NULL, '2024-08-26 12:54:36', '2024-08-26 12:54:36'),
 (9, 6, 'S', 14, '1500', NULL, '2024-08-26 12:54:36', '2024-08-26 12:54:36');
