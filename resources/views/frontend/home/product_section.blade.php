@@ -11,50 +11,8 @@
     </div>
     <div class="row m-0 product_area">
         @foreach ($global_products->take(12) as $product)
-            @if ($product->discount_price)
-                @php
-                    $discountPercentage =
-                        (($product->selling_price - $product->discount_price) / $product->selling_price) * 100;
-                    $roundPercentage = round($discountPercentage);
-                @endphp
-            @endif
             <div class="col-lg-2 col-6 single_item">
-                <div class="item">
-                    <a href="{{ route('product.details', $product->product_slug) }}">
-                        <div class="thumb">
-                            <img src="{{ asset(@$product->multi_photos[0]->photo_name) }}" alt="Product Photo"
-                                width="100%" loading="lazy">
-                            <div class="stock">
-                                @php
-                                    $product_variant_qty = $product->product_variants->sum('quantity');
-                                @endphp
-                                @if ($product_variant_qty > 0)
-                                    <div class="m-1 rounded stock_in px-1">
-                                        In Stock
-                                    </div>
-                                @else
-                                    <div class="m-1 rounded stock_out px-1">
-                                        Out of Stock
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="down-content">
-                            <div class="wrap">
-                                <h4>{{ $product->product_name }}</h4>
-
-                            </div>
-                            <div class="price">
-                                @if ($product->discount_price)
-                                    <span class="product_price">{{ $product->discount_price }} BDT</span>
-                                    <span class="discount">{{ $product->selling_price }} BDT</span>
-                                @else
-                                    <span class="product_price">{{ $product->selling_price }} BDT</span>
-                                @endif
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                @include('frontend.pages.products.partials.product_item', ['product' => $product])
             </div>
         @endforeach
     </div>
@@ -92,7 +50,10 @@
 
     <div class="row m-0 product_area" id="products">
         @foreach ($global_products->take(12) as $product)
-            @include('frontend.home.partials.product', ['product' => $product])
+            {{-- @include('frontend.home.partials.product', ['product' => $product]) --}}
+            <div class="col-lg-3 col-6 single_item">
+                @include('frontend.pages.products.partials.product_item', ['product' => $product])
+            </div>
         @endforeach
     </div>
 

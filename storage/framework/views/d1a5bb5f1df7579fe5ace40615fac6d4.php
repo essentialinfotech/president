@@ -121,27 +121,9 @@
                 <div class="col-lg-9 col-md-12">
                     <div class="row product_area">
                         <?php $__currentLoopData = $category_products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            
+                           
                             <div class="col-lg-4 col-md-6 col-6 single_item">
-                                <div class="item">
-                                    <a href="<?php echo e(route('product.details', $product->product_slug)); ?>">
-                                        <div class="thumb">
-                                            <img src="<?php echo e(asset(@$product->multi_photos[0]->photo_name)); ?>"
-                                                alt="">
-                                            
-                                        </div>
-                                        <div class="down-content">
-                                            <div class="wrap">
-                                                <h4><?php echo e($product->product_name); ?></h4>
-
-                                            </div>
-
-                                            <div class="price">
-                                                <span class="product_price"> BDT</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
+                                <?php echo $__env->make('frontend.pages.products.partials.product_item', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                             </div>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 

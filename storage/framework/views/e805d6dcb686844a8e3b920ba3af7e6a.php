@@ -1,6 +1,6 @@
-@extends('admin.admin_dashboard')
 
-@section('admin')
+
+<?php $__env->startSection('admin'); ?>
     <div class="page-content">
         <!--breadcrumb-->
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
@@ -32,32 +32,32 @@
                         <table class="table" style="background:#F4F6FA;font-weight: 600;">
                             <tr>
                                 <th>Shipping Name:</th>
-                                <th>{{ $order->name }}</th>
+                                <th><?php echo e($order->name); ?></th>
                             </tr>
 
                             <tr>
                                 <th>Shipping Phone:</th>
-                                <th>{{ $order->phone }}</th>
+                                <th><?php echo e($order->phone); ?></th>
                             </tr>
 
                             <tr>
                                 <th>Shipping Email:</th>
-                                <th>{{ $order->email }}</th>
+                                <th><?php echo e($order->email); ?></th>
                             </tr>
 
                             <tr>
                                 <th>Shipping Address:</th>
-                                <th>{{ $order->adress }}</th>
+                                <th><?php echo e($order->adress); ?></th>
                             </tr>
 
                             <tr>
                                 <th>Post Code :</th>
-                                <th>{{ $order->post_code }}</th>
+                                <th><?php echo e($order->post_code); ?></th>
                             </tr>
 
                             <tr>
                                 <th>Order Date :</th>
-                                <th>{{ $order->order_date }}</th>
+                                <th><?php echo e($order->order_date); ?></th>
                             </tr>
 
                         </table>
@@ -72,7 +72,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4>Order Details
-                            <span class="text-danger">Invoice : {{ $order->invoice_no }} </span>
+                            <span class="text-danger">Invoice : <?php echo e($order->invoice_no); ?> </span>
                         </h4>
                     </div>
                     <hr>
@@ -80,54 +80,51 @@
                         <table class="table" style="background:#F4F6FA;font-weight: 600;">
                             <tr>
                                 <th> Name :</th>
-                                <th>{{ @$order->user->name }}</th>
+                                <th><?php echo e(@$order->user->name); ?></th>
                             </tr>
 
                             <tr>
                                 <th>Phone :</th>
-                                <th>{{ @$order->user->phone }}</th>
+                                <th><?php echo e(@$order->user->phone); ?></th>
                             </tr>
 
                             <tr>
                                 <th>Payment Type:</th>
-                                <th>{{ $order->payment_method }}</th>
+                                <th><?php echo e($order->payment_method); ?></th>
                             </tr>
 
 
-                            {{-- <tr>
-                                <th>Transx ID:</th>
-                                <th>{{ $order->transaction_id }}</th>
-                            </tr> --}}
+                            
 
                             <tr>
                                 <th>Invoice:</th>
-                                <th class="text-danger">{{ $order->invoice_no }}</th>
+                                <th class="text-danger"><?php echo e($order->invoice_no); ?></th>
                             </tr>
 
                             <tr>
                                 <th>Order Amonut:</th>
-                                <th>{{ $order->amount }} BDT</th>
+                                <th><?php echo e($order->amount); ?> BDT</th>
                             </tr>
 
                             <tr>
                                 <th>Order Status:</th>
-                                <th><span class="badge bg-danger" style="font-size: 15px;">{{ $order->status }}</span></th>
+                                <th><span class="badge bg-danger" style="font-size: 15px;"><?php echo e($order->status); ?></span></th>
                             </tr>
 
 
                             <tr>
                                 <th> </th>
                                 <th>
-                                    @if ($order->status == 'pending')
-                                        <a href="{{ route('pending-confirm', $order->id) }}"
+                                    <?php if($order->status == 'pending'): ?>
+                                        <a href="<?php echo e(route('pending-confirm', $order->id)); ?>"
                                             class="btn btn-block btn-success" id="confirm">Confirm Order</a>
-                                    @elseif($order->status == 'confirm')
-                                        <a href="{{ route('confirm-processing', $order->id) }}"
+                                    <?php elseif($order->status == 'confirm'): ?>
+                                        <a href="<?php echo e(route('confirm-processing', $order->id)); ?>"
                                             class="btn btn-block btn-success" id="processing">Processing Order</a>
-                                    @elseif($order->status == 'processing')
-                                        <a href="{{ route('processing-delivered', $order->id) }}"
+                                    <?php elseif($order->status == 'processing'): ?>
+                                        <a href="<?php echo e(route('processing-delivered', $order->id)); ?>"
                                             class="btn btn-block btn-success" id="delivered">Delivered Order</a>
-                                    @endif
+                                    <?php endif; ?>
 
 
 
@@ -185,44 +182,45 @@
                                 </tr>
 
 
-                                @foreach ($orderItem as $item)
+                                <?php $__currentLoopData = $orderItem; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
                                         <td class="col-md-1">
-                                            <label><img src="{{ asset($item->image) }}" style="width:50px; height:50px;">
+                                            <label><img src="<?php echo e(asset($item->image)); ?>" style="width:50px; height:50px;">
                                             </label>
                                         </td>
                                         <td class="col-md-2">
-                                            <label>{{ $item->product->product_name }}</label>
+                                            <label><?php echo e($item->product->product_name); ?></label>
                                         </td>
 
 
                                         <td class="col-md-2">
-                                            <label>{{ $item->product->product_code }} </label>
+                                            <label><?php echo e($item->product->product_code); ?> </label>
                                         </td>
-                                        @if ($item->color)
+                                        <?php if($item->color): ?>
                                             <td class="col-md-1">
-                                                <label>{{ $item->color }} </label>
+                                                <label><?php echo e($item->color); ?> </label>
                                             </td>
-                                        @endif
+                                        <?php endif; ?>
                                         <td class="col-md-1">
-                                            <label>{{ @$item->size }} </label>
+                                            <label><?php echo e(@$item->size); ?> </label>
                                         </td>
 
                                         <td class="col-md-1">
                                             <label>-</label>
                                         </td>
                                         <td class="col-md-1">
-                                            <label>{{ $item->qty }} </label>
+                                            <label><?php echo e($item->qty); ?> </label>
                                         </td>
 
                                         <td class="col-md-3">
-                                            <label>{{ $item->price }} BDT <br> Total = {{ $item->price * $item->qty }}
+                                            <label><?php echo e($item->price); ?> BDT <br> Total = <?php echo e($item->price * $item->qty); ?>
+
                                                 BDT
                                             </label>
                                         </td>
 
                                     </tr>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                             </tbody>
                         </table>
@@ -242,4 +240,6 @@
 
 
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.admin_dashboard', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\EIT2024\BagsLaravelWebsites\PresidentWebsite - size variant\resources\views/backend/orders/admin_order_details.blade.php ENDPATH**/ ?>

@@ -3899,12 +3899,10 @@ CART Page
   cursor: pointer;
 }
 
+
 .product-info {
   display: flex;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  /* background: rgba(0, 0, 0, 0.1); */
-  padding: 20px;
+  padding: 5px;
   border-radius: 5px;
 }
 

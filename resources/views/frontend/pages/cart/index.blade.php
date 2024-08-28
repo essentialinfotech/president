@@ -30,18 +30,29 @@
                     @if (session('cart'))
                         @php
                             $totalQuantity = 0;
-                            $discountTotalPrice = 0;
-                            $originalTotalPrice = 0;
-                            foreach (session()->get('cart', []) as $details) {
-                                $totalQuantity += $details['variant']['quantity'];
+                            $totalSellingPrice = 0;
+                            $totalDiscount = 0;
 
-                                if ($details['discount_price']) {
-                                    $discountTotalPrice +=
-                                        $details['discount_price'] * @$details['variant']['quantity'];
+                            foreach (session()->get('cart', []) as $details) {
+                                $quantity = $details['variant']['variant_size']['qty'];
+                                $sellingPrice = $details['variant']['variant_size']['selling_price'];
+                                $discountPrice = $details['variant']['variant_size']['discount_price'] ?? null;
+
+                                // Calculate total selling price (without discount)
+                                $totalSellingPrice += $sellingPrice * $quantity;
+
+                                // Calculate discount only if there is a discount price
+                                if ($discountPrice !== null) {
+                                    $totalDiscount += ($sellingPrice - $discountPrice) * $quantity;
                                 }
-                                $originalTotalPrice += $details['selling_price'] * @$details['variant']['quantity'];
+
+                                $totalQuantity += $quantity;
                             }
+
+                            // Final product price after applying the discount
+                            $totalProductPrice = $totalSellingPrice - $totalDiscount;
                         @endphp
+
                         <div class="row">
                             <div class="col-lg-8">
                                 <div class="cart_head">
@@ -68,92 +79,92 @@
                                 </div>
                                 <div class="row product-card">
                                     @foreach (session('cart', []) as $id => $details)
-                                        <div class="col-12">
-                                            <div class="">
-                                                <div class="d-flex justify-content-between wrap">
-                                                    <div class="wrap_info d-flex">
-                                                        <input class="form-check-input me-3 item-checkbox" type="checkbox"
-                                                            value="{{ $id }}">
-                                                        <img src="{{ @$details['variant']['image'] }}" alt="Product Image">
-                                                        <div class="product-info ms-3">
-                                                            <h5>{{ $details['name'] }}</h5>
-                                                            @if ($details['discount_price'])
-                                                                <p class="price text-muted">
-                                                                    <del>{{ @$details['selling_price'] }} BDT</del>
-                                                                </p>
-                                                                <h5 class="price">{{ $details['discount_price'] }} BDT</h5>
-                                                            @else
-                                                                <h5 class="price">{{ @$details['selling_price'] }} BDT
-                                                                </h5>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                    @php
-                                                        $stock = App\Models\ProductVariant::where(
-                                                            'product_id',
-                                                            $details['product_id'],
-                                                        )
-                                                            ->where('color', $details['variant']['color'])
-                                                            ->first()->quantity;
-                                                    @endphp
-                                                    <div class="ms-auto d-flex align-items-center">
-                                                        <form action="{{ route('cart.update', $id) }}" method="post"
-                                                            class="data-stock stock d-flex align-items-center mx-2"
-                                                            data-stock="{{ $stock }}">
-                                                            @csrf
-                                                            <a class="btn btn-outline-secondary btn-sm minus">-</a>
-                                                            <input
-                                                                class="form-control form-control-sm mx-2 text-center quantity_value"
-                                                                type="text" name="quantity"
-                                                                value="{{ @$details['variant']['quantity'] }}"
-                                                                style="width: 60px;" id="quantity_value" />
-                                                            <a class="btn btn-outline-secondary btn-sm plus">+</a>
-
-                                                            <button class="btn btn-sm btn-success m-0 ml-2">Update</button>
-                                                        </form>
-
-                                                        <form action="{{ route('cart.remove', $id) }}" method="post">
-                                                            @csrf
-                                                            <button type="submit"
-                                                                class="btn trash btn-outline-danger btn-sm m-0"><i
-                                                                    class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                                        </form>
+                                        <div class="col-md-12 border-bottom">
+                                            <div class="d-flex justify-content-between wrap">
+                                                <div class="wrap_info d-flex">
+                                                    <input class="form-check-input me-3 item-checkbox" type="checkbox"
+                                                        value="{{ $id }}">
+                                                    <img src="{{ @$details['variant']['photo'] }}" alt="Product Image">
+                                                    <div class="product-info flex-column">
+                                                        <h5>{{ $details['name'] }} </h5>
+                                                        <p>Size: {{ $details['variant']['variant_size']['size'] }}</p>
+                                                        @if ($details['variant']['variant_size']['discount_price'])
+                                                            <p class="price text-muted d-block">
+                                                                <del>{{ @$details['variant']['variant_size']['selling_price'] }}
+                                                                    BDT</del>
+                                                            </p>
+                                                            <h5 class="price d-block">
+                                                                {{ $details['variant']['variant_size']['discount_price'] }}
+                                                                BDT</h5>
+                                                        @else
+                                                            <h5 class="price d-block">
+                                                                {{ @$details['variant']['variant_size']['selling_price'] }}
+                                                                BDT
+                                                            </h5>
+                                                        @endif
                                                     </div>
                                                 </div>
-                                                @if ($stock < 5)
-                                                    <p class="mt-2 text-danger">Only {{ $stock }} stocks left. </p>
-                                                @endif
+                                                @php
+                                                    $stock = App\Models\ProductVariantSize::where(
+                                                        'product_variant_id',
+                                                        $details['variant']['id'],
+                                                    )
+                                                        ->where('size', $details['variant']['variant_size']['size'])
+                                                        ->first()->quantity;
+                                                @endphp
+                                                <div class="ms-auto d-flex align-items-center">
+                                                    <form action="{{ route('cart.update', $id) }}" method="post"
+                                                        class="data-stock stock d-flex align-items-center mx-2"
+                                                        data-stock="{{ $stock }}">
+                                                        @csrf
+                                                        <a class="btn btn-outline-secondary btn-sm minus">-</a>
+                                                        <input
+                                                            class="form-control form-control-sm mx-2 text-center quantity_value"
+                                                            type="text" name="quantity"
+                                                            value="{{ @$details['variant']['variant_size']['qty'] }}"
+                                                            style="width: 60px;" id="quantity_value" />
+                                                        <a class="btn btn-outline-secondary btn-sm plus">+</a>
+
+                                                        <button class="btn btn-sm btn-success m-0 ml-2">Update</button>
+                                                    </form>
+
+                                                    <form action="{{ route('cart.remove', $id) }}" method="post">
+                                                        @csrf
+                                                        <button type="submit"
+                                                            class="btn trash btn-outline-danger btn-sm m-0"><i
+                                                                class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                                    </form>
+                                                </div>
                                             </div>
+                                            @if ($stock < 5)
+                                                <p class="mt-2 text-danger">Only {{ $stock }} stocks left. </p>
+                                            @endif
                                         </div>
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-4" style="margin-top: 65px;">
                                 <div class="checkout-summary">
                                     <h5>Checkout Summary</h5>
                                     <div class="summary-row mb-0">
                                         <span>Original Product Price</span>
-                                        <span>{{ $originalTotalPrice }} BDT</span>
+                                        <span>{{ number_format($totalSellingPrice, 2) }} BDT</span>
                                     </div>
                                     <div class="summary-row">
                                         <span class="text-muted" style="font-size: 12px;">({{ $totalQuantity }}
                                             Items)</span>
                                     </div>
-                                    @if ($discountTotalPrice > 0)
+                                    @if ($totalDiscount > 0)
                                         <div class="summary-row">
                                             <span>Product Discount</span>
-                                            <span>{{ $discountTotalPrice - $originalTotalPrice }} BDT</span>
+                                            <span>- {{ number_format($totalDiscount, 2) }} BDT</span>
                                         </div>
                                     @endif
                                     <div class="summary-row">
                                         <span>Total Product Price</span>
-                                        @if ($discountTotalPrice > 0)
-                                            <span>{{ $discountTotalPrice }} BDT</span>
-                                        @else
-                                            <span>{{ $originalTotalPrice }} BDT</span>
-                                        @endif
+                                        <span>{{ number_format($totalProductPrice, 2) }} BDT</span>
                                     </div>
-                                    <a href="{{ route('checkout.index') }}" class="btn btn-dark w-100 mt-3">Order Now</a>
+                                    <a href="{{ route('checkout.index') }}" class="btn btn-dark w-100 mt-3">Checkout Now</a>
                                 </div>
                             </div>
                         </div>
@@ -178,49 +189,9 @@
                         <div class="row product_area {{ count($global_products) > 6 ? 'recommendations' : '' }}">
                             @foreach ($global_products->take(12) as $product)
                                 <div class="col-lg-2 col-md-6 col-6 single_item">
-                                    <div class="item">
-                                        <a href="{{ route('product.details', $product->product_slug) }}">
-                                            <div class="thumb">
-                                                <img src="{{ asset(@$product->multi_photos[0]->photo_name) }}"
-                                                    alt="" width="100%">
-                                                <div class="stock">
-                                                    @php
-                                                        $product_variant_qty = $product->product_variants->sum(
-                                                            'quantity',
-                                                        );
-                                                    @endphp
-                                                    @if ($product_variant_qty > 0)
-                                                        <div class="stock_in">
-                                                            In Stock
-                                                        </div>
-                                                    @else
-                                                        <div class="stock_out">
-                                                            Out of Stock
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="down-content">
-                                                <div class="wrap">
-                                                    <h4>{{ $product->product_name }} </h4>
-                                                </div>
-                                                <div class="price">
-                                                    @if ($product->discount_price)
-                                                        <span class="product_price"
-                                                            style="font-size: 14px;">{{ $product->discount_price }}
-                                                            BDT</span>
-                                                        <span class="discount"
-                                                            style="font-size: 14px;">{{ $product->selling_price }}
-                                                            BDT</span>
-                                                    @else
-                                                        <span class="product_price"
-                                                            style="font-size: 14px;">{{ $product->selling_price }}
-                                                            BDT</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
+                                    @include('frontend.pages.products.partials.product_item', [
+                                        'product' => $product,
+                                    ])
                                 </div>
                                 <!-- Repeat for other recommendation products -->
                             @endforeach

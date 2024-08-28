@@ -208,20 +208,22 @@
 	function initQuantity() {
 		if ($('.plus').length && $('.minus').length) {
 			$('.plus').on('click', function () {
+
 				var $quantityInput = $(this).siblings('.quantity_value');
-				// var $productContainer = $(this).closest('.stock');
-				// var stock = parseInt($productContainer.attr('data-stock'));
+				var $productContainer = $(this).closest('.stock');
+				var stock = parseInt($productContainer.attr('data-stock'));
 				var currentValue = parseInt($quantityInput.val());
 
-				// if (!isNaN(currentValue) && currentValue < stock) {
-					$quantityInput.val(currentValue + 1);
-				// } else {
-				// 	// $quantityInput.val(1);
-				// 	alert("Cannot add more than the available stock. Cart PAGE");
-				// }
+				if (!isNaN(currentValue) && currentValue < stock) {
+				$quantityInput.val(currentValue + 1);
+				} else {
+					// $quantityInput.val(1);
+					alert("Cannot add more than the available stock. Cart PAGE");
+				}
 			});
 
 			$('.minus').on('click', function () {
+
 				var $quantityInput = $(this).siblings('.quantity_value');
 				var currentValue = parseInt($quantityInput.val());
 				if (!isNaN(currentValue) && currentValue > 1) {

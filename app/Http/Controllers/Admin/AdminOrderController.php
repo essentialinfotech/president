@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Models\ProductVariantSize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -83,11 +84,27 @@ class AdminOrderController extends Controller
     public function ProcessToDelivered($order_id)
     {
 
-        $product = OrderItem::where('order_id', $order_id)->get();
-        foreach ($product as $item) {
-            ProductVariant::where('product_id', $item->product_id)
-                ->update(['quantity' => DB::raw('quantity-' . $item->qty)]);
+        // $product = OrderItem::where('order_id', $order_id)->get();
+        // foreach ($product as $item) {
+        //     ProductVariantSize::where('product_id', $item->product_id)
+        //         ->update(['quantity' => DB::raw('quantity-' . $item->qty)]);
+        // }
+
+        $productItems = OrderItem::where('order_id', $order_id)->get();
+
+        foreach ($productItems as $item) {
+            // Find the appropriate variant size based on product_id and other criteria
+            $variantSize = ProductVariantSize::whereHas('productVariant', function ($query) use ($item) {
+                $query->where('product_id', $item->product_id);
+            })->first();
+
+            // Update the quantity if the variant size exists
+            if ($variantSize) {
+                $variantSize->update(['quantity' => DB::raw('quantity - ' . $item->qty)]);
+            }
         }
+
+
 
         Order::findOrFail($order_id)->update(['status' => 'deliverd']);
 

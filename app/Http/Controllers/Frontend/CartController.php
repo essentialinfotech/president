@@ -11,53 +11,56 @@ class CartController extends Controller
 {
     public function index()
     {
+        // session()->forget('cart');
         $cart = session()->get('cart', []);
         return view('frontend.pages.cart.index', compact('cart'));
     }
 
     public function add(Request $request, $id)
     {
-        // return $request->all();
-        // Find the product with its associated multi_photos
-        $product = Product::with('multi_photos')->findOrFail($id);
 
-        // Get the variant products for the given product ID
-        $variant_products = ProductVariant::where('product_id', $product->id)->get();
+        $product = Product::with('product_variants.variantSizes')->findOrFail($id);
+
+        // Get the selected variant
+        $selected_variant = $product->product_variants->where('id', $request->variant_id)->first();
+
+        // Check if the selected variant exists
+        if (!$selected_variant) {
+            return redirect()->back()->with('error', 'Selected variant does not exist.');
+        }
+
+        // Get the selected size within the variant
+        $selected_variant_size = $selected_variant->variantSizes->where('id', $request->variant_size)->first();
+
+        // Check if the selected size exists within the variant
+        if (!$selected_variant_size) {
+            return redirect()->back()->with('error', 'Selected size does not exist.');
+        }
 
         // Get the current cart from the session
         $cart = session()->get('cart', []);
 
-        // Initialize the variant information
-        $selected_variant = null;
+        // Create a unique cart key, typically a combination of product ID and variant ID
+        $cart_key = $id . '_' . $selected_variant->id . '_' . $selected_variant_size->id;
 
-        // Check if the variant ID is provided in the request and if it exists in the product's variants
-        if ($request->has('variant_id')) {
-            $variant_id = $request->input('variant_id');
-            $selected_variant = $variant_products->firstWhere('id', $variant_id);
-        }
-
-        // Generate a unique key for the cart item based on product ID and variant ID
-        $cart_key = $id . '-' . ($selected_variant ? $selected_variant->id : 'default');
-
-        // Check if the product-variant combination already exists in the cart
-        if (isset($cart[$cart_key])) {
-            // If exists, update the quantity to include the quantity of the new variant being added
-            $cart[$cart_key]['variant']['quantity'] += $request->variant_qty ?? 1; // Add the quantity of the new variant
-        } else {
-            // Add the product-variant combination to the cart with initial quantity 1
-            $cart[$cart_key] = [
-                "product_id" => $id,
-                "name" => $product->product_name,
-                "discount_price" => $product->discount_price,
-                "selling_price" => $product->selling_price,
-                "variant" => $selected_variant ? [
-                    "id" => $selected_variant->id,
-                    "color" => $request->variant_color,
-                    "quantity" => $request->variant_qty ?? 1, // Variant quantity
-                    "image" => $request->variant_photo,
-                ] : null
-            ];
-        }
+        // Add product to the cart
+        $cart[$cart_key] = [
+            "product_id" => $id,
+            "name" => $product->product_name,
+            "code" => $product->product_code,
+            "variant" => [
+                "id" => $selected_variant->id,
+                "color" => $request->variant_color,
+                "photo" => $request->variant_photo,
+                "variant_size" => [
+                    "id" => $selected_variant_size->id,
+                    "size" => $selected_variant_size->size,
+                    "qty" => $request->variant_qty ?? 1,
+                    "selling_price" => $selected_variant_size->selling_price,
+                    "discount_price" => $selected_variant_size->discount_price,
+                ]
+            ]
+        ];
 
         // Update the cart session
         session()->put('cart', $cart);
@@ -95,7 +98,7 @@ class CartController extends Controller
                 $variant = ProductVariant::find($variant_id);
 
                 if ($variant) {
-                    $cart[$id]['variant']['quantity'] = $request->quantity;
+                    $cart[$id]['variant']['variant_size']['qty'] = $request->quantity;
                 }
             }
 

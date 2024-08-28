@@ -23,7 +23,11 @@ class ProductController extends Controller
 
     public function Discount()
     {
-        $data['new_arrivals'] = Product::where('status', 1)->where('discount_price', '>', 0)->latest()->get();
+        // $data['new_arrivals'] = Product::where('status', 1)->where('discount_price', '>', 0)->latest()->get();
+        $data['discount_products'] = Product::whereHas('product_variants.variantSizes', function ($query) {
+            $query->where('discount_price', '>', 0);
+        })->get();
+
         return view('frontend.pages.products.discount_products', $data);
     }
 
@@ -44,11 +48,36 @@ class ProductController extends Controller
     {
         $data['product'] = Product::where('product_slug', $slug)->first();
 
+        $data['minPrice'] = null;
+        $data['maxPrice'] = null;
+        $data['inStock'] = false;
+
         if (!$data['product']) {
             abort(404);
+        } else {
+            foreach ($data['product']->product_variants as $variant) {
+                foreach ($variant->variantSizes as $size) {
+                    $price = $size->discount_price > 0 ? $size->discount_price : $size->selling_price;
+
+                    if (is_null($data['minPrice']) || $price < $data['minPrice']) {
+                        $data['minPrice'] = $price;
+                    }
+
+                    if (is_null($data['maxPrice']) || $price > $data['maxPrice']) {
+                        $data['maxPrice'] = $price;
+                    }
+
+                    if ($size->quantity > 0) {
+                        $data['inStock'] = true;  // Product is in stock
+                    }
+                }
+            }
         }
+
         return view('frontend.pages.products.details_product', $data);
     }
+
+
     public function loadMoreProducts(Request $request)
     {
         $page = $request->input('page', 1); // Default to page 1 if not provided

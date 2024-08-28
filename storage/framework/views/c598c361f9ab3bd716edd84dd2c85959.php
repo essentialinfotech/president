@@ -27,6 +27,20 @@
             display: none;
             color: red;
         }
+
+        /* side scroll */
+
+        .single_product_thumbnails {
+            overflow-y: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        @media (max-width: 768px) {
+            .single_product_thumbnails ul li img {
+                width: 60px;
+            }
+        }
     </style>
 
     <!-- ***** Product Area Starts ***** -->
@@ -36,18 +50,21 @@
                 <div class="col-lg-7">
                     <div class="single_product_pics">
                         <div class="row">
-                            <div class="col-lg-3 thumbnails_col order-lg-1 order-2">
-                                <div class="single_product_thumbnails" style="overflow-y: scroll;">
+                            <div class="col-lg-2 thumbnails_col order-lg-1 order-2">
+                                
+                                <div class="single_product_thumbnails">
                                     <ul>
                                         <?php $__currentLoopData = $product->multi_photos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $multi_photo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <li class="mb-2 h-100 <?php echo e($key == 0 ? 'active' : ''); ?>"><img
-                                                    src="<?php echo e(asset($multi_photo->photo_name)); ?>" alt=""
-                                                    data-image="<?php echo e(asset($multi_photo->photo_name)); ?>"></li>
+                                            <li class="mb-2 h-100 <?php echo e($key == 0 ? 'active' : ''); ?>">
+                                                <img src="<?php echo e(asset($multi_photo->photo_name)); ?>" alt=""
+                                                    data-image="<?php echo e(asset($multi_photo->photo_name)); ?>">
+                                            </li>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </ul>
                                 </div>
+
                             </div>
-                            <div class="col-lg-9 image_col order-lg-2 order-1">
+                            <div class="col-lg-10 image_col order-lg-2 order-1">
                                 <img class="single_product_image productImage"
                                     src="<?php echo e(asset($product->multi_photos[0]->photo_name)); ?>" alt="Main Product Image">
                             </div>
@@ -57,21 +74,23 @@
                 <div class="col-lg-5">
                     <div class="product_details">
 
-                        <div class="bg-dark text-light px-2 d-table">
-                            In Stock
-                        </div>
-
-                        <div class="bg-dark text-danger px-2 d-table">
-                            Out of Stock
-                        </div>
+                        <?php if($inStock): ?>
+                            <div class="bg-dark text-light px-2 d-table">
+                                In Stock
+                            </div>
+                        <?php else: ?>
+                            <div class="bg-dark text-danger px-2 d-table">
+                                Out of Stock
+                            </div>
+                        <?php endif; ?>
 
                         <div class="product_details_title mt-2">
-                            <h2>
+                            <h2 class="text-capitalize">
                                 <?php echo e($product->product_name); ?></h2>
                         </div>
 
 
-                        <div class="product_price">100 BDT To 900 BDT</div>
+                        <div class="product_price"><?php echo e($minPrice); ?> BDT To <?php echo e($maxPrice); ?> BDT</div>
 
                         <div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
                             <button class="main-border-button" id="openPopup"><a>Add to cart</a></button>
@@ -84,7 +103,8 @@
                                         <img class="productImage" src="<?php echo e(asset($product->multi_photos[0]->photo_name)); ?>"
                                             alt="Product Image">
                                         <div class="product-details">
-                                            <p class="text-capitalize" style="white-space: normal;"><?php echo e($product->product_name); ?></p>
+                                            <p class="text-capitalize" style="white-space: normal;">
+                                                <?php echo e($product->product_name); ?></p>
                                             <div class="price">
                                                 <p class="discount">
                                                     
@@ -128,10 +148,14 @@
                                     </div>
                                     <form action="<?php echo e(route('cart.add', $product->id)); ?>" method="post">
                                         <?php echo csrf_field(); ?>
-                                        <input type="hidden" name="variant_color" class="variant_color" value="">
-                                        <input type="hidden" name="variant_qty" class="variant_qty" value="">
-                                        <input type="hidden" name="variant_id" class="variant_id" value="">
-                                        <input type="hidden" name="variant_photo" class="variant_photo" value="">
+                                        
+
+                                        <input type="hidden" name="variant_color" id="variant_color_input">
+                                        <input type="hidden" name="variant_id" id="variant_id_input">
+                                        <input type="hidden" name="variant_photo" id="variant_photo_input">
+                                        <input type="hidden" name="variant_size" id="variant_size_input">
+                                        <input type="hidden" name="variant_qty" class="variant_qty" id="variant_qty" value="">
+
                                         <button type="submit" class="add-to-cart-btn disabled">Add to Cart</button>
                                     </form>
                                 </div>
@@ -163,7 +187,7 @@
             const variantPhotoInput = document.querySelector('input[name="variant_photo"]');
             const productImage = document.querySelector('.product-info .productImage');
 
-          
+
             function showSizes(variant) {
                 sizeContainer.innerHTML = ''; // Clear previous sizes
 
@@ -175,7 +199,7 @@
                         sizeButton.dataset.sizeId = size.id; // Assuming each size has an id
                         sizeButton.dataset.sellingPrice = size.selling_price;
                         sizeButton.dataset.discountPrice = size.discount_price;
-                       
+
 
                         sizeContainer.appendChild(sizeButton);
 
@@ -191,19 +215,23 @@
                 }
             }
 
-            
+
             function selectColor(button) {
                 const color = button.dataset.color;
                 const imageUrl = button.dataset.image;
                 const variantId = button.dataset.variantId;
                 const variantPhotoUrl = button.dataset.photoUrl;
 
+                document.getElementById('variant_color_input').value = color;
+                document.getElementById('variant_id_input').value = variantId;
+                document.getElementById('variant_photo_input').value = variantPhotoUrl;
+
                 colorNameSpan.textContent = color;
                 productImage.src = imageUrl;
                 variantColorInput.value = color;
                 variantIdInput.value = variantId;
                 variantPhotoInput.value = variantPhotoUrl;
-
+                document.getElementById('variant_qty').value = 1;
                 // Show sizes for the selected color
                 const selectedVariant = {
                     sizes: JSON.parse(button.dataset.sizes ||
@@ -273,13 +301,14 @@
             firstColorBtn.click(); // Trigger click to select first color
         }
 
-       
+
         document.querySelector('.product-sizes .btn_wrap').addEventListener('click', function(event) {
-         
             if (event.target.classList.contains('size-btn')) {
-                document.getElementById('quantity_value').value = 1;
+                document.getElementById('quantity_value').value = 1;                
+                document.getElementById('variant_qty').value = 1;
                 // Remove 'active' class from all size buttons
-                document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove(
+                    'active'));
 
                 // Add 'active' class to the clicked size button
                 event.target.classList.add('active');
@@ -291,6 +320,9 @@
                 // Get the selected size data
                 const sellingPrice = event.target.dataset.sellingPrice;
                 const discountPrice = event.target.dataset.discountPrice;
+
+                const selectedSizeId = event.target.dataset.sizeId;
+                document.getElementById('variant_size_input').value = selectedSizeId;
 
                 // Update the price
                 updatePrice(sellingPrice, discountPrice);
@@ -308,6 +340,7 @@
                 sizeBtn.classList.add('size-btn');
                 sizeBtn.dataset.sellingPrice = size.selling_price;
                 sizeBtn.dataset.discountPrice = size.discount_price;
+                sizeBtn.dataset.sizeId = size.id;
                 sizeBtn.dataset.sizeQuantity = size.quantity;
                 sizeBtn.textContent = size.size;
 
@@ -324,7 +357,8 @@
         document.querySelector('.product-colors .btn_wrap').addEventListener('click', function(event) {
             if (event.target.classList.contains('color-btn')) {
                 // Remove 'active' class from all color buttons
-                document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove(
+                    'active'));
 
                 // Add 'active' class to the clicked color button
                 event.target.classList.add('active');

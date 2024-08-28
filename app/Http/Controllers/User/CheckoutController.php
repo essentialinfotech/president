@@ -40,11 +40,23 @@ class CheckoutController extends Controller
             return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
         }
 
+        // $totalPrice = array_sum(array_map(function ($item) {
+        //     if ($item['discount_price']) {
+        //         return $item['discount_price'] * $item['variant']['quantity'];
+        //     } else {
+        //         return $item['selling_price'] * $item['variant']['quantity'];
+        //     }
+        // }, $cart)); 
+
+
+
         $totalPrice = array_sum(array_map(function ($item) {
-            if ($item['discount_price']) {
-                return $item['discount_price'] * $item['variant']['quantity'];
+            $quantity = $item['variant']['variant_size']['qty']; // Ensure 'qty' is the correct key
+
+            if ($item['variant']['variant_size']['discount_price']) {
+                return $item['variant']['variant_size']['discount_price'] * $quantity;
             } else {
-                return $item['selling_price'] * $item['variant']['quantity'];
+                return $item['variant']['variant_size']['selling_price'] * $quantity;
             }
         }, $cart));
 
@@ -88,12 +100,13 @@ class CheckoutController extends Controller
                 $orderItem->order_id = $order->id;
                 $orderItem->product_id = $details['product_id'];
                 $orderItem->color = $details['variant']['color'];
-                $orderItem->image = $details['variant']['image'];
-                $orderItem->qty = $details['variant']['quantity'];
-                if ($details['discount_price']) {
-                    $orderItem->price = $details['discount_price'];
+                $orderItem->size = $details['variant']['variant_size']['size'];
+                $orderItem->image = $details['variant']['photo'];
+                $orderItem->qty = $details['variant']['variant_size']['qty'];
+                if ($details['variant']['variant_size']['discount_price']) {
+                    $orderItem->price = $details['variant']['variant_size']['discount_price'];
                 } else {
-                    $orderItem->price = $details['selling_price'];
+                    $orderItem->price = $details['variant']['variant_size']['selling_price'];
                 }
                 $orderItem->save();
             } // End Foreach

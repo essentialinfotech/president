@@ -1,8 +1,8 @@
-@extends('frontend.master_dashboard')
 
-@section('main')
-    {{-- Flow Cart --}}
-    @include('frontend.home.flow_cart')
+
+<?php $__env->startSection('main'); ?>
+    
+    <?php echo $__env->make('frontend.home.flow_cart', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 
 
@@ -36,17 +36,17 @@
                             </div>
                             <ul class="menu">
 
-                                <li class="mb-2" style="background:{{ request()->is('products') ? '#CCCCCC' : '' }}">
-                                    <a class="d-block" href="{{ route('products') }}" style="font-size: 14px;">All
+                                <li class="mb-2" style="background:<?php echo e(request()->is('products') ? '#CCCCCC' : ''); ?>">
+                                    <a class="d-block" href="<?php echo e(route('products')); ?>" style="font-size: 14px;">All
                                         Products</a>
                                 </li>
 
-                                <li class="mb-2" style="background:{{ request()->is('discount') ? '#CCCCCC' : '' }}">
-                                    <a class="d-block" href="{{ route('discount-products') }}"
+                                <li class="mb-2" style="background:<?php echo e(request()->is('discount') ? '#CCCCCC' : ''); ?>">
+                                    <a class="d-block" href="<?php echo e(route('discount-products')); ?>"
                                         style="font-size: 14px;">Discount</a>
                                 </li>
-                                <li class="mb-2" style="background:{{ request()->is('new-arrivals') ? '#CCCCCC' : '' }}">
-                                    <a class="d-block" href="{{ route('new-arrival-products') }}"
+                                <li class="mb-2" style="background:<?php echo e(request()->is('new-arrivals') ? '#CCCCCC' : ''); ?>">
+                                    <a class="d-block" href="<?php echo e(route('new-arrival-products')); ?>"
                                         style="font-size: 14px;">NEW ARRIVALS</a>
                                 </li>
                             </ul>
@@ -61,13 +61,13 @@
                                 </a>
                             </div>
                             <ul class="scrollable collapse multi-collapse show" id="multiCollapseExample1">
-                                @foreach ($global_product_categories as $category)
+                                <?php $__currentLoopData = $global_product_categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <li
-                                        style="background:{{ request()->is('category/' . $category->slug) ? '#CCCCCC' : '' }}">
-                                        <a class="d-block" href="{{ route('category.products', $category->slug) }}"
-                                            style="font-size: 14px;">{{ $category->name }}</a>
+                                        style="background:<?php echo e(request()->is('category/' . $category->slug) ? '#CCCCCC' : ''); ?>">
+                                        <a class="d-block" href="<?php echo e(route('category.products', $category->slug)); ?>"
+                                            style="font-size: 14px;"><?php echo e($category->name); ?></a>
                                     </li>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                             <h5><a href="">See More</a></h5>
                         </div>
@@ -121,12 +121,12 @@
                 </div>
                 <div class="col-lg-9 col-md-12">
                     <div class="row product_area">
-                        @foreach ($discount_products as $product)
+                        <?php $__currentLoopData = $discount_products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             
                             <div class="col-lg-4 col-md-6 col-6 single_item">
-                                @include('frontend.pages.products.partials.product_item')
+                                <?php echo $__env->make('frontend.pages.products.partials.product_item', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                             </div>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
                         <div class="col-lg-12">
@@ -138,4 +138,6 @@
         </div>
     </section>
     <!-- ***** Products Area Ends ***** -->
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('frontend.master_dashboard', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\EIT2024\BagsLaravelWebsites\PresidentWebsite - size variant\resources\views/frontend/pages/products/discount_products.blade.php ENDPATH**/ ?>

@@ -347,44 +347,50 @@ unset($__errorArgs, $__bag); ?>
                             <?php if(session('cart')): ?>
                                 <?php
                                     $totalQuantity = 0;
-                                    $discountTotalPrice = 0;
-                                    $originalTotalPrice = 0;
-                                    foreach (session()->get('cart', []) as $details) {
-                                        $totalQuantity += $details['variant']['quantity'];
+                                    $totalSellingPrice = 0;
+                                    $totalDiscount = 0;
 
-                                        if ($details['discount_price']) {
-                                            $discountTotalPrice +=
-                                                $details['discount_price'] * @$details['variant']['quantity'];
+                                    foreach (session()->get('cart', []) as $details) {
+                                        $quantity = $details['variant']['variant_size']['qty'];
+                                        $sellingPrice = $details['variant']['variant_size']['selling_price'];
+                                        $discountPrice = $details['variant']['variant_size']['discount_price'] ?? null;
+
+                                        // Calculate total selling price (without discount)
+                                        $totalSellingPrice += $sellingPrice * $quantity;
+
+                                        // Calculate discount only if there is a discount price
+                                        if ($discountPrice !== null) {
+                                            $totalDiscount += ($sellingPrice - $discountPrice) * $quantity;
                                         }
-                                        $originalTotalPrice +=
-                                            $details['selling_price'] * @$details['variant']['quantity'];
+
+                                        $totalQuantity += $quantity;
                                     }
+
+                                    // Final product price after applying the discount
+                                    $totalProductPrice = $totalSellingPrice - $totalDiscount;
                                 ?>
                             <?php endif; ?>
                             <div class="checkout-summary">
                                 <h5>Checkout Summary</h5>
                                 <div class="summary-row mb-0">
                                     <span>Original Product Price</span>
-                                    <span><?php echo e($originalTotalPrice); ?> BDT</span>
+                                    <span><?php echo e(number_format($totalSellingPrice, 2)); ?> BDT</span>
                                 </div>
                                 <div class="summary-row">
                                     <span class="text-muted" style="font-size: 12px;">(<?php echo e($totalQuantity); ?>
 
                                         Items)</span>
                                 </div>
-                                <div class="summary-row">
-                                    <span>Product Discount</span>
-                                    <span><?php echo e($discountTotalPrice - $originalTotalPrice); ?> BDT</span>
-                                </div>
+                                <?php if($totalDiscount > 0): ?>
+                                    <div class="summary-row">
+                                        <span>Product Discount</span>
+                                        <span>- <?php echo e(number_format($totalDiscount, 2)); ?> BDT</span>
+                                    </div>
+                                <?php endif; ?>
                                 <div class="summary-row">
                                     <span>Total Product Price</span>
-                                    <?php if($discountTotalPrice > 0): ?>
-                                        <span><?php echo e($discountTotalPrice); ?> BDT</span>
-                                    <?php else: ?>
-                                        <span><?php echo e($originalTotalPrice); ?> BDT</span>
-                                    <?php endif; ?>
+                                    <span><?php echo e(number_format($totalProductPrice, 2)); ?> BDT</span>
                                 </div>
-
                                 <button type="submit" class="btn btn-primary">Order Now</button>
                             </div>
                         </div>

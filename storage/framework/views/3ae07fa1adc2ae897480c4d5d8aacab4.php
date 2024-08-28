@@ -3,14 +3,18 @@
         $totalQuantity = 0;
         $totalPrice = 0;
         foreach (session()->get('cart', []) as $details) {
-            $totalQuantity += $details['variant']['quantity'];
+            $totalQuantity += $details['variant']['variant_size']['qty'];
 
-            if ($details['discount_price']) {
-                $totalPrice += $details['discount_price'] * @$details['variant']['quantity'];
+            if ($details['variant']['variant_size']['discount_price']) {
+                $totalPrice +=
+                    $details['variant']['variant_size']['discount_price'] * $details['variant']['variant_size']['qty'];
+            } else {
+                $totalPrice +=
+                    $details['variant']['variant_size']['selling_price'] * $details['variant']['variant_size']['qty'];
             }
-            $totalPrice += $details['selling_price'] * @$details['variant']['quantity'];
         }
     ?>
+
     <a href="<?php echo e(route('cart.index')); ?>">
         <div class="flow_cart">
             <div class="wrap">
