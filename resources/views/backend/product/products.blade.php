@@ -32,6 +32,14 @@
                     </ul>
                 </div>
             @endif
+
+
+
+
+
+
+
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -43,14 +51,37 @@
                                 <th>Product Code</th>
                                 <th>Category</th>
                                 <th>Stock</th>
-                                <th>Selling Price</th>
-                                <th>Discount Price</th>
+                                <th>Price</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($products as $key => $item)
+                                @php
+                                    $stock = 0;
+                                    $minPrice = null;
+                                    $maxPrice = null;
+
+                                    foreach ($item->product_variants as $variant) {
+                                        foreach ($variant->variantSizes as $size) {
+                                            $stock += $size->quantity;
+                                            $price =
+                                                $size->discount_price > 0
+                                                    ? $size->discount_price
+                                                    : $size->selling_price;
+
+                                            if (is_null($minPrice) || $price < $minPrice) {
+                                                $minPrice = $price;
+                                            }
+
+                                            if (is_null($maxPrice) || $price > $maxPrice) {
+                                                $maxPrice = $price;
+                                            }
+                                        }
+                                    }
+                                @endphp
+
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>
@@ -63,9 +94,8 @@
                                     <td>{{ $item->product_name }}</td>
                                     <td>{{ $item->product_code }}</td>
                                     <td>{{ $item->product_category->name }}</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
+                                    <td>{{ $stock }}</td>
+                                    <td>{{ $minPrice }} To {{ $maxPrice }}</td>
                                     <td>{{ $item->status == 1 ? 'Active' : 'Inactive' }}</td>
                                     <td>
                                         <div class="btn-group">
@@ -262,7 +292,7 @@
             });
         });
     </script>
-    
+
 
     <script>
         let variantCount = 1;

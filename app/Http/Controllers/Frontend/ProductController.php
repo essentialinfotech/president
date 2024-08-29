@@ -94,7 +94,7 @@ class ProductController extends Controller
         // Generate the HTML for the fetched products
         $html = '';
         foreach ($products as $product) {
-            $html .= view('frontend.home.partials.product', compact('product'))->render();
+            $html .= view('frontend.home.partials.load_product', compact('product'))->render();
         }
 
         // Return the HTML and the remaining product count as a JSON response

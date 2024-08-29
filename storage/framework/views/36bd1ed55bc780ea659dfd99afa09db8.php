@@ -32,6 +32,14 @@
                     </ul>
                 </div>
             <?php endif; ?>
+
+
+
+
+
+
+
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -43,14 +51,37 @@
                                 <th>Product Code</th>
                                 <th>Category</th>
                                 <th>Stock</th>
-                                <th>Selling Price</th>
-                                <th>Discount Price</th>
+                                <th>Price</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php
+                                    $stock = 0;
+                                    $minPrice = null;
+                                    $maxPrice = null;
+
+                                    foreach ($item->product_variants as $variant) {
+                                        foreach ($variant->variantSizes as $size) {
+                                            $stock += $size->quantity;
+                                            $price =
+                                                $size->discount_price > 0
+                                                    ? $size->discount_price
+                                                    : $size->selling_price;
+
+                                            if (is_null($minPrice) || $price < $minPrice) {
+                                                $minPrice = $price;
+                                            }
+
+                                            if (is_null($maxPrice) || $price > $maxPrice) {
+                                                $maxPrice = $price;
+                                            }
+                                        }
+                                    }
+                                ?>
+
                                 <tr>
                                     <td><?php echo e($key + 1); ?></td>
                                     <td>
@@ -62,9 +93,8 @@
                                     <td><?php echo e($item->product_name); ?></td>
                                     <td><?php echo e($item->product_code); ?></td>
                                     <td><?php echo e($item->product_category->name); ?></td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
+                                    <td><?php echo e($stock); ?></td>
+                                    <td><?php echo e($minPrice); ?> To <?php echo e($maxPrice); ?></td>
                                     <td><?php echo e($item->status == 1 ? 'Active' : 'Inactive'); ?></td>
                                     <td>
                                         <div class="btn-group">
@@ -261,7 +291,7 @@
             });
         });
     </script>
-    
+
 
     <script>
         let variantCount = 1;

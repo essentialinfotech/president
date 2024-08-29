@@ -51,24 +51,19 @@
     <div class="row m-0 product_area" id="products">
         <?php $__currentLoopData = $global_products->take(12); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             
-            <div class="col-lg-3 col-6 single_item">
-                <?php echo $__env->make('frontend.pages.products.partials.product_item', ['product' => $product], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-            </div>
+            
+                <?php echo $__env->make('frontend.home.partials.load_product', ['product' => $product], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </div>
 
     <?php if($global_products->count() > 12): ?>
-        <div class="row">
+        <div class="row m-0">
             <div class="col-12 text-center mt-3">
                 <button id="loadMore" class="btn btn-primary">Show More</button>
             </div>
         </div>
     <?php endif; ?>
-
-
-
-
-
 </section>
 <!-- **** Our Collection Ends **** -->
 

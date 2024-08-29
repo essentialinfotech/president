@@ -186,6 +186,21 @@
 
 
                                 @foreach ($orderItem as $item)
+                                    @php
+                                        // Get the variant based on the color (if applicable) and product ID
+                                        $variant = $item->product->product_variants
+                                            ->where('color', $item->color)
+                                            ->first();
+
+                                        // Get the specific variant size based on the size from the order item
+                                        $variantSize = $variant
+                                            ? $variant->variantSizes->where('size', $item->size)->first()
+                                            : null;
+
+                                        // Retrieve the quantity for the variant size
+                                        $quantity = $variantSize ? $variantSize->quantity : 0;
+                                    @endphp
+
                                     <tr>
                                         <td class="col-md-1">
                                             <label><img src="{{ asset($item->image) }}" style="width:50px; height:50px;">
@@ -207,9 +222,8 @@
                                         <td class="col-md-1">
                                             <label>{{ @$item->size }} </label>
                                         </td>
-
                                         <td class="col-md-1">
-                                            <label>-</label>
+                                            <label>{{ $quantity }}</label>
                                         </td>
                                         <td class="col-md-1">
                                             <label>{{ $item->qty }} </label>
@@ -220,7 +234,6 @@
                                                 BDT
                                             </label>
                                         </td>
-
                                     </tr>
                                 @endforeach
 

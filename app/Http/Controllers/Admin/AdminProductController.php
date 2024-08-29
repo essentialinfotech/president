@@ -24,6 +24,7 @@ class AdminProductController extends Controller
     {
         $data['products'] = Product::with(['product_category', 'multi_photos'])->latest()->get();
         $data['product_categories'] = ProductCategory::get();
+
         return view('backend.product.products', $data);
     }
 
@@ -144,7 +145,7 @@ class AdminProductController extends Controller
         return view('backend.product.product_edit', $data);
     }
 
- 
+
 
     /**
      * Update the specified resource in storage.
@@ -308,13 +309,17 @@ class AdminProductController extends Controller
         if ($data->delete()) {
             $photos = ProductMultiPhoto::where('product_id', $data->id)->get();
             foreach ($photos as $img) {
-                unlink($img->photo_name);
+                if (file_exists($img->photo_name)) {
+                    unlink(public_path($img->photo_name));
+                }
                 ProductMultiPhoto::where('id', $img->id)->delete();
             }
 
             $variants = ProductVariant::where('product_id', $data->id)->get();
             foreach ($variants as $variant) {
-                unlink($variant->photo);
+                if (file_exists($variant->photo)) {
+                    unlink(public_path($variant->photo));
+                }
                 ProductVariant::where('id', $variant->id)->delete();
             }
         }

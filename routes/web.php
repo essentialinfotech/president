@@ -178,7 +178,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     //  Product 
     Route::resource('admin/products', AdminProductController::class);
     Route::get('admin/products/multi-photo/{id}', [AdminProductController::class, 'MultiPhotoDelete'])->name('admin.multiphoto-photo.delete');
-   
+
     Route::put('admin/products/variant-update/{id}', [AdminProductController::class, 'UpateVariant'])->name('admin.product-variant-update');
     Route::get('admin/products/variant-delete/{id}', [AdminProductController::class, 'DeleteVariant'])->name('admin.product-variant-delete');
 

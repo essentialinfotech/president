@@ -51,24 +51,19 @@
     <div class="row m-0 product_area" id="products">
         @foreach ($global_products->take(12) as $product)
             {{-- @include('frontend.home.partials.product', ['product' => $product]) --}}
-            <div class="col-lg-3 col-6 single_item">
-                @include('frontend.pages.products.partials.product_item', ['product' => $product])
-            </div>
+            {{-- <div class="col-lg-3 col-6 single_item"> --}}
+                @include('frontend.home.partials.load_product', ['product' => $product])
+            {{-- </div> --}}
         @endforeach
     </div>
 
     @if ($global_products->count() > 12)
-        <div class="row">
+        <div class="row m-0">
             <div class="col-12 text-center mt-3">
                 <button id="loadMore" class="btn btn-primary">Show More</button>
             </div>
         </div>
     @endif
-
-
-
-
-
 </section>
 <!-- **** Our Collection Ends **** -->
 
