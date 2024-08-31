@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="row m-0 product_area">
-        @foreach ($global_products->take(12) as $product)
+        @foreach ($global_products->take(12)->sortByDesc('created_at') as $product)
             <div class="col-lg-2 col-6 single_item">
                 @include('frontend.pages.products.partials.product_item', ['product' => $product])
             </div>

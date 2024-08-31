@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
         $data['global_socials'] = SocialItem::all();
         
         $data['global_product_categories'] = ProductCategory::with('products')->orderBy('order', 'ASC')->get();
-        $data['global_products'] = Product::orderBy('created_at', 'ASC')->get();
+        $data['global_products'] = Product::get();
         view()->share($data);
     }
 }
