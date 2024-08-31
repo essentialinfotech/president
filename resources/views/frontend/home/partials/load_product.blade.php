@@ -1,3 +1,26 @@
+@php
+    $minPrice = null;
+    $maxPrice = null;
+    $inStock = false;
+
+    foreach ($product->product_variants as $variant) {
+        foreach ($variant->variantSizes as $size) {
+            $price = $size->discount_price > 0 ? $size->discount_price : $size->selling_price;
+
+            if (is_null($minPrice) || $price < $minPrice) {
+                $minPrice = $price;
+            }
+
+            if (is_null($maxPrice) || $price > $maxPrice) {
+                $maxPrice = $price;
+            }
+
+            if ($size->quantity > 0) {
+                $inStock = true; // Product is in stock
+            }
+        }
+    }
+@endphp
 <div class="col-lg-3 col-6 single_item">
     <div class="item">
         <a href="{{ route('product.details', $product->product_slug) }}">
@@ -5,10 +28,8 @@
                 <img src="{{ asset(@$product->multi_photos[0]->photo_name) }}" alt="Product Photo" width="100%"
                     loading="lazy">
                 <div class="stock">
-                    @php
-                        $product_variant_qty = $product->product_variants->sum('quantity');
-                    @endphp
-                    @if ($product_variant_qty > 0)
+
+                    @if ($inStock)
                         <div class="m-1 rounded stock_in px-1">
                             In Stock
                         </div>
@@ -21,15 +42,14 @@
             </div>
             <div class="down-content">
                 <div class="wrap">
-                    <h4>{{ $product->product_name }}</h4>
+                    <h4 class="text-capitalize">{{ $product->product_name }}</h4>
                 </div>
                 <div class="price">
-                    @if ($product->discount_price)
-                        <span class="product_price">{{ $product->discount_price }} BDT</span>
-                        <span class="discount">{{ $product->selling_price }} BDT</span>
-                    @else
-                        <span class="product_price">{{ $product->selling_price }} BDT</span>
-                    @endif
+
+                    <span class="product_price">{{ $minPrice }} To {{ $maxPrice }}
+                        BDT</span>
+
+
                 </div>
             </div>
         </a>
