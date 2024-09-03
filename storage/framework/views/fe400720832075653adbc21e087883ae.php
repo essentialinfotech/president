@@ -27,6 +27,12 @@
 
                         </div>
                     <?php endif; ?>
+                    <?php if(session('error')): ?>
+                        <div class="alert alert-danger" id="danger-alert">
+                            <?php echo e(session('error')); ?>
+
+                        </div>
+                    <?php endif; ?>
 
                     <?php if(session('cart')): ?>
                         <?php
@@ -169,7 +175,8 @@
                                         <span>Total Product Price</span>
                                         <span><?php echo e(number_format($totalProductPrice, 2)); ?> BDT</span>
                                     </div>
-                                    <a href="<?php echo e(route('checkout.index')); ?>" class="btn btn-dark w-100 mt-3">Checkout Now</a>
+                                    <a href="<?php echo e(route('checkout.index')); ?>" class="btn btn-dark w-100 mt-3">Checkout
+                                        Now</a>
                                 </div>
                             </div>
                         </div>

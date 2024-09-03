@@ -173,6 +173,7 @@ class AdminProductController extends Controller
         $data->product_code = $request->product_code;
         $data->short_description = $request->short_description;
         $data->long_description = $request->long_description;
+        $data->is_bundle = $request->is_bundle;
 
         if ($data->update()) {
             /// Multiple Image Upload From her //////            

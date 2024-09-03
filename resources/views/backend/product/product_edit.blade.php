@@ -94,6 +94,13 @@
                         <label for="img" class="form-label">Long Descp</label>
                         <textarea name="long_description" class="form-control mytextarea">{{ $product->long_description }}</textarea>
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label">Is Bundle?</label>
+                        <select name="is_bundle" class="form-control" id="is_bundle">
+                            <option value="No" {{ $product->is_bundle == 'No' ? 'selected' : '' }}>No</option>
+                            <option value="Yes" {{ $product->is_bundle == 'Yes' ? 'selected' : '' }}>Yes</option>
+                        </select>
+                    </div>
 
 
                     <div id="variants">
@@ -125,20 +132,23 @@
                                                     @if ($variant_size->discount_price)
                                                         <span>
                                                             <strong>Selling
-                                                                Price:</strong><del class="text-danger">{{ $variant_size->selling_price }}</del></span>
+                                                                Price:</strong><del
+                                                                class="text-danger">{{ $variant_size->selling_price }}</del></span>
                                                         <span>
                                                             <strong>Discount
-                                                                Price:</strong><span class="text-success">{{ $variant_size->discount_price }}</span></span>
+                                                                Price:</strong><span
+                                                                class="text-success">{{ $variant_size->discount_price }}</span></span>
                                                     @else
                                                         <span><strong>Selling
-                                                                Price:</strong><span class="text-success">{{ $variant_size->selling_price }}</span></span>
+                                                                Price:</strong><span
+                                                                class="text-success">{{ $variant_size->selling_price }}</span></span>
                                                     @endif
                                                 </p>
                                             @endforeach
 
                                         </td>
-                                        <td>                                            
-                                           
+                                        <td>
+
 
                                             <a href="{{ route('admin.product-variant-delete', $variant->id) }}"
                                                 class="btn btn-sm" title="Delete" onclick="return confirm('Are you sure?')">
@@ -146,7 +156,6 @@
                                             </a>
                                         </td>
                                     </tr>
-                                    
                                 @endforeach
                             </tbody>
                         </table>

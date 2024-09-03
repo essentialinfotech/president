@@ -26,6 +26,11 @@
                             {{ session('success') }}
                         </div>
                     @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger" id="danger-alert">
+                            {{ session('error') }}
+                        </div>
+                    @endif
 
                     @if (session('cart'))
                         @php
@@ -164,7 +169,8 @@
                                         <span>Total Product Price</span>
                                         <span>{{ number_format($totalProductPrice, 2) }} BDT</span>
                                     </div>
-                                    <a href="{{ route('checkout.index') }}" class="btn btn-dark w-100 mt-3">Checkout Now</a>
+                                    <a href="{{ route('checkout.index') }}" class="btn btn-dark w-100 mt-3">Checkout
+                                        Now</a>
                                 </div>
                             </div>
                         </div>

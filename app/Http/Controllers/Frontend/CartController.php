@@ -90,22 +90,26 @@ class CartController extends Controller
     {
         $cart = session()->get('cart', []);
 
-        if (isset($cart[$id])) {
+        if ($request->quantity > 0) {
+            if (isset($cart[$id])) {
 
-            // If the cart item has a variant, update the variant quantity
-            if (isset($cart[$id]['variant'])) {
-                $variant_id = $cart[$id]['variant']['id'];
-                $variant = ProductVariant::find($variant_id);
+                // If the cart item has a variant, update the variant quantity
+                if (isset($cart[$id]['variant'])) {
+                    $variant_id = $cart[$id]['variant']['id'];
+                    $variant = ProductVariant::find($variant_id);
 
-                if ($variant) {
-                    $cart[$id]['variant']['variant_size']['qty'] = $request->quantity;
+                    if ($variant) {
+                        $cart[$id]['variant']['variant_size']['qty'] = $request->quantity;
+                    }
                 }
+
+                session()->put('cart', $cart);
             }
 
-            session()->put('cart', $cart);
+            return redirect()->back()->with('success', 'Cart updated successfully!');
+        } else {
+            return redirect()->back()->with('error', 'Nagative value is not parmited!');
         }
-
-        return redirect()->back()->with('success', 'Cart updated successfully!');
     }
 
 
