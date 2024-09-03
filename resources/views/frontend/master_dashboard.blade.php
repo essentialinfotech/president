@@ -89,6 +89,9 @@
     {{-- For cart page slider --}}
     <script src="{{ asset('frontend/assets/js/slick.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/slick.min.js') }}"></script>
+
+
+    <script src="{{ asset('adminbackend/assets/js/validate.min.js') }}"></script>
     {{-- Custom js --}}
     <script src="{{ asset('frontend/assets/js/custom.js') }}"></script>
 

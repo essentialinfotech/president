@@ -19,7 +19,7 @@
     <link href="{{ asset('adminbackend/assets/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('adminbackend/assets/css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('adminbackend/assets/css/icons.css') }}" rel="stylesheet">
-    <title>Essential Infotech</title>
+    <title>{{ $global_setting_data->title }}</title>
 </head>
 
 <body class="bg-login">
@@ -30,8 +30,7 @@
                 <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
                     <div class="col mx-auto">
                         <div class="mb-4 text-center">
-                            <img src="{{ asset('adminbackend/assets/images/logo.png') }}" width="180"
-                                alt="" />
+                            <img src="{{ asset($global_setting_data->logo) }}" width="180" alt="Logo" />
                         </div>
                         <div class="card">
                             <div class="card-body">
@@ -47,6 +46,9 @@
                                                 <label for="inputEmailAddress" class="form-label">Email Address</label>
                                                 <input type="email" name="email" class="form-control"
                                                     id="inputEmailAddress" placeholder="Email Address">
+                                                @error('email')
+                                                    <div class="alert alert-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                             <div class="col-12">
                                                 <label for="inputChoosePassword" class="form-label">Enter
@@ -58,6 +60,9 @@
                                                         href="javascript:;" class="input-group-text bg-transparent"><i
                                                             class='bx bx-hide'></i></a>
                                                 </div>
+                                                @error('password')
+                                                    <div class="alert alert-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-check form-switch">

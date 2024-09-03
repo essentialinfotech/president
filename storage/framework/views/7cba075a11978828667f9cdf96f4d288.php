@@ -120,7 +120,7 @@
                     class="<?php echo e(Route::is('discount-products') || Route::is('products') ? 'active' : ''); ?>">Promotion</a>
                 <ul>
                     <li><a href="<?php echo e(route('discount-products')); ?>">Discount</a></li>
-                    <li><a href="<?php echo e(route('products')); ?>">Bundling</a></li>
+                    <li><a href="<?php echo e(route('bundling-products')); ?>">Bundling</a></li>
                 </ul>
             </li>
 

@@ -120,7 +120,7 @@
                     class="{{ Route::is('discount-products') || Route::is('products') ? 'active' : '' }}">Promotion</a>
                 <ul>
                     <li><a href="{{ route('discount-products') }}">Discount</a></li>
-                    <li><a href="{{ route('products') }}">Bundling</a></li>
+                    <li><a href="{{ route('bundling-products') }}">Bundling</a></li>
                 </ul>
             </li>
 

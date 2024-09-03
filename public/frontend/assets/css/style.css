@@ -2399,8 +2399,8 @@ Products Page
 }
 
 .product_area .item .thumb .stock {
-  position: absolute;
-  bottom: 0;
+  /* position: absolute;
+  bottom: 0; */
 }
 
 .product_area .item .thumb .stock .stock_out,
@@ -2425,6 +2425,7 @@ Products Page
   padding: 10px 1px;
   position: relative;
   z-index: 3;
+  padding-left: 5px;
 }
 
 .product_area .item .down-content .wrap {

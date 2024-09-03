@@ -11,12 +11,22 @@
                                 </div>
                                 <div class="">
 
-                                    <form class="row g-3" method="POST" action="<?php echo e(route('login')); ?>">
+                                    <form id="myForm" class="row g-3" method="POST" action="<?php echo e(route('login')); ?>">
                                         <?php echo csrf_field(); ?>
                                         <div class="col-12">
                                             <label for="inputEmailAddress" class="form-label">Email Address</label>
                                             <input type="email" name="email" class="form-control" id="inputEmailAddress"
-                                                placeholder="Your Email">
+                                                placeholder="Your Email" required>
+                                            <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <div class="alert alert-danger"><?php echo e($message); ?></div>
+                                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                         </div>
                                         <div class="col-12 mt-2">
                                             <label for="inputChoosePassword" class="form-label">Enter
@@ -27,8 +37,22 @@
                                                 <a href="javascript:;" class="input-group-text bg-transparent"><i
                                                         class='fas fa-eye'></i></a>
                                             </div>
+                                            <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <div class="alert alert-danger"><?php echo e($message); ?></div>
+                                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                         </div>
                                         
+                                        <div class="col-md-6 mt-2  text-end"> <a class="text-muted"
+                                                href="<?php echo e(route('password.request')); ?>">Forgot
+                                                Password ?</a>
+                                        </div>
 
                                         <div class="col-12 mt-4">
                                             <div class="d-grid">
@@ -53,7 +77,9 @@
         </div>
 
     </section>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startPush('script'); ?>
     <script>
         $(document).ready(function() {
             $("#show_hide_password a").on('click', function(event) {
@@ -70,6 +96,41 @@
             });
         });
     </script>
-<?php $__env->stopSection(); ?>
+    <script>
+        $(document).ready(function() {
+            $('#myForm').validate({
+                rules: {
+                    email: {
+                        required: true,
+                    },
+                    password: {
+                        required: true,
+                    },
+
+                },
+                messages: {
+                    email: {
+                        required: 'The email field is required.',
+                    },
+                    password: {
+                        required: 'The password field is required.',
+                    },
+
+                },
+                errorElement: 'span',
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    element.after(error); // Place the error message directly after the input field
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+            });
+        });
+    </script>
+<?php $__env->stopPush(); ?>
 
 <?php echo $__env->make('frontend.master_dashboard', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\EIT2024\BagsLaravelWebsites\PresidentWebsite - size variant\resources\views/auth/login.blade.php ENDPATH**/ ?>

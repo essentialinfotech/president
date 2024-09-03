@@ -176,6 +176,13 @@
                             <label class="form-label">Long Descp</label>
                             <textarea name="long_description" class="form-control mytextarea"></textarea>
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label">Is Bundle?</label>
+                            <select name="is_bundle" class="form-control" id="is_bundle">
+                                <option>No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
 
                         <div id="variants">
                             <div class="variant">

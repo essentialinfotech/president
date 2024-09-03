@@ -19,7 +19,7 @@
     <link href="<?php echo e(asset('adminbackend/assets/css/bootstrap.min.css')); ?>" rel="stylesheet">
     <link href="<?php echo e(asset('adminbackend/assets/css/app.css')); ?>" rel="stylesheet">
     <link href="<?php echo e(asset('adminbackend/assets/css/icons.css')); ?>" rel="stylesheet">
-    <title>Essential Infotech</title>
+    <title><?php echo e($global_setting_data->title); ?></title>
 </head>
 
 <body class="bg-login">
@@ -30,8 +30,7 @@
                 <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
                     <div class="col mx-auto">
                         <div class="mb-4 text-center">
-                            <img src="<?php echo e(asset('adminbackend/assets/images/logo.png')); ?>" width="180"
-                                alt="" />
+                            <img src="<?php echo e(asset($global_setting_data->logo)); ?>" width="180" alt="Logo" />
                         </div>
                         <div class="card">
                             <div class="card-body">
@@ -47,6 +46,16 @@
                                                 <label for="inputEmailAddress" class="form-label">Email Address</label>
                                                 <input type="email" name="email" class="form-control"
                                                     id="inputEmailAddress" placeholder="Email Address">
+                                                <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                    <div class="alert alert-danger"><?php echo e($message); ?></div>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
                                             <div class="col-12">
                                                 <label for="inputChoosePassword" class="form-label">Enter
@@ -58,6 +67,16 @@
                                                         href="javascript:;" class="input-group-text bg-transparent"><i
                                                             class='bx bx-hide'></i></a>
                                                 </div>
+                                                <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                    <div class="alert alert-danger"><?php echo e($message); ?></div>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-check form-switch">

@@ -55,6 +55,7 @@ Route::get('/category/{slug}', [ProductController::class, 'CategoyProduct'])->na
 Route::get('/products', [ProductController::class, 'AllProduct'])->name('products');
 Route::get('/new-arrivals', [ProductController::class, 'NewArrivals'])->name('new-arrival-products');
 Route::get('/discount', [ProductController::class, 'Discount'])->name('discount-products');
+Route::get('/bundling', [ProductController::class, 'Bundling'])->name('bundling-products');
 Route::get('/products/{slug}', [ProductController::class, 'ProductDetails'])->name('product.details');
 
 // In routes/web.php

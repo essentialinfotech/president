@@ -72,39 +72,36 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Profile</h4>
-                                    
-                                    <?php if(session('status')): ?>
-                                        <div class="alert alert-success" role="alert">
-                                            <?php echo e(session('status')); ?>
 
-                                        </div>
-                                    <?php elseif(session('error')): ?>
-                                        <div class="alert alert-danger" role="alert">
-                                            <?php echo e(session('error')); ?>
-
-                                        </div>
-                                    <?php endif; ?>
                                     
-                                    <form action="<?php echo e(route('user.update.profile')); ?>" method="POST">
+                                    <div id="profileAlertMessage" class="alert" role="alert" style="display: none;">
+                                    </div>
+                                    
+
+                                    <form id="updateProfileForm" action="<?php echo e(route('user.update.profile')); ?>" method="POST">
                                         <?php echo csrf_field(); ?>
                                         <div class="mb-3">
                                             <label for="name" class="form-label">Name</label>
                                             <input type="text" name="name" class="form-control" id="name"
                                                 value="<?php echo e(Auth::user()->name); ?>">
+                                            <span id="name_error" class="text-danger"></span>
                                         </div>
                                         <div class="mb-3">
                                             <label for="email" class="form-label">Email</label>
                                             <input type="email" name="email" class="form-control" id="email"
                                                 value="<?php echo e(Auth::user()->email); ?>">
+                                            <span id="email_error" class="text-danger"></span>
                                         </div>
                                         <div class="mb-3">
                                             <label for="phone" class="form-label">Phone</label>
-                                            <input type="text" name="phone" class="form-control" id="phone"
+                                            <input type="number" name="phone" class="form-control" id="phone"
                                                 value="<?php echo e(Auth::user()->phone); ?>">
+                                            <span id="phone_error" class="text-danger"></span>
                                         </div>
                                         <button type="submit" class="btn btn-primary">Save Changes</button>
                                     </form>
                                 </div>
+
                             </div>
                         </div>
                         <div class="tab-pane fade" id="v-pills-change-password" role="tabpanel"
@@ -113,19 +110,10 @@
                                 <div class="card-body">
                                     <h4 class="card-title">Change Password</h4>
                                     
-                                    <?php if(session('status')): ?>
-                                        <div class="alert alert-success" role="alert">
-                                            <?php echo e(session('status')); ?>
-
-                                        </div>
-                                    <?php elseif(session('error')): ?>
-                                        <div class="alert alert-danger" role="alert">
-                                            <?php echo e(session('error')); ?>
-
-                                        </div>
-                                    <?php endif; ?>
+                                    <div id="alertMessage" role="alert" style=""></div>
                                     
-                                    <form action="<?php echo e(route('user.update.password')); ?>" method="POST">
+                                    <form id="updatePasswordForm" action="<?php echo e(route('user.update.password')); ?>"
+                                        method="POST">
                                         <?php echo csrf_field(); ?>
                                         <div class="mb-3">
                                             <label for="old_password" class="form-label">Old Password</label>
@@ -139,16 +127,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"
                                                 placeholder="Old Password" />
-                                            <?php $__errorArgs = ['old_password'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                <span class="text-danger"><?php echo e($message); ?></span>
-                                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+                                            <span class="text-danger" id="old_password_error"></span>
                                         </div>
                                         <div class="mb-3">
                                             <label for="new_password" class="form-label">New Password</label>
@@ -162,16 +141,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"
                                                 placeholder="New Password" />
-                                            <?php $__errorArgs = ['new_password'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                <span class="text-danger"><?php echo e($message); ?></span>
-                                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+                                            <span class="text-danger" id="new_password_error"></span>
                                         </div>
                                         <div class="mb-3">
                                             <label for="new_password_confirmation" class="form-label">Confirm New
@@ -187,19 +157,11 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"
                                                 placeholder="Confirm New Password" />
-                                            <?php $__errorArgs = ['new_password_confirmation'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                <span class="text-danger"><?php echo e($message); ?></span>
-                                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+                                            <span class="text-danger" id="new_password_confirmation_error"></span>
                                         </div>
                                         <button type="submit" class="btn btn-primary">Change Password</button>
                                     </form>
+
                                 </div>
                             </div>
                         </div>
@@ -270,5 +232,104 @@ unset($__errorArgs, $__bag); ?>
 
     </section>
 <?php $__env->stopSection(); ?>
+
+<?php $__env->startPush('script'); ?>
+    <script>
+        $(document).ready(function() {
+            $('#updatePasswordForm').on('submit', function(e) {
+                e.preventDefault();
+
+                // Clear previous error messages
+                $('#old_password_error').text('');
+                $('#new_password_error').text('');
+                $('#new_password_confirmation_error').text('');
+                $('#alertMessage').hide().removeClass("alert-success alert-danger");
+
+                $.ajax({
+                    url: $(this).attr('action'), // The form action URL
+                    method: $(this).attr('method'), // The form method (POST)
+                    data: $(this).serialize(), // Serialize form data
+                    success: function(response) {
+                        // Handle success
+                        $('#alertMessage').text('Password changed successfully!')
+                            .addClass("alert-success")
+                            .removeClass("alert-danger")
+                            .show();
+                    },
+                    error: function(response) {
+                        // Handle validation errors
+                        if (response.responseJSON.errors) {
+                            var errors = response.responseJSON.errors;
+                            if (errors.old_password) {
+                                $('#old_password_error').text(errors.old_password[0]);
+                            }
+                            if (errors.new_password) {
+                                $('#new_password_error').text(errors.new_password[0]);
+                            }
+                            if (errors.new_password_confirmation) {
+                                $('#new_password_confirmation_error').text(errors
+                                    .new_password_confirmation[0]);
+                            }
+                        } else if (response.status === 401) {
+                            // Handle old password mismatch
+                            $('#alertMessage').text("Old Password Doesn't Match!!")
+                                .addClass("alert-danger")
+                                .removeClass("alert-success")
+                                .show();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#updateProfileForm').on('submit', function(e) {
+                e.preventDefault();
+
+                // Clear previous error messages
+                $('#name_error').text('');
+                $('#email_error').text('');
+                $('#phone_error').text('');
+                $('#profileAlertMessage').hide().removeClass("alert-success alert-danger");
+
+                $.ajax({
+                    url: $(this).attr('action'), // The form action URL
+                    method: $(this).attr('method'), // The form method (POST)
+                    data: $(this).serialize(), // Serialize form data
+                    success: function(response) {
+                        // Handle success
+                        $('#profileAlertMessage').text('Profile Updated Successfully!')
+                            .addClass("alert-success")
+                            .removeClass("alert-danger")
+                            .show();
+                    },
+                    error: function(response) {
+                        // Handle validation errors
+                        if (response.responseJSON.errors) {
+                            var errors = response.responseJSON.errors;
+                            if (errors.name) {
+                                $('#name_error').text(errors.name[0]);
+                            }
+                            if (errors.email) {
+                                $('#email_error').text(errors.email[0]);
+                            }
+                            if (errors.phone) {
+                                $('#phone_error').text(errors.phone[0]);
+                            }
+                        } else {
+                            $('#profileAlertMessage').text(
+                                    'An error occurred. Please try again.')
+                                .addClass("alert-danger")
+                                .removeClass("alert-success")
+                                .show();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+<?php $__env->stopPush(); ?>
 
 <?php echo $__env->make('frontend.master_dashboard', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\EIT2024\BagsLaravelWebsites\PresidentWebsite - size variant\resources\views/frontend/user-frontend/user_dashboard.blade.php ENDPATH**/ ?>

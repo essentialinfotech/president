@@ -55,6 +55,7 @@ class AdminProductController extends Controller
         $data->product_code = $request->product_code;
         $data->short_description = $request->short_description;
         $data->long_description = $request->long_description;
+        $data->is_bundle = $request->is_bundle;
         $data->status = 1;
         if ($data->save()) {
             /// Multiple Image Upload From her //////
@@ -336,16 +337,8 @@ class AdminProductController extends Controller
     public function MultiPhotoDelete($id)
     {
         $data = ProductMultiPhoto::find($id);
-        $product_variants = ProductVariant::where('product_id', $data->product_id)->get();
         if (file_exists($data->photo_name)) {
             unlink(public_path($data->photo_name));
-        }
-        foreach ($product_variants as $product_variant) {
-
-            if (file_exists($product_variant->photo)) {
-                unlink(public_path($product_variant->photo));
-            }
-            $product_variant->delete();
         }
 
         $data->delete();

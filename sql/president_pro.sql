@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 31, 2024 at 03:47 AM
+-- Generation Time: Sep 03, 2024 at 11:34 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.2.0
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `president_copy`
+-- Database: `president_pro`
 --
 
 -- --------------------------------------------------------
@@ -302,141 +302,141 @@ CREATE TABLE IF NOT EXISTS `products` (
   `product_name` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_slug` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_code` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `selling_price` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `discount_price` text COLLATE utf8mb4_unicode_ci,
   `video_link` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `short_description` text COLLATE utf8mb4_unicode_ci,
-  `long_description` text COLLATE utf8mb4_unicode_ci,
+  `long_description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `is_bundle` text COLLATE utf8mb4_unicode_ci,
   `status` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=145 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=146 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `product_category_id`, `product_name`, `product_slug`, `product_code`, `selling_price`, `discount_price`, `video_link`, `short_description`, `long_description`, `status`, `created_at`, `updated_at`) VALUES
-(20, '12', 'School Bag-PM 00350-H', 'school-bag-pm-00350-h', 'PM 00350-H', '4700', NULL, NULL, 'd', '<p>ddsfdscds</p>', '1', '2024-08-22 16:58:19', '2024-08-31 03:44:23'),
-(22, '9', 'Trolley Case QQ 920 - 18\"', 'trolley-case-qq-920-18', 'QQ 920', '5900', NULL, NULL, 'aSda', '<p>asdasd</p>', '1', '2024-08-22 17:19:56', '2024-08-22 18:00:14'),
-(23, '9', 'Trolley Case QQ 920 - 22\"', 'trolley-case-qq-920-22', 'QQ 920', '6900', NULL, NULL, 'asdsada', '<p>asdsadasd</p>', '1', '2024-08-22 17:28:48', '2024-08-22 18:02:11'),
-(24, '12', 'School Bag-PM 0404-N', 'school-bag-pm-0404-n', 'PM 0404-N', '2600', NULL, NULL, '1', '<p>2</p>', '1', '2024-08-22 17:33:25', '2024-08-22 17:33:25'),
-(25, '18', 'BC -18\"', 'bc-18', '3173', '5350', NULL, NULL, 'Brief case', NULL, '1', '2024-08-22 17:36:36', '2024-08-22 17:36:36'),
-(26, '12', 'School Bag-PM 00532-H', 'school-bag-pm-00532-h', 'PM 00532-H', '3450', NULL, NULL, '1', '<p>21</p>', '1', '2024-08-22 17:37:00', '2024-08-22 18:41:46'),
-(27, '12', 'School Bag-PM 00554-H', 'school-bag-pm-00554-h', 'PM 00554-H', '3500', NULL, NULL, '1', '<p>1</p>', '1', '2024-08-22 17:39:03', '2024-08-22 17:39:03'),
-(28, '12', 'School Bag-PM 00555-H', 'school-bag-pm-00555-h', 'PM 00555-H', '3850', NULL, NULL, '1', '<p>1</p>', '1', '2024-08-22 17:41:02', '2024-08-22 17:41:02'),
-(29, '12', 'School Bag-PM 0606-N', 'school-bag-pm-0606-n', 'PM 0606-N', '2600', NULL, NULL, '1', '<p>1</p>', '1', '2024-08-22 17:43:14', '2024-08-22 17:43:14'),
-(30, '12', 'School Bag-PM 0707-N', 'school-bag-pm-0707-n', 'PM 0707-N', '2850', NULL, NULL, NULL, '<p>1</p>', '1', '2024-08-22 17:44:43', '2024-08-22 23:59:56'),
-(31, '12', 'School Bag-PM 732-T', 'school-bag-pm-732-t', 'PM 732-T', '3500', NULL, NULL, '1', '<p>1</p>', '1', '2024-08-22 17:48:23', '2024-08-22 23:49:01'),
-(32, '12', 'School Bag-PM 1202A-P', 'school-bag-pm-1202a-p', 'PM 1202A-P', '4550', NULL, NULL, '1', '<p><br></p>', '1', '2024-08-22 17:51:37', '2024-08-22 17:51:37'),
-(33, '12', 'School Bag-PM 1901-T', 'school-bag-pm-1901-t', 'PM 1901-T', '3400', NULL, NULL, '1', NULL, '1', '2024-08-22 17:53:41', '2024-08-22 17:53:41'),
-(34, '12', 'School Bag-PM 1905-T', 'school-bag-pm-1905-t', 'PM 1905-T', '3400', NULL, NULL, '1', NULL, '1', '2024-08-22 17:55:35', '2024-08-22 17:55:57'),
-(35, '12', 'School Bag- PM 1919-N', 'school-bag-pm-1919-n', 'PM 1919-N', '2750', NULL, NULL, '1', NULL, '1', '2024-08-22 18:00:38', '2024-08-22 18:00:38'),
-(36, '9', 'Trolley Case QQ 920 - 26\"', 'trolley-case-qq-920-26', 'QQ 920', '7650', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:04:37', '2024-08-22 18:09:18'),
-(37, '12', 'School Bag-PM 2318-1-T', 'school-bag-pm-2318-1-t', 'PM 2318-1-T', '3600', NULL, NULL, '1', NULL, '1', '2024-08-22 18:04:37', '2024-08-22 23:52:31'),
-(38, '9', 'Trolley Case QQ 932 - 20\"', 'trolley-case-qq-932-20', 'QQ 932', '6100', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:06:44', '2024-08-26 19:46:45'),
-(39, '13', 'SHOULDER- PM 8343-S', 'shoulder-pm-8343-s', 'PM 8343-S', '1550', NULL, NULL, '1', NULL, '1', '2024-08-22 18:07:51', '2024-08-22 18:07:51'),
-(40, '9', 'Trolley Case QQ 932 - 28\"', 'trolley-case-qq-932-28', 'QQ 932', '7800', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:08:19', '2024-08-22 18:08:19'),
-(41, '12', 'School Bag-PM 3089-T', 'school-bag-pm-3089-t', 'PM 3089-T', '3750', NULL, NULL, '1', NULL, '1', '2024-08-22 18:09:16', '2024-08-22 18:09:16'),
-(43, '12', 'School Bag-PM 3116-T', 'school-bag-pm-3116-t', 'PM 3116-T', '3750', NULL, NULL, '1', NULL, '1', '2024-08-22 18:10:51', '2024-08-22 18:10:51'),
-(44, '11', 'Office Bag FB PM 0909', 'office-bag-fb-pm-0909', '0909', '3500', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:11:05', '2024-08-22 18:11:05'),
-(45, '9', 'Trolley Case QQ 932 - 24\"', 'trolley-case-qq-932-24', 'QQ 932', '7800', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:11:48', '2024-08-22 18:11:48'),
-(46, '12', 'School Bag-PM 5116-S', 'school-bag-pm-5116-s', 'PM 5116-S', '2250', NULL, NULL, '1', NULL, '1', '2024-08-22 18:13:10', '2024-08-22 18:13:10'),
-(47, '9', 'Trolley Case TT 861 - 20\"', 'trolley-case-tt-861-20', 'TT 861', '5500', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:13:32', '2024-08-22 18:13:32'),
-(48, '11', 'Office Bag PM 0505', 'office-bag-pm-0505', '0505', '3600', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:13:32', '2024-08-22 18:13:32'),
-(49, '9', 'Trolley Case TT 861 - 24\"', 'trolley-case-tt-861-24', 'TT 861', '6500', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:13:51', '2024-08-22 18:13:51'),
-(50, '12', 'School Bag-PM 5350-S', 'school-bag-pm-5350-s', 'PM 5350-S', '2750', NULL, NULL, '1', NULL, '1', '2024-08-22 18:14:59', '2024-08-22 18:14:59'),
-(51, '12', 'School Bag-PM 5801-N', 'school-bag-pm-5801-n', 'PM 5801-N', '3150', NULL, NULL, '1', NULL, '1', '2024-08-22 18:16:56', '2024-08-22 18:16:56'),
-(52, '11', 'Office Bag FB PM 1122', 'office-bag-fb-pm-1122', '1122', '3350', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:17:12', '2024-08-22 18:17:12'),
-(53, '12', 'School Bag-PM 6301-S', 'school-bag-pm-6301-s', 'PM 6301-S', '2300', NULL, NULL, '1', NULL, '1', '2024-08-22 18:18:10', '2024-08-22 18:18:10'),
-(54, '13', 'SHOULDER-PM 16079-S', 'shoulder-pm-16079-s', 'PM 16079-S', '2450', NULL, NULL, '1', NULL, '1', '2024-08-22 18:19:54', '2024-08-22 18:19:54'),
-(55, '12', 'School Bag-PM 6302-S', 'school-bag-pm-6302-s', 'PM 6302-S', '2300', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:20:07', '2024-08-22 18:20:07'),
-(56, '9', 'Trolley Case TT 861 - 28\"', 'trolley-case-tt-861-28', 'TT 861', '7300', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:20:07', '2024-08-22 18:20:07'),
-(57, '9', 'Trolley Case  9593 -18\"', 'trolley-case-9593-18', '9593', '6900', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:20:24', '2024-08-22 18:37:25'),
-(58, '12', 'School Bag- PM 8119-7-S', 'school-bag-pm-8119-7-s', 'PM 8119-7-S', '2550', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:22:19', '2024-08-22 18:22:19'),
-(59, '16', 'Waist Bag PM 5468 - S', 'waist-bag-pm-5468-s', 'PM 5468 - S', '1100', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:22:37', '2024-08-22 18:26:02'),
-(118, '10', 'Trolley Travel Bag- 5297-20\"', 'trolley-travel-bag-5297-20', '5297', '9000', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:21:45', '2024-08-22 23:21:45'),
-(61, '16', 'Waist Bag PM 8412- S', 'waist-bag-pm-8412-s', 'PM 8412- S', '1150', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:23:27', '2024-08-22 18:26:18'),
-(62, '12', 'School Bag-PM 8126-S', 'school-bag-pm-8126-s', 'PM 8126-S', '2350', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:23:37', '2024-08-22 18:23:37'),
-(63, '9', 'Trolley Case 9593- 22\"', 'trolley-case-9593-22', '9593', '7900', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:23:51', '2024-08-22 18:35:04'),
-(64, '15', 'Trolley Case Q-3 - 20\"', 'trolley-case-q-3-20', 'Q-3', '7700', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:25:58', '2024-08-22 18:25:58'),
-(65, '9', 'Trolley Case 9593- 26\"', 'trolley-case-9593-26', '9593', '8800', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:26:08', '2024-08-22 18:39:00'),
-(66, '13', 'SHOULDER- Q 00121-H', 'shoulder-q-00121-h', 'Q 00121-H', '2300', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:26:19', '2024-08-22 18:26:19'),
-(67, '12', 'School Bag-PM 8349-1-S', 'school-bag-pm-8349-1-s', 'PM 8349-1-S', '2300', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:26:54', '2024-08-22 18:26:54'),
-(68, '12', 'School Bag-PM 8960-J', 'school-bag-pm-8960-j', 'PM 8960-J', '1700', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:28:36', '2024-08-22 18:28:36'),
-(69, '12', 'School Bag-PM 8961-J', 'school-bag-pm-8961-j', 'PM 8961-J', '1700', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:29:49', '2024-08-22 18:29:49'),
-(70, '11', 'Office Bag FB PM 5011', 'office-bag-fb-pm-5011', '5011', '2600', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:29:59', '2024-08-22 18:29:59'),
-(71, '15', 'Trolley Case Q-3 - 24\"', 'trolley-case-q-3-24', 'Q-3', '8700', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:30:41', '2024-08-22 18:30:41'),
-(72, '15', 'Trolley Case Q-3 - 28\"', 'trolley-case-q-3-28', 'Q-3', '9800', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:31:00', '2024-08-22 18:31:00'),
-(73, '12', 'School Bag-PM 8966-J', 'school-bag-pm-8966-j', 'PM 8966-J', '2200', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:32:07', '2024-08-22 18:32:07'),
-(74, '11', 'Office Bag PM 8011', 'office-bag-pm-8011', '8011', '2350', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:32:51', '2024-08-22 18:32:51'),
-(75, '12', 'School Bag-PM 8968-J', 'school-bag-pm-8968-j', 'PM 8968-J', '2050', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:33:36', '2024-08-22 18:33:36'),
-(76, '12', 'School Bag', 'school-bag', 'PM 8978-J', '2450', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:35:06', '2024-08-22 23:56:41'),
-(77, '13', 'SOULDER- PM 3576-2-S', 'soulder-pm-3576-2-s', 'PM 3576-2-S', '1550', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:35:54', '2024-08-22 18:35:54'),
-(78, '11', 'Office Bag PM 8102-N', 'office-bag-pm-8102-n', '8102-N', '2800', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:38:08', '2024-08-22 18:38:08'),
-(79, '12', 'School Bag PM 9126-S', 'school-bag-pm-9126-s', '9126-S', '2500', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:38:48', '2024-08-22 18:38:48'),
-(80, '13', 'SOULDER- PM 8343-S', 'soulder-pm-8343-s', 'PM 8343-S', '1550', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:39:32', '2024-08-22 18:39:32'),
-(81, '15', 'Trolley Case 1904 - 20\"', 'trolley-case-1904-20', '1904', '7000', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:40:28', '2024-08-22 18:40:28'),
-(95, '14', 'Pilot case C015 - 18\"', 'pilot-case-c015-18', 'C015', '8450', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:34:54', '2024-08-22 22:34:54'),
-(83, '11', 'Office Bag 9002-N', 'office-bag-9002-n', '9002-N', '2250', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:41:45', '2024-08-22 18:41:45'),
-(84, '9', 'Trolley Case  8786- 20\"', 'trolley-case-8786-20', '8786', '7000', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:41:51', '2024-08-22 18:41:51'),
-(85, '15', 'Trolley Case 1904 - 24\"', 'trolley-case-1904-24', '1904', '8100', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:41:59', '2024-08-22 18:41:59'),
-(86, '15', 'Trolley Case 1904 - 28\"', 'trolley-case-1904-28', '1904', '9200', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:42:47', '2024-08-22 22:24:46'),
-(87, '12', 'School Bag PM 51161-S', 'school-bag-pm-51161-s', '51161-S', '2250', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:43:48', '2024-08-22 18:43:48'),
-(98, '13', 'SOULDER -PM 8351-2-S', 'soulder-pm-8351-2-s', 'PM 8351-2-S', '1150', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:38:24', '2024-08-22 22:38:24'),
-(89, '9', 'Trolley Case 8786 - 24\"', 'trolley-case-8786-24', '8786', '8100', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:45:15', '2024-08-24 16:43:26'),
-(97, '9', 'Trolley Case 9476- 20\"', 'trolley-case-9476-20', '9476', '6800', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:37:11', '2024-08-24 16:55:48'),
-(91, '15', 'Trolley Case 5304 - 20\"', 'trolley-case-5304-20', '5304', '10600', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:26:50', '2024-08-22 22:28:14'),
-(92, '15', 'Trolley Case 5304 - 24\"', 'trolley-case-5304-24', '5304', '9000', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:27:28', '2024-08-22 22:27:28'),
-(93, '15', 'Trolley Case 5304 - 28\"', 'trolley-case-5304-28', '5304', '13300', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:28:34', '2024-08-22 22:28:34'),
-(94, '14', 'Pilot Case 9117 - 17\"', 'pilot-case-9117-17', '9117', '7650', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:30:45', '2024-08-22 22:30:45'),
-(96, '12', 'School Bag PM 67471-AK', 'school-bag-pm-67471-ak', 'PM 67471-AK', '3350', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:35:13', '2024-08-22 22:35:13'),
-(99, '14', 'Pilot Case 1801 - 17\"', 'pilot-case-1801-17', '1801 - 17\"', '7650', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:39:49', '2024-08-22 22:39:49'),
-(100, '12', 'School Bag PM 81261-S', 'school-bag-pm-81261-s', '81261-S', '2350', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:40:11', '2024-08-22 22:40:11'),
-(101, '9', 'Trolley Case 9476 -24\"', 'trolley-case-9476-24', '9476', '7800', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:44:37', '2024-08-24 16:36:00'),
-(102, '12', 'School Bag PM 0905', 'school-bag-pm-0905', '0905', '2550', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:44:44', '2024-08-22 22:44:44'),
-(103, '12', 'School Bag PM 55332-S', 'school-bag-pm-55332-s', '55332-S', '2700', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:44:45', '2024-08-22 22:44:45'),
-(104, '13', 'SOULDER- PM 8351-3-S', 'soulder-pm-8351-3-s', 'PM 8351-3-S', '1200', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:45:32', '2024-08-22 22:45:32'),
-(105, '10', 'Travel Bag PM 00021 - H', 'travel-bag-pm-00021-h', 'PM 00021 - H', '3650', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:45:37', '2024-08-22 22:45:37'),
-(106, '10', 'Travel Bag PM 21521 - Q', 'travel-bag-pm-21521-q', 'PM 21521- Q', '2300', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:47:50', '2024-08-22 22:52:18'),
-(107, '9', 'Trolley Case 9476- 28\"', 'trolley-case-9476-28', '9476', '8700', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:49:22', '2024-08-24 16:39:13'),
-(108, '10', 'Travel Bag PM 23052 - Q', 'travel-bag-pm-23052-q', 'PM 23052 - Q', '3650', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:50:33', '2024-08-22 22:50:33'),
-(109, '13', 'SOULDER -PM 8414-S', 'soulder-pm-8414-s', 'PM 8414-S', '1150', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:50:42', '2024-08-22 22:50:42'),
-(110, '9', 'Trolley Case 9595- 20\"', 'trolley-case-9595-20', '9595', '7000', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:52:48', '2024-08-22 22:52:48'),
-(111, '13', 'SOULDER- PM 8415-S', 'soulder-pm-8415-s', 'PM 8415-S', '1200', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:53:53', '2024-08-22 22:53:53'),
-(112, '12', 'Trolley School Bag PM 1917-P - 19\"', 'trolley-school-bag-pm-1917-p-19', '1917-P -19\"', '5500', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:55:33', '2024-08-22 23:30:13'),
-(113, '9', 'Trolley Case 9595-24\"', 'trolley-case-9595-24', '9595', '8100', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:55:36', '2024-08-22 22:55:36'),
-(114, '10', 'Trolley Travel Bag-SC 5285-20\"', 'trolley-travel-bag-sc-5285-20', '5285', '7550', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:59:23', '2024-08-22 22:59:23'),
-(115, '10', 'Trolley Travel Bag-5285-20\"', 'trolley-travel-bag-5285-20', '5285', '7550', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:14:26', '2024-08-22 23:14:26'),
-(116, '10', 'Trolley Travel Bag-SC 5285-24\"', 'trolley-travel-bag-sc-5285-24', '5285', '9300', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:15:40', '2024-08-22 23:19:00'),
-(117, '9', 'Trolley Case 9595 -28\"', 'trolley-case-9595-28', '9595', '9000', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:18:37', '2024-08-22 23:18:37'),
-(119, '10', 'Trolley Travel Bag- 5297-24\"', 'trolley-travel-bag-5297-24', '5297', '10600', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:23:23', '2024-08-22 23:23:23'),
-(120, '9', 'Trolley Case 9686-20\"', 'trolley-case-9686-20', 'QQ 9686', '6400', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:24:02', '2024-08-24 16:29:07'),
-(121, '10', 'Trolley Travel Bag-  5297-24\"', 'trolley-travel-bag-5297-24', '5297', '9000', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:25:45', '2024-08-22 23:25:45'),
-(122, '9', 'Trolley Case 9686-24\"', 'trolley-case-9686-24', 'QQ 9686', '7300', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:26:48', '2024-08-22 23:26:48'),
-(123, '9', 'Trolley Case 9686- 28\"', 'trolley-case-9686-28', 'QQ 9686', '8100', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:28:38', '2024-08-24 16:32:22'),
-(124, '12', 'Trolley School Bag PM 1917-P - 22\"', 'trolley-school-bag-pm-1917-p-22', '1917-P - 22\"', '5750', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:29:30', '2024-08-22 23:29:30'),
-(125, '10', 'Trolley Travel Bag- Q-1-20\"', 'trolley-travel-bag-q-1-20', 'Q-1', '8300', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:29:39', '2024-08-22 23:30:01'),
-(126, '10', 'Trolley Travel Bag- Q1-24\"', 'trolley-travel-bag-q1-24', 'Q1', '9300', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:31:18', '2024-08-22 23:31:18'),
-(127, '10', 'Trolley Travel Bag- Q1-28\"', 'trolley-travel-bag-q1-28', 'Q1', '10800', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:34:03', '2024-08-22 23:34:03'),
-(128, '12', 'Trolley School Bag PM 1918-P - 22\"', 'trolley-school-bag-pm-1918-p-22', '1918-P - 22\"', '6000', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:37:03', '2024-08-22 23:37:03'),
-(129, '10', 'Trolley Travel Bag- Q2-20\"', 'trolley-travel-bag-q2-20', 'Q2', '7700', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:37:39', '2024-08-22 23:37:39'),
-(130, '10', 'Trolley Travel Bag- Q2-24\"', 'trolley-travel-bag-q2-24', 'Q2', '8700', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:38:58', '2024-08-22 23:38:58'),
-(131, '12', 'Trolley School Bag PM 1918-P - 19\"', 'trolley-school-bag-pm-1918-p-19', '1918-P - 19\"', '5750', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:39:04', '2024-08-22 23:39:04'),
-(132, '9', 'Trolley Case 9691- 20\"', 'trolley-case-9691-20', 'QQ 9691', '6400', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:39:27', '2024-08-22 23:46:07'),
-(133, '10', 'Trolley Travel Bag- Q2-28\"', 'trolley-travel-bag-q2-28', 'Q2', '9800', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:40:00', '2024-08-22 23:40:00'),
-(134, '9', 'Trolley Case 9691- 24\"', 'trolley-case-9691-24', 'QQ 9691', '7300', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:41:48', '2024-08-24 16:26:12'),
-(135, '17', '3 DIAL COMBI TSA LOCK', '3-dial-combi-tsa-lock', 'TSA LOCK', '550', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:45:04', '2024-08-22 23:45:04'),
-(136, '17', '4 DIAL COMBI LOCK 309', '4-dial-combi-lock-309', '309', '650', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:46:56', '2024-08-22 23:46:56'),
-(137, '9', 'Trolley Case 9691- 28\"', 'trolley-case-9691-28', 'QQ 9691', '8100', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:48:41', '2024-08-22 23:48:41'),
-(138, '9', 'Trolley Case 919- 20\"', 'trolley-case-919-20', 'QQ 919', '6100', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:52:38', '2024-08-22 23:52:38'),
-(139, '10', 'Trolley Travel Bag PM 236-Q - 20\"', 'trolley-travel-bag-pm-236-q-20', '236-Q - 20\"', '4200', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:53:33', '2024-08-22 23:53:33'),
-(140, '9', 'Trolley Case 919- 24\"', 'trolley-case-919-24', 'QQ 919', '7000', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:54:48', '2024-08-22 23:57:55'),
-(141, '10', 'Trolley Travel Bag PM 236-Q - 22\"', 'trolley-travel-bag-pm-236-q-22', '236-Q - 22\"', '4550', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:55:56', '2024-08-22 23:55:56'),
-(142, '9', 'Trolley Case 919- 28\"', 'trolley-case-919-28', 'QQ 919', '7800', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:56:36', '2024-08-22 23:56:36'),
-(143, '10', 'Trolley Travel Bag PM 236-Q - 24\"', 'trolley-travel-bag-pm-236-q-24', '236-Q - 24\"', '4850', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:57:59', '2024-08-22 23:58:58'),
-(144, '9', 'Trolley Case 8786- 28\"', 'trolley-case-8786-28', '8786', '9000', NULL, NULL, NULL, NULL, '1', '2024-08-24 16:53:42', '2024-08-24 16:53:42');
+INSERT INTO `products` (`id`, `product_category_id`, `product_name`, `product_slug`, `product_code`, `video_link`, `short_description`, `long_description`, `is_bundle`, `status`, `created_at`, `updated_at`) VALUES
+(20, '12', 'School Bag-PM 00350-H', 'school-bag-pm-00350-h', 'PM 00350-H', NULL, 'd', '<p>ddsfdscds</p>', NULL, '1', '2024-08-22 16:58:19', '2024-08-31 03:44:23'),
+(22, '9', 'Trolley Case QQ 920 - 18\"', 'trolley-case-qq-920-18', 'QQ 920', NULL, 'aSda', '<p>asdasd</p>', NULL, '1', '2024-08-22 17:19:56', '2024-08-22 18:00:14'),
+(23, '9', 'Trolley Case QQ 920 - 22\"', 'trolley-case-qq-920-22', 'QQ 920', NULL, 'asdsada', '<p>asdsadasd</p>', NULL, '1', '2024-08-22 17:28:48', '2024-08-22 18:02:11'),
+(24, '12', 'School Bag-PM 0404-N', 'school-bag-pm-0404-n', 'PM 0404-N', NULL, '1', '<p>2</p>', NULL, '1', '2024-08-22 17:33:25', '2024-08-22 17:33:25'),
+(25, '18', 'BC -18\"', 'bc-18', '3173', NULL, 'Brief case', NULL, NULL, '1', '2024-08-22 17:36:36', '2024-08-22 17:36:36'),
+(26, '12', 'School Bag-PM 00532-H', 'school-bag-pm-00532-h', 'PM 00532-H', NULL, '1', '<p>21</p>', NULL, '1', '2024-08-22 17:37:00', '2024-08-22 18:41:46'),
+(27, '12', 'School Bag-PM 00554-H', 'school-bag-pm-00554-h', 'PM 00554-H', NULL, '1', '<p>1</p>', NULL, '1', '2024-08-22 17:39:03', '2024-08-22 17:39:03'),
+(28, '12', 'School Bag-PM 00555-H', 'school-bag-pm-00555-h', 'PM 00555-H', NULL, '1', '<p>1</p>', NULL, '1', '2024-08-22 17:41:02', '2024-08-22 17:41:02'),
+(29, '12', 'School Bag-PM 0606-N', 'school-bag-pm-0606-n', 'PM 0606-N', NULL, '1', '<p>1</p>', NULL, '1', '2024-08-22 17:43:14', '2024-08-22 17:43:14'),
+(30, '12', 'School Bag-PM 0707-N', 'school-bag-pm-0707-n', 'PM 0707-N', NULL, NULL, '<p>1</p>', NULL, '1', '2024-08-22 17:44:43', '2024-08-22 23:59:56'),
+(31, '12', 'School Bag-PM 732-T', 'school-bag-pm-732-t', 'PM 732-T', NULL, '1', '<p>1</p>', NULL, '1', '2024-08-22 17:48:23', '2024-08-22 23:49:01'),
+(32, '12', 'School Bag-PM 1202A-P', 'school-bag-pm-1202a-p', 'PM 1202A-P', NULL, '1', '<p><br></p>', NULL, '1', '2024-08-22 17:51:37', '2024-08-22 17:51:37'),
+(33, '12', 'School Bag-PM 1901-T', 'school-bag-pm-1901-t', 'PM 1901-T', NULL, '1', NULL, NULL, '1', '2024-08-22 17:53:41', '2024-08-22 17:53:41'),
+(34, '12', 'School Bag-PM 1905-T', 'school-bag-pm-1905-t', 'PM 1905-T', NULL, '1', NULL, NULL, '1', '2024-08-22 17:55:35', '2024-08-22 17:55:57'),
+(35, '12', 'School Bag- PM 1919-N', 'school-bag-pm-1919-n', 'PM 1919-N', NULL, '1', NULL, NULL, '1', '2024-08-22 18:00:38', '2024-08-22 18:00:38'),
+(36, '9', 'Trolley Case QQ 920 - 26\"', 'trolley-case-qq-920-26', 'QQ 920', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:04:37', '2024-08-22 18:09:18'),
+(37, '12', 'School Bag-PM 2318-1-T', 'school-bag-pm-2318-1-t', 'PM 2318-1-T', NULL, '1', NULL, NULL, '1', '2024-08-22 18:04:37', '2024-08-22 23:52:31'),
+(38, '9', 'Trolley Case QQ 932 - 20\"', 'trolley-case-qq-932-20', 'QQ 932', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:06:44', '2024-08-26 19:46:45'),
+(39, '13', 'SHOULDER- PM 8343-S', 'shoulder-pm-8343-s', 'PM 8343-S', NULL, '1', NULL, NULL, '1', '2024-08-22 18:07:51', '2024-08-22 18:07:51'),
+(40, '9', 'Trolley Case QQ 932 - 28\"', 'trolley-case-qq-932-28', 'QQ 932', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:08:19', '2024-08-22 18:08:19'),
+(41, '12', 'School Bag-PM 3089-T', 'school-bag-pm-3089-t', 'PM 3089-T', NULL, '1', NULL, NULL, '1', '2024-08-22 18:09:16', '2024-08-22 18:09:16'),
+(43, '12', 'School Bag-PM 3116-T', 'school-bag-pm-3116-t', 'PM 3116-T', NULL, '1', NULL, NULL, '1', '2024-08-22 18:10:51', '2024-08-22 18:10:51'),
+(44, '11', 'Office Bag FB PM 0909', 'office-bag-fb-pm-0909', '0909', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:11:05', '2024-08-22 18:11:05'),
+(45, '9', 'Trolley Case QQ 932 - 24\"', 'trolley-case-qq-932-24', 'QQ 932', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:11:48', '2024-08-22 18:11:48'),
+(46, '12', 'School Bag-PM 5116-S', 'school-bag-pm-5116-s', 'PM 5116-S', NULL, '1', NULL, NULL, '1', '2024-08-22 18:13:10', '2024-08-22 18:13:10'),
+(47, '9', 'Trolley Case TT 861 - 20\"', 'trolley-case-tt-861-20', 'TT 861', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:13:32', '2024-08-22 18:13:32'),
+(48, '11', 'Office Bag PM 0505', 'office-bag-pm-0505', '0505', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:13:32', '2024-08-22 18:13:32'),
+(49, '9', 'Trolley Case TT 861 - 24\"', 'trolley-case-tt-861-24', 'TT 861', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:13:51', '2024-08-22 18:13:51'),
+(50, '12', 'School Bag-PM 5350-S', 'school-bag-pm-5350-s', 'PM 5350-S', NULL, '1', NULL, NULL, '1', '2024-08-22 18:14:59', '2024-08-22 18:14:59'),
+(51, '12', 'School Bag-PM 5801-N', 'school-bag-pm-5801-n', 'PM 5801-N', NULL, '1', NULL, NULL, '1', '2024-08-22 18:16:56', '2024-08-22 18:16:56'),
+(52, '11', 'Office Bag FB PM 1122', 'office-bag-fb-pm-1122', '1122', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:17:12', '2024-08-22 18:17:12'),
+(53, '12', 'School Bag-PM 6301-S', 'school-bag-pm-6301-s', 'PM 6301-S', NULL, '1', NULL, NULL, '1', '2024-08-22 18:18:10', '2024-08-22 18:18:10'),
+(54, '13', 'SHOULDER-PM 16079-S', 'shoulder-pm-16079-s', 'PM 16079-S', NULL, '1', NULL, NULL, '1', '2024-08-22 18:19:54', '2024-08-22 18:19:54'),
+(55, '12', 'School Bag-PM 6302-S', 'school-bag-pm-6302-s', 'PM 6302-S', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:20:07', '2024-08-22 18:20:07'),
+(56, '9', 'Trolley Case TT 861 - 28\"', 'trolley-case-tt-861-28', 'TT 861', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:20:07', '2024-08-22 18:20:07'),
+(57, '9', 'Trolley Case  9593 -18\"', 'trolley-case-9593-18', '9593', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:20:24', '2024-08-22 18:37:25'),
+(58, '12', 'School Bag- PM 8119-7-S', 'school-bag-pm-8119-7-s', 'PM 8119-7-S', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:22:19', '2024-08-22 18:22:19'),
+(59, '16', 'Waist Bag PM 5468 - S', 'waist-bag-pm-5468-s', 'PM 5468 - S', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:22:37', '2024-08-22 18:26:02'),
+(118, '10', 'Trolley Travel Bag- 5297-20\"', 'trolley-travel-bag-5297-20', '5297', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:21:45', '2024-08-22 23:21:45'),
+(61, '16', 'Waist Bag PM 8412- S', 'waist-bag-pm-8412-s', 'PM 8412- S', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:23:27', '2024-08-22 18:26:18'),
+(62, '12', 'School Bag-PM 8126-S', 'school-bag-pm-8126-s', 'PM 8126-S', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:23:37', '2024-08-22 18:23:37'),
+(63, '9', 'Trolley Case 9593- 22\"', 'trolley-case-9593-22', '9593', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:23:51', '2024-08-22 18:35:04'),
+(64, '15', 'Trolley Case Q-3 - 20\"', 'trolley-case-q-3-20', 'Q-3', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:25:58', '2024-08-22 18:25:58'),
+(65, '9', 'Trolley Case 9593- 26\"', 'trolley-case-9593-26', '9593', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:26:08', '2024-08-22 18:39:00'),
+(66, '13', 'SHOULDER- Q 00121-H', 'shoulder-q-00121-h', 'Q 00121-H', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:26:19', '2024-08-22 18:26:19'),
+(67, '12', 'School Bag-PM 8349-1-S', 'school-bag-pm-8349-1-s', 'PM 8349-1-S', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:26:54', '2024-08-22 18:26:54'),
+(68, '12', 'School Bag-PM 8960-J', 'school-bag-pm-8960-j', 'PM 8960-J', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:28:36', '2024-08-22 18:28:36'),
+(69, '12', 'School Bag-PM 8961-J', 'school-bag-pm-8961-j', 'PM 8961-J', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:29:49', '2024-08-22 18:29:49'),
+(70, '11', 'Office Bag FB PM 5011', 'office-bag-fb-pm-5011', '5011', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:29:59', '2024-08-22 18:29:59'),
+(71, '15', 'Trolley Case Q-3 - 24\"', 'trolley-case-q-3-24', 'Q-3', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:30:41', '2024-08-22 18:30:41'),
+(72, '15', 'Trolley Case Q-3 - 28\"', 'trolley-case-q-3-28', 'Q-3', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:31:00', '2024-08-22 18:31:00'),
+(73, '12', 'School Bag-PM 8966-J', 'school-bag-pm-8966-j', 'PM 8966-J', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:32:07', '2024-08-22 18:32:07'),
+(74, '11', 'Office Bag PM 8011', 'office-bag-pm-8011', '8011', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:32:51', '2024-08-22 18:32:51'),
+(75, '12', 'School Bag-PM 8968-J', 'school-bag-pm-8968-j', 'PM 8968-J', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:33:36', '2024-08-22 18:33:36'),
+(76, '12', 'School Bag', 'school-bag', 'PM 8978-J', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:35:06', '2024-08-22 23:56:41'),
+(77, '13', 'SOULDER- PM 3576-2-S', 'soulder-pm-3576-2-s', 'PM 3576-2-S', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:35:54', '2024-08-22 18:35:54'),
+(78, '11', 'Office Bag PM 8102-N', 'office-bag-pm-8102-n', '8102-N', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:38:08', '2024-08-22 18:38:08'),
+(79, '12', 'School Bag PM 9126-S', 'school-bag-pm-9126-s', '9126-S', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:38:48', '2024-08-22 18:38:48'),
+(80, '13', 'SOULDER- PM 8343-S', 'soulder-pm-8343-s', 'PM 8343-S', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:39:32', '2024-08-22 18:39:32'),
+(81, '15', 'Trolley Case 1904 - 20\"', 'trolley-case-1904-20', '1904', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:40:28', '2024-08-22 18:40:28'),
+(95, '14', 'Pilot case C015 - 18\"', 'pilot-case-c015-18', 'C015', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:34:54', '2024-08-22 22:34:54'),
+(83, '11', 'Office Bag 9002-N', 'office-bag-9002-n', '9002-N', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:41:45', '2024-08-22 18:41:45'),
+(84, '9', 'Trolley Case  8786- 20\"', 'trolley-case-8786-20', '8786', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:41:51', '2024-08-22 18:41:51'),
+(85, '15', 'Trolley Case 1904 - 24\"', 'trolley-case-1904-24', '1904', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:41:59', '2024-08-22 18:41:59'),
+(86, '15', 'Trolley Case 1904 - 28\"', 'trolley-case-1904-28', '1904', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:42:47', '2024-08-22 22:24:46'),
+(87, '12', 'School Bag PM 51161-S', 'school-bag-pm-51161-s', '51161-S', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:43:48', '2024-08-22 18:43:48'),
+(98, '13', 'SOULDER -PM 8351-2-S', 'soulder-pm-8351-2-s', 'PM 8351-2-S', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:38:24', '2024-08-22 22:38:24'),
+(89, '9', 'Trolley Case 8786 - 24\"', 'trolley-case-8786-24', '8786', NULL, NULL, NULL, NULL, '1', '2024-08-22 18:45:15', '2024-08-24 16:43:26'),
+(97, '9', 'Trolley Case 9476- 20\"', 'trolley-case-9476-20', '9476', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:37:11', '2024-08-24 16:55:48'),
+(91, '15', 'Trolley Case 5304 - 20\"', 'trolley-case-5304-20', '5304', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:26:50', '2024-08-22 22:28:14'),
+(92, '15', 'Trolley Case 5304 - 24\"', 'trolley-case-5304-24', '5304', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:27:28', '2024-08-22 22:27:28'),
+(93, '15', 'Trolley Case 5304 - 28\"', 'trolley-case-5304-28', '5304', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:28:34', '2024-08-22 22:28:34'),
+(94, '14', 'Pilot Case 9117 - 17\"', 'pilot-case-9117-17', '9117', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:30:45', '2024-08-22 22:30:45'),
+(96, '12', 'School Bag PM 67471-AK', 'school-bag-pm-67471-ak', 'PM 67471-AK', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:35:13', '2024-08-22 22:35:13'),
+(99, '14', 'Pilot Case 1801 - 17\"', 'pilot-case-1801-17', '1801 - 17\"', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:39:49', '2024-08-22 22:39:49'),
+(100, '12', 'School Bag PM 81261-S', 'school-bag-pm-81261-s', '81261-S', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:40:11', '2024-08-22 22:40:11'),
+(101, '9', 'Trolley Case 9476 -24\"', 'trolley-case-9476-24', '9476', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:44:37', '2024-08-24 16:36:00'),
+(102, '12', 'School Bag PM 0905', 'school-bag-pm-0905', '0905', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:44:44', '2024-08-22 22:44:44'),
+(103, '12', 'School Bag PM 55332-S', 'school-bag-pm-55332-s', '55332-S', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:44:45', '2024-08-22 22:44:45'),
+(104, '13', 'SOULDER- PM 8351-3-S', 'soulder-pm-8351-3-s', 'PM 8351-3-S', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:45:32', '2024-08-22 22:45:32'),
+(105, '10', 'Travel Bag PM 00021 - H', 'travel-bag-pm-00021-h', 'PM 00021 - H', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:45:37', '2024-08-22 22:45:37'),
+(106, '10', 'Travel Bag PM 21521 - Q', 'travel-bag-pm-21521-q', 'PM 21521- Q', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:47:50', '2024-08-22 22:52:18'),
+(107, '9', 'Trolley Case 9476- 28\"', 'trolley-case-9476-28', '9476', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:49:22', '2024-08-24 16:39:13'),
+(108, '10', 'Travel Bag PM 23052 - Q', 'travel-bag-pm-23052-q', 'PM 23052 - Q', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:50:33', '2024-08-22 22:50:33'),
+(109, '13', 'SOULDER -PM 8414-S', 'soulder-pm-8414-s', 'PM 8414-S', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:50:42', '2024-08-22 22:50:42'),
+(110, '9', 'Trolley Case 9595- 20\"', 'trolley-case-9595-20', '9595', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:52:48', '2024-08-22 22:52:48'),
+(111, '13', 'SOULDER- PM 8415-S', 'soulder-pm-8415-s', 'PM 8415-S', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:53:53', '2024-08-22 22:53:53'),
+(112, '12', 'Trolley School Bag PM 1917-P - 19\"', 'trolley-school-bag-pm-1917-p-19', '1917-P -19\"', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:55:33', '2024-08-22 23:30:13'),
+(113, '9', 'Trolley Case 9595-24\"', 'trolley-case-9595-24', '9595', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:55:36', '2024-08-22 22:55:36'),
+(114, '10', 'Trolley Travel Bag-SC 5285-20\"', 'trolley-travel-bag-sc-5285-20', '5285', NULL, NULL, NULL, NULL, '1', '2024-08-22 22:59:23', '2024-08-22 22:59:23'),
+(115, '10', 'Trolley Travel Bag-5285-20\"', 'trolley-travel-bag-5285-20', '5285', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:14:26', '2024-08-22 23:14:26'),
+(116, '10', 'Trolley Travel Bag-SC 5285-24\"', 'trolley-travel-bag-sc-5285-24', '5285', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:15:40', '2024-08-22 23:19:00'),
+(117, '9', 'Trolley Case 9595 -28\"', 'trolley-case-9595-28', '9595', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:18:37', '2024-08-22 23:18:37'),
+(119, '10', 'Trolley Travel Bag- 5297-24\"', 'trolley-travel-bag-5297-24', '5297', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:23:23', '2024-08-22 23:23:23'),
+(120, '9', 'Trolley Case 9686-20\"', 'trolley-case-9686-20', 'QQ 9686', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:24:02', '2024-08-24 16:29:07'),
+(121, '10', 'Trolley Travel Bag-  5297-24\"', 'trolley-travel-bag-5297-24', '5297', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:25:45', '2024-08-22 23:25:45'),
+(122, '9', 'Trolley Case 9686-24\"', 'trolley-case-9686-24', 'QQ 9686', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:26:48', '2024-08-22 23:26:48'),
+(123, '9', 'Trolley Case 9686- 28\"', 'trolley-case-9686-28', 'QQ 9686', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:28:38', '2024-08-24 16:32:22'),
+(124, '12', 'Trolley School Bag PM 1917-P - 22\"', 'trolley-school-bag-pm-1917-p-22', '1917-P - 22\"', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:29:30', '2024-08-22 23:29:30'),
+(125, '10', 'Trolley Travel Bag- Q-1-20\"', 'trolley-travel-bag-q-1-20', 'Q-1', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:29:39', '2024-08-22 23:30:01'),
+(126, '10', 'Trolley Travel Bag- Q1-24\"', 'trolley-travel-bag-q1-24', 'Q1', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:31:18', '2024-08-22 23:31:18'),
+(127, '10', 'Trolley Travel Bag- Q1-28\"', 'trolley-travel-bag-q1-28', 'Q1', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:34:03', '2024-08-22 23:34:03'),
+(128, '12', 'Trolley School Bag PM 1918-P - 22\"', 'trolley-school-bag-pm-1918-p-22', '1918-P - 22\"', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:37:03', '2024-08-22 23:37:03'),
+(129, '10', 'Trolley Travel Bag- Q2-20\"', 'trolley-travel-bag-q2-20', 'Q2', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:37:39', '2024-08-22 23:37:39'),
+(130, '10', 'Trolley Travel Bag- Q2-24\"', 'trolley-travel-bag-q2-24', 'Q2', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:38:58', '2024-08-22 23:38:58'),
+(131, '12', 'Trolley School Bag PM 1918-P - 19\"', 'trolley-school-bag-pm-1918-p-19', '1918-P - 19\"', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:39:04', '2024-08-22 23:39:04'),
+(132, '9', 'Trolley Case 9691- 20\"', 'trolley-case-9691-20', 'QQ 9691', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:39:27', '2024-08-22 23:46:07'),
+(133, '10', 'Trolley Travel Bag- Q2-28\"', 'trolley-travel-bag-q2-28', 'Q2', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:40:00', '2024-08-22 23:40:00'),
+(134, '9', 'Trolley Case 9691- 24\"', 'trolley-case-9691-24', 'QQ 9691', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:41:48', '2024-08-24 16:26:12'),
+(135, '17', '3 DIAL COMBI TSA LOCK', '3-dial-combi-tsa-lock', 'TSA LOCK', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:45:04', '2024-08-22 23:45:04'),
+(136, '17', '4 DIAL COMBI LOCK 309', '4-dial-combi-lock-309', '309', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:46:56', '2024-08-22 23:46:56'),
+(137, '9', 'Trolley Case 9691- 28\"', 'trolley-case-9691-28', 'QQ 9691', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:48:41', '2024-08-22 23:48:41'),
+(138, '9', 'Trolley Case 919- 20\"', 'trolley-case-919-20', 'QQ 919', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:52:38', '2024-08-22 23:52:38'),
+(139, '10', 'Trolley Travel Bag PM 236-Q - 20\"', 'trolley-travel-bag-pm-236-q-20', '236-Q - 20\"', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:53:33', '2024-08-22 23:53:33'),
+(140, '9', 'Trolley Case 919- 24\"', 'trolley-case-919-24', 'QQ 919', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:54:48', '2024-08-22 23:57:55'),
+(141, '10', 'Trolley Travel Bag PM 236-Q - 22\"', 'trolley-travel-bag-pm-236-q-22', '236-Q - 22\"', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:55:56', '2024-08-22 23:55:56'),
+(142, '9', 'Trolley Case 919- 28\"', 'trolley-case-919-28', 'QQ 919', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:56:36', '2024-08-22 23:56:36'),
+(143, '10', 'Trolley Travel Bag PM 236-Q - 24\"', 'trolley-travel-bag-pm-236-q-24', '236-Q - 24\"', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:57:59', '2024-08-22 23:58:58'),
+(144, '9', 'Trolley Case 8786- 28\"', 'trolley-case-8786-28', '8786', NULL, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer', '<h2 style=\"margin: 11pt 0px; padding: 0px; font-size: 16pt; font-weight: 700; line-height: 1.45; color: rgb(0, 0, 0); font-family: Roboto, -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; letter-spacing: normal; white-space-collapse: break-spaces;\"><span data-spm-anchor-id=\"a2a0e.pdp_revamp.product_detail.i1.60e56fafPEgDNJ\" style=\"margin: 0px; padding: 0px; color: rgb(33, 33, 33); background-color: rgb(250, 250, 250); font-size: 10.5pt;\">Product details of 4 Layers Simple Shoe Rack Folding Shoe Cabinet Multi-layer Shoes Storage Organizer Space-Saving Shoes Shelf Door Color Matching Cabinets</span></h2><ul style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 10px; padding: 0px; list-style-position: initial; list-style-image: initial; font-family: Roboto, -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; font-size: 12px; letter-spacing: normal; white-space-collapse: break-spaces;\"><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">Step 1:</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Product Title: Simple Shoe Rack Folding Shoe Cabinet Multi-layer Shoes Storage Organizer</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Material: Polyurethane</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Category Path: Furniture &amp; Decor&gt;Storage &amp; Organisation&gt;Shoe Organisers</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">Step 2:</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Shoe Rack</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Folding</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Multi-layer</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Space-Saving</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Door Color Matching</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">Step 3:</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">• Simple Shoe Rack with Multi-layer Storage for Space-Saving.</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">• Folding design for easy storage and portability.</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">• Made of durable polyurethane material for long-lasting use.</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">• Door color matching cabinets for a stylish and organized look.</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">Step 4:</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">• Informative and accurate product highlights provided.</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">Step 5:</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div data-spm-anchor-id=\"a2a0e.pdp_revamp.product_detail.i0.60e56fafPEgDNJ\" style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">• Thank you for using our product highlights generator!</span></div></li></ul>', NULL, '1', '2024-08-24 16:53:42', '2024-09-03 11:06:28'),
+(145, '12', 'bundle product', 'bundle-product', '7787878', NULL, 'dsdsrf', '<p>dsfdsfdsf</p>', 'Yes', '1', '2024-09-03 11:09:24', '2024-09-03 11:09:24');
 
 -- --------------------------------------------------------
 
@@ -488,7 +488,7 @@ CREATE TABLE IF NOT EXISTS `product_multi_photos` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=546 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=549 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `product_multi_photos`
@@ -512,7 +512,7 @@ INSERT INTO `product_multi_photos` (`id`, `product_id`, `photo_name`, `created_a
 (158, 35, 'upload/product/1808073898522390.jpg', '2024-08-22 18:00:39', '2024-08-22 18:00:39'),
 (487, 137, 'upload/product/1808084470832166.jpg', '2024-08-22 23:48:41', '2024-08-22 23:48:41'),
 (486, 136, 'upload/product/1808084360119225.jpg', '2024-08-22 23:46:56', '2024-08-22 23:46:56'),
-(541, 144, 'upload/product/1808239555591673.jpg', '2024-08-24 16:53:42', '2024-08-24 16:53:42'),
+(547, 145, 'upload/product/1809172937532626.png', '2024-09-03 11:09:24', '2024-09-03 11:09:24'),
 (540, 134, 'upload/product/1808237789651438.jpg', '2024-08-24 16:25:38', '2024-08-24 16:25:38'),
 (539, 134, 'upload/product/1808237789568772.jpg', '2024-08-24 16:25:37', '2024-08-24 16:25:37'),
 (140, 29, 'upload/product/1808072803118865.jpg', '2024-08-22 17:43:14', '2024-08-22 17:43:14'),
@@ -872,9 +872,10 @@ INSERT INTO `product_multi_photos` (`id`, `product_id`, `photo_name`, `created_a
 (519, 143, 'upload/product/1808085055982608.jpg', '2024-08-22 23:57:59', '2024-08-22 23:57:59'),
 (520, 143, 'upload/product/1808085056061638.jpg', '2024-08-22 23:58:00', '2024-08-22 23:58:00'),
 (538, 134, 'upload/product/1808237789472730.jpg', '2024-08-24 16:25:37', '2024-08-24 16:25:37'),
-(542, 144, 'upload/product/1808239555692656.jpg', '2024-08-24 16:53:42', '2024-08-24 16:53:42'),
+(546, 145, 'upload/product/1809172937278528.png', '2024-09-03 11:09:24', '2024-09-03 11:09:24'),
 (543, 144, 'upload/product/1808239555786095.jpg', '2024-08-24 16:53:42', '2024-08-24 16:53:42'),
-(544, 144, 'upload/product/1808239555871246.jpg', '2024-08-24 16:53:42', '2024-08-24 16:53:42');
+(544, 144, 'upload/product/1808239555871246.jpg', '2024-08-24 16:53:42', '2024-08-24 16:53:42'),
+(548, 145, 'upload/product/1809172937766245.png', '2024-09-03 11:09:24', '2024-09-03 11:09:24');
 
 -- --------------------------------------------------------
 
@@ -892,13 +893,16 @@ CREATE TABLE IF NOT EXISTS `product_variants` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `product_variants_product_id_foreign` (`product_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=303 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=308 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `product_variants`
 --
 
 INSERT INTO `product_variants` (`id`, `product_id`, `color`, `photo`, `created_at`, `updated_at`) VALUES
+(307, 145, 'Gray', 'upload/product/1809172938213427.jpeg', '2024-09-03 11:09:25', '2024-09-03 11:09:25'),
+(306, 145, 'Blue', 'upload/product/1809172937999311.jpeg', '2024-09-03 11:09:25', '2024-09-03 11:09:25'),
+(305, 144, 'Blue', 'upload/product/1809172753212023.jpeg', '2024-09-03 11:06:28', '2024-09-03 11:06:28'),
 (302, 20, 'blue', 'upload/product/1808873148996617.png', '2024-08-31 03:44:25', '2024-08-31 03:44:25');
 
 -- --------------------------------------------------------
@@ -919,14 +923,22 @@ CREATE TABLE IF NOT EXISTS `product_variant_sizes` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `product_variant_sizes_product_variant_id_foreign` (`product_variant_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `product_variant_sizes`
 --
 
 INSERT INTO `product_variant_sizes` (`id`, `product_variant_id`, `size`, `quantity`, `selling_price`, `discount_price`, `created_at`, `updated_at`) VALUES
-(13, 302, 'L', 15, '500', NULL, '2024-08-31 03:44:25', '2024-08-31 03:44:25');
+(14, 303, 'XXL', 15, '500', '450', '2024-09-03 06:21:34', '2024-09-03 06:21:34'),
+(13, 302, 'L', 15, '500', NULL, '2024-08-31 03:44:25', '2024-08-31 03:44:25'),
+(15, 303, 'M', 8, '600', NULL, '2024-09-03 06:21:34', '2024-09-03 06:21:34'),
+(16, 304, 'S', 5, '8000', NULL, '2024-09-03 06:21:35', '2024-09-03 06:21:35'),
+(17, 304, 'L', 12, '8030.75', '7030.75', '2024-09-03 06:21:35', '2024-09-03 06:21:35'),
+(18, 305, 'L', 4, '500', NULL, '2024-09-03 11:06:28', '2024-09-03 11:06:28'),
+(19, 305, 'XL', 8, '600', NULL, '2024-09-03 11:06:28', '2024-09-03 11:06:28'),
+(20, 306, 'default', 12, '100', NULL, '2024-09-03 11:09:25', '2024-09-03 11:09:25'),
+(21, 307, 'default', 4, '500', NULL, '2024-09-03 11:09:25', '2024-09-03 11:09:25');
 
 -- --------------------------------------------------------
 
@@ -1015,7 +1027,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
@@ -1023,14 +1035,18 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `name`, `username`, `email`, `email_verified_at`, `password`, `photo`, `phone`, `role`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Admin', NULL, 'admin@email.com', NULL, '$2y$12$QZGqQgLjxQ7hrztPOk70sOPrYT6O9kyfZIE/k7qI3C5yeUmP0hrmS', '202405190840favicon.png', NULL, 'admin', 'active', NULL, '2024-01-14 04:47:02', '2024-05-19 02:40:27'),
-(2, 'username', NULL, 'user@email.com', NULL, '$2y$12$eNGYPfKzCv8ggJ8LKHaFZuVtiD8JWG1tIuhlnP5mMrsNSE4kib7Aq', NULL, '0245454545', 'user', 'active', NULL, '2024-01-14 06:35:54', '2024-01-14 06:56:29'),
+(2, 'username', NULL, 'user@email.com', NULL, '$2y$12$BrkiVfaHwtdXxwFSNdkOQ.o6Irf1ZLG2S/kQV5sWhpm/9n.6Kmg2q', NULL, '0245454545', 'user', 'active', 'J3xqoQm3byJQ3dRqAMHbwd4anuP7NqWt6hd0GFHGbwn8ePeePekBRW5UPPY2', '2024-01-14 06:35:54', '2024-09-03 06:10:26'),
 (3, 'new User', NULL, 'nuser@email.com', NULL, '$2y$12$s3F2jxPhoAUkD7qzN3s17OvvJSmwKPVnxvRYgAFZNRPjDWXpqVj8S', NULL, NULL, 'user', 'active', NULL, '2024-06-20 04:14:28', '2024-06-20 04:14:28'),
 (4, 'nnuser', NULL, 'nnuser@email.com', NULL, '$2y$12$4xEETzlZY1HvhERdquqsNeBrdfB3AoR6Tup2qLynUqTqYRNlZ4x7S', NULL, NULL, 'user', 'active', NULL, '2024-06-20 04:41:37', '2024-06-20 04:41:37'),
 (5, 'Shamanta Jaman Shammi', NULL, '96shammi@gmail.com', NULL, '$2y$12$K8wFSioVuWhaOkFMhNbgge1q1UhaGws6WpfThn53VC50lyJAO0KXq', NULL, NULL, 'user', 'active', NULL, '2024-06-24 14:36:22', '2024-06-24 14:36:22'),
 (6, 'Tasnia Tabassum Esha', NULL, 'eshatasniatabassum@gmail.com', NULL, '$2y$12$LyHAguWkKBTfhxp66ElkvuSa1ycmTYtTfE1DfOsfcukMFuYQb.qJK', NULL, '01775546967', 'user', 'active', NULL, '2024-06-24 14:36:52', '2024-06-24 14:37:26'),
 (7, 'Mostahid Ahmed', NULL, 'mostahidahmed34@gmail.com', NULL, '$2y$12$4E7iafhePL7XJ1Mb8bhPnOAohJG1qu4mSFllU7M2IA4FkJ9uLRzxO', NULL, NULL, 'user', 'active', NULL, '2024-06-24 14:37:35', '2024-06-24 14:37:35'),
 (8, 'Azmir Pair Mithi', NULL, 'azmirmithi368@gmail.com', NULL, '$2y$12$Ml5VsbNWlxPK.VMSpVFaXu6AAkeV590TZZ3VwJXgP9g1tCAatpzJq', NULL, NULL, 'user', 'active', NULL, '2024-06-24 14:37:37', '2024-06-24 15:33:14'),
-(9, 'Azmir Pair Mithi', NULL, 'humairajannat21@gmail.com', NULL, '$2y$12$RcdohBmq5MeEl6WENC7qgu4fn9wXXYlKeiYCVtYDfoNhy90IfvCe2', NULL, NULL, 'user', 'active', NULL, '2024-06-27 14:16:10', '2024-06-27 14:16:10');
+(9, 'Azmir Pair Mithi', NULL, 'humairajannat21@gmail.com', NULL, '$2y$12$RcdohBmq5MeEl6WENC7qgu4fn9wXXYlKeiYCVtYDfoNhy90IfvCe2', NULL, NULL, 'user', 'active', NULL, '2024-06-27 14:16:10', '2024-06-27 14:16:10'),
+(10, 'nregis', NULL, 'nregis@email.com', NULL, '$2y$12$rYttmhVBSJixG9GuUPxFq.ZDC17DbhB4htWfuTxAZUqz08CgqazXu', NULL, NULL, 'user', 'active', NULL, '2024-09-03 06:17:35', '2024-09-03 06:17:35'),
+(11, '12333', NULL, 'user1@email.com', NULL, '$2y$12$5o.wtsI.GVJHY72oQbA2XeFKVgb5epsnTxHtKrmxegZ/Sa2.dqY6m', NULL, NULL, 'user', 'active', NULL, '2024-09-03 08:32:05', '2024-09-03 08:32:05'),
+(12, '232323', NULL, 'user3@email.com', NULL, '$2y$12$HZlJommbe4yVQftXtoOv5.hwXyPRFSmb2drh.EcOAEtveULAackpu', NULL, NULL, 'user', 'active', NULL, '2024-09-03 08:40:16', '2024-09-03 08:40:16'),
+(13, 'R11111', NULL, 'user4@email.com', NULL, '$2y$12$flNkdL3xCIYvgYmtOw7Dy.DRkprE67HJ2lz0DvP9dwCd74TzyJtVW', NULL, '01609071300', 'user', 'active', NULL, '2024-09-03 08:58:38', '2024-09-03 09:38:38');
 
 -- --------------------------------------------------------
 

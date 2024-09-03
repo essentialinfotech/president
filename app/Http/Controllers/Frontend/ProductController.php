@@ -31,6 +31,16 @@ class ProductController extends Controller
         return view('frontend.pages.products.discount_products', $data);
     }
 
+    public function Bundling()
+    {
+        // $data['new_arrivals'] = Product::where('status', 1)->where('discount_price', '>', 0)->latest()->get();
+        $data['bundling_products'] = Product::whereHas('product_variants.variantSizes', function ($query) {
+            $query->where('is_bundle', 'Yes');
+        })->get();
+
+        return view('frontend.pages.products.bundling_products', $data);
+    }
+
     public function CategoyProduct($slug)
     {
         $data['category'] = ProductCategory::where('slug', $slug)->first();

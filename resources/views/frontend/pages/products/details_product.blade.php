@@ -174,9 +174,9 @@
                         <div>
                             <p>{!! $product->long_description !!}</p>
                         </div>
-                        <div class="free_delivery d-flex flex-row align-items-center justify-content-center">
+                        {{-- <div class="free_delivery d-flex flex-row align-items-center justify-content-center">
                             <span class="ti-truck"></span><span>Message</span>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

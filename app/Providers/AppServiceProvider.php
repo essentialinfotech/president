@@ -39,7 +39,7 @@ class AppServiceProvider extends ServiceProvider
         $data['global_home_page_item'] = HomePageItem::first();
         $data['global_page_item'] = PageItem::first();
         $data['global_socials'] = SocialItem::all();
-        
+
         $data['global_product_categories'] = ProductCategory::with('products')->orderBy('order', 'ASC')->get();
         $data['global_products'] = Product::get();
         view()->share($data);

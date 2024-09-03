@@ -16,10 +16,11 @@ return new class extends Migration
             $table->text('product_category_id');
             $table->text('product_name');
             $table->text('product_slug');
-            $table->text('product_code');           
+            $table->text('product_code');
             $table->string('video_link')->nullable();
             $table->text('short_description');
-            $table->text('long_description');
+            $table->longText('long_description');
+            $table->text('is_bundle')->nullable();
             $table->text('status');
             $table->timestamps();
         });

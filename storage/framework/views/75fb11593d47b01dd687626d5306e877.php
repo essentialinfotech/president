@@ -89,6 +89,9 @@
     
     <script src="<?php echo e(asset('frontend/assets/js/slick.js')); ?>"></script>
     <script src="<?php echo e(asset('frontend/assets/js/slick.min.js')); ?>"></script>
+
+
+    <script src="<?php echo e(asset('adminbackend/assets/js/validate.min.js')); ?>"></script>
     
     <script src="<?php echo e(asset('frontend/assets/js/custom.js')); ?>"></script>
 

@@ -90,11 +90,22 @@ class UserController extends Controller
     public function UserUpdateProfile(Request $request)
     {
         // Validation
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . Auth::user()->id,
-            'phone' => 'required',
-        ]);
+        $request->validate(
+            [
+                // 'name' => 'required',
+                'name' => [
+                    'required',
+                    'string',
+                    'max:255',
+                    'regex:/^[a-zA-Z][a-zA-Z0-9]*$/',
+                ],
+                'email' => 'required|email|unique:users,email,' . Auth::user()->id,
+                'phone' => 'required',
+            ],
+            [
+                'name.regex' => 'The name must be start with a letter.',
+            ]
+        );
 
         // Update the new password
         User::whereId(auth()->user()->id)->update([
@@ -106,7 +117,7 @@ class UserController extends Controller
         return back()->with("status", "Profile Updated Successfully");
     }
 
-    // User Update Password
+
     public function UserUpdatePassword(Request $request)
     {
         // Validation
@@ -116,8 +127,8 @@ class UserController extends Controller
         ]);
 
         // Match The Old Password
-        if (!Hash::check($request->old_password, auth::user()->password)) {
-            return back()->with("error", "Old Password Doesn't Match!!");
+        if (!Hash::check($request->old_password, auth()->user()->password)) {
+            return response()->json(['message' => "Old Password Doesn't Match!!"], 401);
         }
 
         // Update the new password
@@ -125,6 +136,6 @@ class UserController extends Controller
             'password' => Hash::make($request->new_password)
         ]);
 
-        return back()->with("status", "Password Changed Successfully");
+        return response()->json(['status' => "Password Changed Successfully"]);
     }
 }

@@ -13,7 +13,7 @@
                 <div class="col-lg-12">
                     <div class="section-heading">
                         <h2>Search Products</h2>
-                        <span>Check your search products.</span>
+                        <span class="d-none">Check your search products.</span>
                     </div>
                 </div>
             </div>

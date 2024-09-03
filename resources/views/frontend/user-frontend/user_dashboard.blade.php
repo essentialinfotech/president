@@ -73,37 +73,36 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Profile</h4>
+
                                     {{-- Start Alert message --}}
-                                    @if (session('status'))
-                                        <div class="alert alert-success" role="alert">
-                                            {{ session('status') }}
-                                        </div>
-                                    @elseif (session('error'))
-                                        <div class="alert alert-danger" role="alert">
-                                            {{ session('error') }}
-                                        </div>
-                                    @endif
+                                    <div id="profileAlertMessage" class="alert" role="alert" style="display: none;">
+                                    </div>
                                     {{-- End Alert message --}}
-                                    <form action="{{ route('user.update.profile') }}" method="POST">
+
+                                    <form id="updateProfileForm" action="{{ route('user.update.profile') }}" method="POST">
                                         @csrf
                                         <div class="mb-3">
                                             <label for="name" class="form-label">Name</label>
                                             <input type="text" name="name" class="form-control" id="name"
                                                 value="{{ Auth::user()->name }}">
+                                            <span id="name_error" class="text-danger"></span>
                                         </div>
                                         <div class="mb-3">
                                             <label for="email" class="form-label">Email</label>
                                             <input type="email" name="email" class="form-control" id="email"
                                                 value="{{ Auth::user()->email }}">
+                                            <span id="email_error" class="text-danger"></span>
                                         </div>
                                         <div class="mb-3">
                                             <label for="phone" class="form-label">Phone</label>
-                                            <input type="text" name="phone" class="form-control" id="phone"
+                                            <input type="number" name="phone" class="form-control" id="phone"
                                                 value="{{ Auth::user()->phone }}">
+                                            <span id="phone_error" class="text-danger"></span>
                                         </div>
                                         <button type="submit" class="btn btn-primary">Save Changes</button>
                                     </form>
                                 </div>
+
                             </div>
                         </div>
                         <div class="tab-pane fade" id="v-pills-change-password" role="tabpanel"
@@ -112,35 +111,24 @@
                                 <div class="card-body">
                                     <h4 class="card-title">Change Password</h4>
                                     {{-- Start Alert message --}}
-                                    @if (session('status'))
-                                        <div class="alert alert-success" role="alert">
-                                            {{ session('status') }}
-                                        </div>
-                                    @elseif (session('error'))
-                                        <div class="alert alert-danger" role="alert">
-                                            {{ session('error') }}
-                                        </div>
-                                    @endif
+                                    <div id="alertMessage" role="alert" style=""></div>
                                     {{-- End Alert message --}}
-                                    <form action="{{ route('user.update.password') }}" method="POST">
+                                    <form id="updatePasswordForm" action="{{ route('user.update.password') }}"
+                                        method="POST">
                                         @csrf
                                         <div class="mb-3">
                                             <label for="old_password" class="form-label">Old Password</label>
                                             <input type="password" name="old_password" id="old_password"
                                                 class="form-control @error('old_password') is-invalid @enderror"
                                                 placeholder="Old Password" />
-                                            @error('old_password')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
+                                            <span class="text-danger" id="old_password_error"></span>
                                         </div>
                                         <div class="mb-3">
                                             <label for="new_password" class="form-label">New Password</label>
                                             <input type="password" name="new_password" id="new_password"
                                                 class="form-control @error('new_password') is-invalid @enderror"
                                                 placeholder="New Password" />
-                                            @error('new_password')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
+                                            <span class="text-danger" id="new_password_error"></span>
                                         </div>
                                         <div class="mb-3">
                                             <label for="new_password_confirmation" class="form-label">Confirm New
@@ -149,12 +137,11 @@
                                                 id="new_password_confirmation"
                                                 class="form-control @error('new_password_confirmation') is-invalid @enderror"
                                                 placeholder="Confirm New Password" />
-                                            @error('new_password_confirmation')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
+                                            <span class="text-danger" id="new_password_confirmation_error"></span>
                                         </div>
                                         <button type="submit" class="btn btn-primary">Change Password</button>
                                     </form>
+
                                 </div>
                             </div>
                         </div>
@@ -225,3 +212,102 @@
 
     </section>
 @endsection
+
+@push('script')
+    <script>
+        $(document).ready(function() {
+            $('#updatePasswordForm').on('submit', function(e) {
+                e.preventDefault();
+
+                // Clear previous error messages
+                $('#old_password_error').text('');
+                $('#new_password_error').text('');
+                $('#new_password_confirmation_error').text('');
+                $('#alertMessage').hide().removeClass("alert-success alert-danger");
+
+                $.ajax({
+                    url: $(this).attr('action'), // The form action URL
+                    method: $(this).attr('method'), // The form method (POST)
+                    data: $(this).serialize(), // Serialize form data
+                    success: function(response) {
+                        // Handle success
+                        $('#alertMessage').text('Password changed successfully!')
+                            .addClass("alert-success")
+                            .removeClass("alert-danger")
+                            .show();
+                    },
+                    error: function(response) {
+                        // Handle validation errors
+                        if (response.responseJSON.errors) {
+                            var errors = response.responseJSON.errors;
+                            if (errors.old_password) {
+                                $('#old_password_error').text(errors.old_password[0]);
+                            }
+                            if (errors.new_password) {
+                                $('#new_password_error').text(errors.new_password[0]);
+                            }
+                            if (errors.new_password_confirmation) {
+                                $('#new_password_confirmation_error').text(errors
+                                    .new_password_confirmation[0]);
+                            }
+                        } else if (response.status === 401) {
+                            // Handle old password mismatch
+                            $('#alertMessage').text("Old Password Doesn't Match!!")
+                                .addClass("alert-danger")
+                                .removeClass("alert-success")
+                                .show();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#updateProfileForm').on('submit', function(e) {
+                e.preventDefault();
+
+                // Clear previous error messages
+                $('#name_error').text('');
+                $('#email_error').text('');
+                $('#phone_error').text('');
+                $('#profileAlertMessage').hide().removeClass("alert-success alert-danger");
+
+                $.ajax({
+                    url: $(this).attr('action'), // The form action URL
+                    method: $(this).attr('method'), // The form method (POST)
+                    data: $(this).serialize(), // Serialize form data
+                    success: function(response) {
+                        // Handle success
+                        $('#profileAlertMessage').text('Profile Updated Successfully!')
+                            .addClass("alert-success")
+                            .removeClass("alert-danger")
+                            .show();
+                    },
+                    error: function(response) {
+                        // Handle validation errors
+                        if (response.responseJSON.errors) {
+                            var errors = response.responseJSON.errors;
+                            if (errors.name) {
+                                $('#name_error').text(errors.name[0]);
+                            }
+                            if (errors.email) {
+                                $('#email_error').text(errors.email[0]);
+                            }
+                            if (errors.phone) {
+                                $('#phone_error').text(errors.phone[0]);
+                            }
+                        } else {
+                            $('#profileAlertMessage').text(
+                                    'An error occurred. Please try again.')
+                                .addClass("alert-danger")
+                                .removeClass("alert-success")
+                                .show();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+@endpush
