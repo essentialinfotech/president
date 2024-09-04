@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Mail\ContactMail;
 use App\Models\PageItem;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -21,36 +22,37 @@ class ContactController extends Controller
     public function ContactSendmail(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'subject' => 'required',
-            'name' => 'required',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[a-zA-Z][a-zA-Z0-9]*$/',
+            ],
             'email' => 'required|email',
             'phone' => 'required',
-            'service' => 'required',
             'message' => 'required',
         ], [
-            'subject' => 'ERROR_Subject_REQUIRED',
-            'name' => 'ERROR_NAME_REQUIRED',
-            'email.email' => 'ERROR_EMAIL_VALID',
-            'email.required' => 'ERROR_EMAIL_REQUIRED',
-            'phone.required' => 'ERROR_Phone_REQUIRED',
-            'service.required' => 'ERROR_Service_REQUIRED',
-            'message' => 'ERROR_Message_REQUIRED'
+            'name.regex' => 'The name must be start with a letter.',
+            'email.email' => 'Enter Your Valid Email',
+            'email.required' => 'Email Field is Required',
+            'phone.required' => 'Phone Field is Required',
+            'message' => 'Message Field is Required'
         ]);
         if (!$validator->passes()) {
             return response()->json(['code' => 0, 'error_message' => $validator->errors()->toArray()]);
         } else {
             // Send mail
             $data = [
-                'subject' => $request->subject,
+                'subject' => "From Website",
                 'name' => $request->name,
                 'phone' => $request->phone,
                 'email' => $request->email,
-                'service' => $request->service,
                 'body' => $request->message,
                 // 'path' => '/public/name.pdf',
             ];
-            $recipients = ['info@essential-infotech.com', 'hr@essential-infotech.com'];
-            Mail::to($recipients)->send(new ContactMail($data));
+            $email = Setting::first()->email;
+            // $recipients = ['info@essential-infotech.com', 'hr@essential-infotech.com'];
+            Mail::to($email)->send(new ContactMail($data));
 
             return response()->json(['code' => 1, 'success_message' => 'SUCCESS CONTACT']);
         }

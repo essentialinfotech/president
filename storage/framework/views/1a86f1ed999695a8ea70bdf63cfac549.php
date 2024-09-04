@@ -13,9 +13,9 @@
                 </div>
             </div>
             <div class="col-lg-2">
-                <h4>Shopping &amp; Categories</h4>
+                <h4>Top Categories</h4>
                 <ul>
-                    <?php $__currentLoopData = $global_product_categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php $__currentLoopData = $global_product_categories->take(5); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <li><a href="<?php echo e(route('category.products', $category->slug)); ?>"><?php echo e($category->name); ?></a></li>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ul>
@@ -23,7 +23,7 @@
             <div class="col-lg-2">
                 <h4>Useful Links</h4>
                 <ul>
-                    <li><a href="<?php echo e(route('home')); ?>">Homepage</a></li>
+                    <li><a href="<?php echo e(route('home')); ?>">Home Page</a></li>
                     
                     <li><a href="<?php echo e(route('contact')); ?>">Contact Us</a></li>
                 </ul>

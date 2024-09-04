@@ -107,10 +107,12 @@ Route::post('/cart/remove-selected', [CartController::class, 'removeSelected'])-
 
 
 
+// Checkout
+Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('checkout', [CheckoutController::class, 'process'])->name('checkout.process');
+
+
 Route::middleware(['auth'])->group(function () {
-    // Checkout
-    Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-    Route::post('checkout', [CheckoutController::class, 'process'])->name('checkout.process');
 
     Route::get('dashboard', [UserController::class, 'UserDashboard'])->name('dashboard');
     Route::get('user/order/{invoice_no}', [UserController::class, 'UserOrderDetails'])->name('user.order-details');

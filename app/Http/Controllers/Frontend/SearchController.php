@@ -13,7 +13,7 @@ class SearchController extends Controller
         $searchTerm = $request->input('query');
 
         // Perform search logic, for example:
-        $products = Product::with('multi_photos')->where('product_name', 'like', '%' . $searchTerm . '%')->get();
+        $products = Product::with('multi_photos')->where('product_name', 'like', '%' . $searchTerm . '%') ->take(5)->get();
 
         return response()->json(['products' => $products]);
     }
@@ -23,7 +23,7 @@ class SearchController extends Controller
         $searchTerm = $request->input('query');
 
         // Perform search logic, for example:
-        $data['products'] = Product::with(['multi_photos','product_category'])->where('product_name', 'like', '%' . $searchTerm . '%')->get();
+        $data['products'] = Product::with(['multi_photos', 'product_category'])->where('product_name', 'like', '%' . $searchTerm . '%')->get();
         return view('frontend.pages.products.search_products', $data);
     }
 }

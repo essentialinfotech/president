@@ -130,7 +130,7 @@
     <section style="margin-top: 110px;">
         <div class="checkout_page">
             <div class="back_bar">
-                <a href="{{ url()->previous() }}">
+                <a href="{{ route('home') }}">
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <p>Home Page</p>
                 </a>
@@ -157,34 +157,44 @@
                     <div class="row">
                         <div class="col-lg-7 col-md-12">
                             <div class="delivery_info">
-                                <h4>Delivery Informtaion</h4>
+                                <h4>Delivery Information</h4>
                                 <div class="form-group">
-                                    <input type="text" class="form-control  @error('name') is-invalid @enderror"
-                                        value="{{ old('name') }}" name="name" placeholder="Recipient Full Name*">
+                                    <label for="name">Recipient Name</label>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                        id="name" value="{{ old('name', Auth::check() ? Auth::user()->name : '') }}"
+                                        name="name" placeholder="Recipient Full Name*">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control  @error('phone') is-invalid @enderror"
-                                        value="{{ old('phone') }}" name="phone" placeholder="Recipient Phone Number*">
+                                    <label for="phone">Recipient Phone Number</label>
+                                    <input type="number" id="phone"
+                                        class="form-control @error('phone') is-invalid @enderror"
+                                        value="{{ old('phone', Auth::check() ? Auth::user()->phone : '') }}" name="phone"
+                                        placeholder="Recipient Phone Number*">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control @error('email') is-invalid @enderror"
-                                        value="{{ old('email') }}" name="email" placeholder="Recipient Email*">
-                                </div>
-
-                                <div class="form-group">
-                                    <textarea name="address" class="form-control @error('address') is-invalid @enderror" value="{{ old('address') }}"
-                                        placeholder="Address*">{{ old('address') }}</textarea>
+                                    <label for="email"> Email</label>
+                                    <input type="text" id="email"
+                                        class="form-control @error('email') is-invalid @enderror"
+                                        value="{{ old('email', Auth::check() ? Auth::user()->email : '') }}" name="email"
+                                        placeholder="Recipient Email*">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="post_code"
+                                    <label for="address">Recipient Address</label>
+                                    <textarea name="address" id="address" class="form-control @error('address') is-invalid @enderror"
+                                        placeholder="Address*">{{ old('address', Auth::check() ? Auth::user()->address : '') }}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="post_code">Post Code</label>
+                                    <input type="text" name="post_code" id="post_code"
                                         class="form-control @error('post_code') is-invalid @enderror"
                                         value="{{ old('post_code') }}" placeholder="Post Code*">
                                 </div>
                                 <div class="form-group">
-                                    <textarea name="notes" class="form-control" value="{{ old('notes') }}" placeholder="Notes"></textarea>
+                                    <label for="notes">Notes</label>
+                                    <textarea name="notes" id="notes" class="form-control" placeholder="Notes">{{ old('notes') }}</textarea>
                                 </div>
-
                             </div>
+
                         </div>
                         <div class="col-lg-5 col-md-12">
                             <div class="confirm_info">

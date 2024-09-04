@@ -126,7 +126,7 @@
 
             <li class="submenu">
                 <a href="javascript:;"
-                    class="<?php echo e(Route::is('our-story') || Route::is('our-story') ? 'active' : ''); ?>">Collections</a>
+                    class="<?php echo e(Route::is('our-story') || Route::is('our-story') ? 'active' : ''); ?>">Our Story</a>
                 <ul>
                     <li><a href="<?php echo e(route('our-story')); ?>">Heritage</a></li>
                     <li><a href="<?php echo e(route('purpose-and-values')); ?>">Purpose</a></li>
@@ -198,7 +198,7 @@
         $('#searchQuery').on('keyup', function() {
             var query = $(this).val();
 
-            if (query.length > 2) { // Adjust minimum length as needed
+            if (query.length > 0) { // Adjust minimum length as needed
                 $.ajax({
                     url: '<?php echo e(route('search')); ?>',
                     method: 'GET',

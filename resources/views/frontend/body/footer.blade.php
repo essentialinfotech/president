@@ -16,9 +16,9 @@
                 </div>
             </div>
             <div class="col-lg-2">
-                <h4>Shopping &amp; Categories</h4>
+                <h4>Top Categories</h4>
                 <ul>
-                    @foreach ($global_product_categories as $category)
+                    @foreach ($global_product_categories->take(5) as $category)
                         <li><a href="{{ route('category.products', $category->slug) }}">{{ $category->name }}</a></li>
                     @endforeach
                 </ul>
@@ -26,7 +26,7 @@
             <div class="col-lg-2">
                 <h4>Useful Links</h4>
                 <ul>
-                    <li><a href="{{ route('home') }}">Homepage</a></li>
+                    <li><a href="{{ route('home') }}">Home Page</a></li>
                     {{-- <li><a href="{{ route('about') }}">About Us</a></li> --}}
                     <li><a href="{{ route('contact') }}">Contact Us</a></li>
                 </ul>

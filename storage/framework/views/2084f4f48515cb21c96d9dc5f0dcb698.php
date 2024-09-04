@@ -49,23 +49,25 @@
 <body>
 
     <div class="container">
-        <a href="{{ route('home') }}">
-            <img src="{{ asset($global_setting_data->logo) }}" alt="logo" style="width: 100px;margin-bottom: 20px;">
+        <a href="<?php echo e(route('home')); ?>">
+            <img src="<?php echo e(asset($global_setting_data->logo)); ?>" alt="logo" style="width: 100px;margin-bottom: 20px;">
         </a>
 
-        <p>Hello {{ $global_setting_data->title }},</p>
+        <p>Hello <?php echo e($global_setting_data->title); ?>,</p>
 
-        <p>{{ $data['body'] }}</p>
+        <p><?php echo e($data['body']); ?></p>
         <p class="footer">Best regards,<br>
-            {{ $data['name'] }}<br>
-            {{ $data['phone'] }}<br>
-            {{ $data['email'] }}<br>
+            <?php echo e($data['name']); ?><br>
+            <?php echo e($data['phone']); ?><br>
+            <?php echo e($data['email']); ?><br>
         </p>
 
         Thanks,<br>
-        {{ config('app.name') }}
+        <?php echo e(config('app.name')); ?>
+
     </div>
 
 </body>
 
 </html>
+<?php /**PATH E:\EIT2024\BagsLaravelWebsites\PresidentWebsite - size variant\resources\views/mail/contact_email.blade.php ENDPATH**/ ?>

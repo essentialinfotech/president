@@ -50,17 +50,14 @@
 
     <div class="row m-0 product_area" id="products">
         @foreach ($global_products->take(12) as $product)
-            {{-- @include('frontend.home.partials.product', ['product' => $product]) --}}
-            {{-- <div class="col-lg-3 col-6 single_item"> --}}
             @include('frontend.home.partials.load_product', ['product' => $product])
-            {{-- </div> --}}
         @endforeach
     </div>
 
     @if ($global_products->count() > 12)
         <div class="row m-0">
             <div class="col-12 text-center mt-3">
-                <button id="loadMore" class="btn btn-primary">Show More</button>
+                <button id="loadMore" class="btn btn-dark">Show More</button>
             </div>
         </div>
     @endif
@@ -77,44 +74,6 @@
             autoplay: true,
             cssEase: 'linear',
             pauseOnHover: false,
-        });
-    </script>
-
-    <script>
-        let currentPage = 1; // Start with the first page
-        const productsPerPage = 12; // Number of products per page
-
-        $(document).on('click', '#loadMore', function() {
-            currentPage++; // Increment the page number
-            $.ajax({
-                url: '{{ route('load.more.products') }}', // Adjust the route to match your web.php
-                method: 'GET',
-                data: {
-                    page: currentPage,
-                    per_page: productsPerPage
-                },
-                success: function(response) {
-                    // Convert the HTML string into jQuery elements
-                    const newProducts = $(response.html);
-
-                    // Hide the new products initially
-                    newProducts.hide();
-
-                    // Append them to the container
-                    $('#products').append(newProducts);
-
-                    // Fade in the new products smoothly
-                    newProducts.fadeIn(600);
-
-                    // Remove the "Show More" button if there are no more products to load
-                    if (response.remaining <= 0) {
-                        $('#loadMore').remove();
-                    }
-                },
-                error: function(xhr) {
-                    console.error(xhr.responseText); // Log any error messages for debugging
-                }
-            });
         });
     </script>
 @endpush

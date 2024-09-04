@@ -126,7 +126,7 @@
 
             <li class="submenu">
                 <a href="javascript:;"
-                    class="{{ Route::is('our-story') || Route::is('our-story') ? 'active' : '' }}">Collections</a>
+                    class="{{ Route::is('our-story') || Route::is('our-story') ? 'active' : '' }}">Our Story</a>
                 <ul>
                     <li><a href="{{ route('our-story') }}">Heritage</a></li>
                     <li><a href="{{ route('purpose-and-values') }}">Purpose</a></li>
@@ -204,7 +204,7 @@
         $('#searchQuery').on('keyup', function() {
             var query = $(this).val();
 
-            if (query.length > 2) { // Adjust minimum length as needed
+            if (query.length > 0) { // Adjust minimum length as needed
                 $.ajax({
                     url: '{{ route('search') }}',
                     method: 'GET',
