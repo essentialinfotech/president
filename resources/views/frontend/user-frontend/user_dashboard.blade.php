@@ -95,9 +95,19 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="phone" class="form-label">Phone</label>
-                                            <input type="number" name="phone" class="form-control" id="phone"
+                                            <div class="input-group mb-2">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">+88</div>
+                                                </div>
+                                                <input type="number" name="phone" class="form-control" id="phone"
                                                 value="{{ Auth::user()->phone }}">
+                                            </div>
                                             <span id="phone_error" class="text-danger"></span>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="address" class="form-label">Address</label>
+                                            <textarea name="address" class="form-control" id="address">{{ Auth::user()->address }}</textarea>
+                                            <span id="address_error" class="text-danger"></span>
                                         </div>
                                         <button type="submit" class="btn btn-primary">Save Changes</button>
                                     </form>

@@ -97,13 +97,14 @@ class UserController extends Controller
                     'required',
                     'string',
                     'max:255',
-                    'regex:/^[a-zA-Z][a-zA-Z0-9]*$/',
+                    'regex:/^[a-zA-Z][a-zA-Z0-9 ]*$/',
                 ],
                 'email' => 'required|email|unique:users,email,' . Auth::user()->id,
-                'phone' => 'required',
+                'phone' => 'required|digits:11',
             ],
             [
-                'name.regex' => 'The name must be start with a letter.',
+                'name.regex' => 'Please enter a valid name using letters and spaces only',
+                'phone' => 'The Phone Number is Invalid!',
             ]
         );
 
@@ -111,7 +112,8 @@ class UserController extends Controller
         User::whereId(auth()->user()->id)->update([
             'name' => $request->name,
             'email' => $request->email,
-            'phone' => $request->phone
+            'phone' => $request->phone,
+            'address' => $request->address
         ]);
 
         return back()->with("status", "Profile Updated Successfully");

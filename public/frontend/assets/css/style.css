@@ -1050,7 +1050,7 @@ header
 
 .header-area .main-nav .nav li.submenu ul {
   position: absolute;
-  width: 150px;
+  width: max-content;
   box-shadow: 0 2px 28px 0 rgba(0, 0, 0, 0.06);
   overflow: hidden;
   top: 50px;
@@ -1060,7 +1060,6 @@ header
   visibility: hidden;
   z-index: -1;
   transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
-  text-align: right;
 }
 
 .header-area .main-nav .nav li.submenu ul li {
@@ -1074,6 +1073,7 @@ header
   display: block;
   background: #f7f7f7;
   color: #2a2a2a !important;
+  padding-left: 20px;
   padding-right: 20px;
   height: 40px;
   line-height: 40px;

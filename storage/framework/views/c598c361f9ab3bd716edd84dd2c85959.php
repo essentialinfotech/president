@@ -89,11 +89,17 @@
                                 <?php echo e($product->product_name); ?></h2>
                         </div>
 
+                        <?php if($minPrice && $maxPrice): ?>
+                            <div class="product_price"><?php echo e($minPrice); ?> BDT To <?php echo e($maxPrice); ?> BDT</div>
+                        <?php endif; ?>
 
-                        <div class="product_price"><?php echo e($minPrice); ?> BDT To <?php echo e($maxPrice); ?> BDT</div>
 
                         <div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
-                            <button class="main-border-button" id="openPopup"><a>Add to cart</a></button>
+                            <?php if($inStock): ?>
+                                <button class="main-border-button px-0" id="openPopup"><a>Add to cart</a></button>
+                            <?php else: ?>
+                                <button type="button" class="btn btn-secondary btn-lg" disabled>Add to cart</button>
+                            <?php endif; ?>
 
                             <div id="popup" class="popup">
                                 <div class="popup-content">
@@ -148,18 +154,21 @@
                                     </div>
                                     <form action="<?php echo e(route('cart.add', $product->id)); ?>" method="post">
                                         <?php echo csrf_field(); ?>
-                                        
 
                                         <input type="hidden" name="variant_color" id="variant_color_input">
                                         <input type="hidden" name="variant_id" id="variant_id_input">
                                         <input type="hidden" name="variant_photo" id="variant_photo_input">
                                         <input type="hidden" name="variant_size" id="variant_size_input">
-                                        <input type="hidden" name="variant_qty" class="variant_qty" id="variant_qty" value="">
+                                        <input type="hidden" name="variant_qty" class="variant_qty" id="variant_qty"
+                                            value="">
 
                                         <button type="submit" class="add-to-cart-btn disabled">Add to Cart</button>
                                     </form>
                                 </div>
                             </div>
+                        </div>
+                        <div>
+                            <p><?php echo e($product->short_description); ?></p>
                         </div>
                         <div>
                             <p><?php echo $product->long_description; ?></p>
@@ -302,7 +311,7 @@
 
         document.querySelector('.product-sizes .btn_wrap').addEventListener('click', function(event) {
             if (event.target.classList.contains('size-btn')) {
-                document.getElementById('quantity_value').value = 1;                
+                document.getElementById('quantity_value').value = 1;
                 document.getElementById('variant_qty').value = 1;
                 // Remove 'active' class from all size buttons
                 document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove(

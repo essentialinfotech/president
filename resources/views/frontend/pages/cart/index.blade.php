@@ -13,12 +13,6 @@
     </style>
     <section style="margin-top: 100px;">
         <div class="cart_page">
-            <div class="back_bar">
-                <a href="{{ route('home') }}">
-                    <i class="fa fa-angle-left" aria-hidden="true"></i>
-                    <p>Home Page</p>
-                </a>
-            </div>
             <div class="container my-5">
                 <div class="">
                     @if (session('success'))
@@ -267,7 +261,7 @@
             if (successAlert) {
                 setTimeout(function() {
                     successAlert.style.display = 'none';
-                }, 10000); // 10000 milliseconds = 10 seconds
+                }, 5000); // 10000 milliseconds = 10 seconds
             }
         });
     </script>

@@ -25,12 +25,12 @@
                 </div>
                 <div class="col-lg-9 col-md-12">
                     <div class="row m-0 product_area" id="products">
-                        <?php $__currentLoopData = $global_products->take(12); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php $__currentLoopData = $discount_products->take(12); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php echo $__env->make('frontend.home.partials.load_product', ['product' => $product], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
 
-                    <?php if($global_products->count() > 12): ?>
+                    <?php if($discount_products->count() > 12): ?>
                         <div class="row m-0">
                             <div class="col-12 text-center mt-3">
                                 <button id="loadMore" class="btn btn-dark">Show More</button>

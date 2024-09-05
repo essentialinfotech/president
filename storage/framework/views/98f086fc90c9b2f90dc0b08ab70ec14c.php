@@ -129,12 +129,6 @@
     </style>
     <section style="margin-top: 110px;">
         <div class="checkout_page">
-            <div class="back_bar">
-                <a href="<?php echo e(route('home')); ?>">
-                    <i class="fa fa-angle-left" aria-hidden="true"></i>
-                    <p>Home Page</p>
-                </a>
-            </div>
             <?php if(session('error')): ?>
                 <div class="alert alert-danger">
                     <?php echo e(session('error')); ?>
@@ -160,7 +154,7 @@
                             <div class="delivery_info">
                                 <h4>Delivery Information</h4>
                                 <div class="form-group">
-                                    <label for="name">Recipient Name</label>
+                                    <label for="name">Recipient Name <span class="text-danger">*</span> </label>
                                     <input type="text" class="form-control <?php $__errorArgs = ['name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -170,24 +164,49 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"
                                         id="name" value="<?php echo e(old('name', Auth::check() ? Auth::user()->name : '')); ?>"
-                                        name="name" placeholder="Recipient Full Name*">
+                                        name="name">
+                                    <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <span class="text-danger"><?php echo e($message); ?></span>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                 </div>
                                 <div class="form-group">
-                                    <label for="phone">Recipient Phone Number</label>
-                                    <input type="number" id="phone"
-                                        class="form-control <?php $__errorArgs = ['phone'];
+                                    <label for="phone" class="form-label">Recipient Phone Number <span
+                                            class="text-danger">*</span> </label>
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">+88</div>
+                                        </div>
+                                        <input type="number" name="phone"
+                                            class="form-control  <?php $__errorArgs = ['phone'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>"
-                                        value="<?php echo e(old('phone', Auth::check() ? Auth::user()->phone : '')); ?>" name="phone"
-                                        placeholder="Recipient Phone Number*">
+unset($__errorArgs, $__bag); ?>" id="phone"
+                                            value="<?php echo e(old('email', Auth::check() ? Auth::user()->phone : '')); ?>">
+                                    </div>
+                                    <?php $__errorArgs = ['phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <span class="text-danger"><?php echo e($message); ?></span>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                 </div>
                                 <div class="form-group">
-                                    <label for="email"> Email</label>
+                                    <label for="email"> Email <span class="text-danger">*</span> </label>
                                     <input type="text" id="email"
                                         class="form-control <?php $__errorArgs = ['email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -197,11 +216,20 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"
-                                        value="<?php echo e(old('email', Auth::check() ? Auth::user()->email : '')); ?>" name="email"
-                                        placeholder="Recipient Email*">
+                                        value="<?php echo e(old('email', Auth::check() ? Auth::user()->email : '')); ?>" name="email">
+                                    <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <span class="text-danger"><?php echo e($message); ?></span>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                 </div>
                                 <div class="form-group">
-                                    <label for="address">Recipient Address</label>
+                                    <label for="address">Recipient Address <span class="text-danger">*</span> </label>
                                     <textarea name="address" id="address" class="form-control <?php $__errorArgs = ['address'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -209,8 +237,17 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>"
-                                        placeholder="Address*"><?php echo e(old('address', Auth::check() ? Auth::user()->address : '')); ?></textarea>
+unset($__errorArgs, $__bag); ?>"><?php echo e(old('address', Auth::check() ? Auth::user()->address : '')); ?></textarea>
+                                    <?php $__errorArgs = ['address'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <span class="text-danger"><?php echo e($message); ?></span>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                 </div>
                                 <div class="form-group">
                                     <label for="post_code">Post Code</label>
@@ -223,11 +260,11 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"
-                                        value="<?php echo e(old('post_code')); ?>" placeholder="Post Code*">
+                                        value="<?php echo e(old('post_code')); ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="notes">Notes</label>
-                                    <textarea name="notes" id="notes" class="form-control" placeholder="Notes"><?php echo e(old('notes')); ?></textarea>
+                                    <textarea name="notes" id="notes" class="form-control"><?php echo e(old('notes')); ?></textarea>
                                 </div>
                             </div>
 
@@ -256,7 +293,7 @@ $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                        <div class="alert alert-danger"><?php echo e($message); ?></div>
+                                        <span class="text-danger"><?php echo e($message); ?></span>
                                     <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
@@ -266,7 +303,7 @@ $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                        <div class="alert alert-danger"><?php echo e($message); ?></div>
+                                        <span class="text-danger"><?php echo e($message); ?></span>
                                     <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
@@ -276,7 +313,7 @@ $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                        <div class="alert alert-danger"><?php echo e($message); ?></div>
+                                        <span class="text-danger"><?php echo e($message); ?></span>
                                     <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
@@ -306,7 +343,7 @@ $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                                <div class="alert alert-danger"><?php echo e($message); ?></div>
+                                                <span class="text-danger"><?php echo e($message); ?></span>
                                             <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
@@ -333,7 +370,7 @@ $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                                <div class="alert alert-danger"><?php echo e($message); ?></div>
+                                                <span class="text-danger"><?php echo e($message); ?></span>
                                             <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;

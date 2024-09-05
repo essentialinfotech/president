@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,12 +27,19 @@ class CheckoutController extends Controller
     {
         // Validation
         $request->validate([
-            'name' => 'required',
-            'phone' => 'required',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[a-zA-Z][a-zA-Z0-9 ]*$/',
+            ],
+            'phone' => 'required|digits:11',
             'email' => 'required|email',
             'address' => 'required',
-            'post_code' => 'required',
             'payment_method' => 'required',
+        ], [
+            'name.regex' => 'Please enter a valid name using letters and spaces only',
+            'phone' => 'The Phone Number is Invalid!',
         ]);
 
 
@@ -39,14 +47,6 @@ class CheckoutController extends Controller
         if (empty($cart)) {
             return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
         }
-
-        // $totalPrice = array_sum(array_map(function ($item) {
-        //     if ($item['discount_price']) {
-        //         return $item['discount_price'] * $item['variant']['quantity'];
-        //     } else {
-        //         return $item['selling_price'] * $item['variant']['quantity'];
-        //     }
-        // }, $cart)); 
 
 
 
@@ -63,9 +63,14 @@ class CheckoutController extends Controller
         $order = new Order();
         if (Auth::check()) {
             $order->user_id = Auth::user()->id;
+            if ($request->has('address') && !empty($request->address)) {
+                User::where('id', Auth::user()->id)->update(['address' => $request->address]);
+            }
         } else {
             $order->user_id = null;
         }
+
+        // $order->user_id = null;
 
         $order->name = $request->name;
         $order->email = $request->email;

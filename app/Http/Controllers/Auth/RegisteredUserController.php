@@ -37,12 +37,12 @@ class RegisteredUserController extends Controller
                 'required',
                 'string',
                 'max:255',
-                'regex:/^[a-zA-Z][a-zA-Z0-9]*$/',
+               'regex:/^[a-zA-Z][a-zA-Z0-9 ]*$/',
             ],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ],[
-            'name.regex' => 'The name must be start with a letter.',
+        ], [
+            'name.regex' => 'Please enter a valid name using letters and spaces only',
         ]);
 
         $user = User::create([

@@ -25,12 +25,12 @@
                 </div>
                 <div class="col-lg-9 col-md-12">
                     <div class="row m-0 product_area" id="products">
-                        @foreach ($global_products->take(12) as $product)
+                        @foreach ($discount_products->take(12) as $product)
                             @include('frontend.home.partials.load_product', ['product' => $product])
                         @endforeach
                     </div>
 
-                    @if ($global_products->count() > 12)
+                    @if ($discount_products->count() > 12)
                         <div class="row m-0">
                             <div class="col-12 text-center mt-3">
                                 <button id="loadMore" class="btn btn-dark">Show More</button>

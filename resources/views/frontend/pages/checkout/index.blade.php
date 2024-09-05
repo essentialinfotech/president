@@ -129,12 +129,6 @@
     </style>
     <section style="margin-top: 110px;">
         <div class="checkout_page">
-            <div class="back_bar">
-                <a href="{{ route('home') }}">
-                    <i class="fa fa-angle-left" aria-hidden="true"></i>
-                    <p>Home Page</p>
-                </a>
-            </div>
             @if (session('error'))
                 <div class="alert alert-danger">
                     {{ session('error') }}
@@ -159,39 +153,54 @@
                             <div class="delivery_info">
                                 <h4>Delivery Information</h4>
                                 <div class="form-group">
-                                    <label for="name">Recipient Name</label>
+                                    <label for="name">Recipient Name <span class="text-danger">*</span> </label>
                                     <input type="text" class="form-control @error('name') is-invalid @enderror"
                                         id="name" value="{{ old('name', Auth::check() ? Auth::user()->name : '') }}"
-                                        name="name" placeholder="Recipient Full Name*">
+                                        name="name">
+                                    @error('name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="phone">Recipient Phone Number</label>
-                                    <input type="number" id="phone"
-                                        class="form-control @error('phone') is-invalid @enderror"
-                                        value="{{ old('phone', Auth::check() ? Auth::user()->phone : '') }}" name="phone"
-                                        placeholder="Recipient Phone Number*">
+                                    <label for="phone" class="form-label">Recipient Phone Number <span
+                                            class="text-danger">*</span> </label>
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">+88</div>
+                                        </div>
+                                        <input type="number" name="phone"
+                                            class="form-control  @error('phone') is-invalid @enderror" id="phone"
+                                            value="{{ old('email', Auth::check() ? Auth::user()->phone : '') }}">
+                                    </div>
+                                    @error('phone')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="email"> Email</label>
+                                    <label for="email"> Email <span class="text-danger">*</span> </label>
                                     <input type="text" id="email"
                                         class="form-control @error('email') is-invalid @enderror"
-                                        value="{{ old('email', Auth::check() ? Auth::user()->email : '') }}" name="email"
-                                        placeholder="Recipient Email*">
+                                        value="{{ old('email', Auth::check() ? Auth::user()->email : '') }}" name="email">
+                                    @error('email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="address">Recipient Address</label>
-                                    <textarea name="address" id="address" class="form-control @error('address') is-invalid @enderror"
-                                        placeholder="Address*">{{ old('address', Auth::check() ? Auth::user()->address : '') }}</textarea>
+                                    <label for="address">Recipient Address <span class="text-danger">*</span> </label>
+                                    <textarea name="address" id="address" class="form-control @error('address') is-invalid @enderror">{{ old('address', Auth::check() ? Auth::user()->address : '') }}</textarea>
+                                    @error('address')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="post_code">Post Code</label>
                                     <input type="text" name="post_code" id="post_code"
                                         class="form-control @error('post_code') is-invalid @enderror"
-                                        value="{{ old('post_code') }}" placeholder="Post Code*">
+                                        value="{{ old('post_code') }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="notes">Notes</label>
-                                    <textarea name="notes" id="notes" class="form-control" placeholder="Notes">{{ old('notes') }}</textarea>
+                                    <textarea name="notes" id="notes" class="form-control">{{ old('notes') }}</textarea>
                                 </div>
                             </div>
 
@@ -209,13 +218,13 @@
                                         <option value="Nagad">Nagad</option>
                                     </select>
                                     @error('payment_method')
-                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                     @error('sender_phone_number')
-                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                     @error('transaction_id')
-                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="card-info">
@@ -231,7 +240,7 @@
                                                 Sender number is required.
                                             </div>
                                             @error('sender_phone_number')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
 
@@ -244,7 +253,7 @@
                                                 TRX ID is required.
                                             </div>
                                             @error('transaction_id')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
 

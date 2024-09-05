@@ -89,17 +89,15 @@ class CartController extends Controller
     public function update(Request $request, $id)
     {
         $cart = session()->get('cart', []);
-
-        if ($request->quantity > 0) {
+        if (ctype_digit($request->quantity) && $request->quantity >= 1) {
             if (isset($cart[$id])) {
-
                 // If the cart item has a variant, update the variant quantity
                 if (isset($cart[$id]['variant'])) {
                     $variant_id = $cart[$id]['variant']['id'];
                     $variant = ProductVariant::find($variant_id);
 
                     if ($variant) {
-                        $cart[$id]['variant']['variant_size']['qty'] = $request->quantity;
+                        $cart[$id]['variant']['variant_size']['qty'] = (int)$request->quantity; // Cast to integer
                     }
                 }
 
@@ -108,7 +106,7 @@ class CartController extends Controller
 
             return redirect()->back()->with('success', 'Cart updated successfully!');
         } else {
-            return redirect()->back()->with('error', 'Nagative value is not parmited!');
+            return redirect()->back()->with('error', 'Negative or Decimal value is not permitted!');
         }
     }
 
