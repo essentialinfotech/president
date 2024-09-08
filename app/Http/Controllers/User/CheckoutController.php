@@ -85,7 +85,10 @@ class CheckoutController extends Controller
             // Validation
             $request->validate([
                 'transaction_id' => 'required',
-                'sender_phone_number' => 'required'
+                'sender_phone_number' => 'required|digits:11',
+            ], [
+                'sender_phone_number' => 'The Phone Number is Invalid!',
+                'sender_phone_number.required' => 'Phone Field is Required',
             ]);
             $order->transaction_id = $request->transaction_id;
             $order->sender_phone_number = $request->sender_phone_number;

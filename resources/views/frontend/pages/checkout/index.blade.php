@@ -231,17 +231,26 @@
                                     <div class="row gy-3">
 
                                         <div class="col-md-6">
-                                            <label for="sender_phone_number" class="form-label">Sender Phone
+                                                <label for="sender_phone_number" class="form-label">Phone</label>
+                                                <div class="input-group mb-2">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">+88</div>
+                                                    </div>
+                                                    <input type="number" name="sender_phone_number" class="form-control" id="sender_phone_number">
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Sender number is required.
+                                                </div>
+                                                @error('sender_phone_number')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+
+                                            {{-- <label for="sender_phone_number" class="form-label">Sender Phone
                                                 Number</label>
-                                            <input type="text" name="sender_phone_number"
+                                            <input type="number" name="sender_phone_number"
                                                 class="form-control @error('sender_phone_number') is-invalid @enderror"
-                                                id="sender_phone_number" placeholder="">
-                                            <div class="invalid-feedback">
-                                                Sender number is required.
-                                            </div>
-                                            @error('sender_phone_number')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
+                                                id="sender_phone_number" placeholder=""> --}}
+                                            
                                         </div>
 
                                         <div class="col-md-6">

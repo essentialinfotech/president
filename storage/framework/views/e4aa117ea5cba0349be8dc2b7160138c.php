@@ -1,19 +1,19 @@
-@extends('frontend.master_dashboard')
 
-@section('main')
+
+<?php $__env->startSection('main'); ?>
     <section style="margin-top: 110px;">
         <div class="container mt-5">
             <div class="row">
                 <div class="col-md-3">
                     <div class="nav flex-column nav-pills">
-                        <a class="nav-link active" href="{{ route('dashboard') }}">Dashboard</a>
+                        <a class="nav-link active" href="<?php echo e(route('dashboard')); ?>">Dashboard</a>
 
                     </div>
                 </div>
                 <div class="col-md-9">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Order Details <span class="text-success">Invoice: {{ $order->invoice_no }}</span>
+                            <h4>Order Details <span class="text-success">Invoice: <?php echo e($order->invoice_no); ?></span>
                             </h4>
                         </div>
                         <div class="row row-cols-1 row-cols-md-1 row-cols-lg-2 row-cols-xl-1">
@@ -44,54 +44,55 @@
 
                                             </tr>
 
-                                            @php
+                                            <?php
                                                 $grandTotal = 0;
-                                            @endphp
-                                            @foreach ($orderItem as $item)
-                                                @php
+                                            ?>
+                                            <?php $__currentLoopData = $orderItem; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <?php
                                                     $totalPrice = $item->price * $item->qty;
                                                     $grandTotal += $totalPrice;
-                                                @endphp
+                                                ?>
                                                 <tr>
                                                     <td class="col-md-1">
-                                                        <label><img src="{{ asset($item->image) }}"
+                                                        <label><img src="<?php echo e(asset($item->image)); ?>"
                                                                 style="width:50px; height:50px;">
                                                         </label>
                                                     </td>
                                                     <td class="col-md-2">
-                                                        <label>{{ $item->product->product_name }}</label>
+                                                        <label><?php echo e($item->product->product_name); ?></label>
                                                     </td>
 
 
                                                     <td class="col-md-2">
-                                                        <label>{{ $item->product->product_code }} </label>
+                                                        <label><?php echo e($item->product->product_code); ?> </label>
                                                     </td>
-                                                    @if ($item->color == null)
+                                                    <?php if($item->color == null): ?>
                                                         <td class="col-md-1">
                                                             <label>.... </label>
                                                         </td>
-                                                    @else
+                                                    <?php else: ?>
                                                         <td class="col-md-1">
-                                                            <label>{{ $item->color }} </label>
+                                                            <label><?php echo e($item->color); ?> </label>
                                                         </td>
-                                                    @endif
+                                                    <?php endif; ?>
 
                                                     <td class="col-md-1">
-                                                        <label>{{ $item->qty }} </label>
+                                                        <label><?php echo e($item->qty); ?> </label>
                                                     </td>
 
                                                     <td class="col-md-3">
-                                                        <label>{{ $item->price }} BDT <br> Total =
-                                                            {{ $item->price * $item->qty }}
+                                                        <label><?php echo e($item->price); ?> BDT <br> Total =
+                                                            <?php echo e($item->price * $item->qty); ?>
+
                                                             BDT
                                                         </label>
                                                     </td>
 
                                                 </tr>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             <tr>
                                                 <td colspan="5" class="text-right"><strong>Grand Total:</strong></td>
-                                                <td>{{ $grandTotal }} BDT</td>
+                                                <td><?php echo e($grandTotal); ?> BDT</td>
                                             </tr>
 
                                         </tbody>
@@ -112,4 +113,6 @@
 
 
     </section>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('frontend.master_dashboard', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\EIT2024\BagsLaravelWebsites\PresidentWebsite - size variant\resources\views/frontend/user-frontend/user_order_details.blade.php ENDPATH**/ ?>

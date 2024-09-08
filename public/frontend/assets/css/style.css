@@ -617,6 +617,7 @@ Filter
 .filter-container .border_b {
   border-bottom: 1px solid #ccc;
   margin-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 .filter-container .wrap {

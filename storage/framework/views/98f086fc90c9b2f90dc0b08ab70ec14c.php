@@ -323,31 +323,29 @@ unset($__errorArgs, $__bag); ?>
                                     <div class="row gy-3">
 
                                         <div class="col-md-6">
-                                            <label for="sender_phone_number" class="form-label">Sender Phone
-                                                Number</label>
-                                            <input type="text" name="sender_phone_number"
-                                                class="form-control <?php $__errorArgs = ['sender_phone_number'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>"
-                                                id="sender_phone_number" placeholder="">
-                                            <div class="invalid-feedback">
-                                                Sender number is required.
-                                            </div>
-                                            <?php $__errorArgs = ['sender_phone_number'];
+                                                <label for="sender_phone_number" class="form-label">Phone</label>
+                                                <div class="input-group mb-2">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">+88</div>
+                                                    </div>
+                                                    <input type="number" name="sender_phone_number" class="form-control" id="sender_phone_number">
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Sender number is required.
+                                                </div>
+                                                <?php $__errorArgs = ['sender_phone_number'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                                <span class="text-danger"><?php echo e($message); ?></span>
-                                            <?php unset($message);
+                                                    <span class="text-danger"><?php echo e($message); ?></span>
+                                                <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+
+                                            
+                                            
                                         </div>
 
                                         <div class="col-md-6">

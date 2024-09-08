@@ -26,6 +26,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\SearchController;
 use App\Http\Controllers\User\CheckoutController;
+use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Artisan;
@@ -110,6 +111,8 @@ Route::post('/cart/remove-selected', [CartController::class, 'removeSelected'])-
 // Checkout
 Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('checkout', [CheckoutController::class, 'process'])->name('checkout.process');
+// Order
+Route::post('/user/order-cancel', [OrderController::class, 'cancelOrder'])->name('user.order-cancel');
 
 
 Route::middleware(['auth'])->group(function () {

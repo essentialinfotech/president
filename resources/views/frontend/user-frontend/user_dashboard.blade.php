@@ -56,8 +56,21 @@
                                                         <td>{{ $order->amount }} BDT</td>
                                                         <td>
                                                             <a href="{{ route('user.order-details', $order->invoice_no) }}"
-                                                                class="btn btn-info" title="Details"><i
-                                                                    class="fa fa-eye"></i> </a>
+                                                                class="btn btn-info" title="Details">
+                                                                <i class="fa fa-eye"></i> </a>
+                                                            @if ($order->status == 'pending')
+                                                                @if ($order->status != 'cancelled')
+                                                                    <button class="btn btn-danger cancel-order mb-0"
+                                                                        data-invoice="{{ $order->invoice_no }}"
+                                                                        title="Cancel Order">
+                                                                        <i class="fa fa-close"></i>
+                                                                    </button>
+                                                                @else
+                                                                    <button class="btn btn-secondary mb-0"
+                                                                        disabled>Cancelled</button>
+                                                                @endif
+                                                            @endif
+
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -100,7 +113,7 @@
                                                     <div class="input-group-text">+88</div>
                                                 </div>
                                                 <input type="number" name="phone" class="form-control" id="phone"
-                                                value="{{ Auth::user()->phone }}">
+                                                    value="{{ Auth::user()->phone }}">
                                             </div>
                                             <span id="phone_error" class="text-danger"></span>
                                         </div>
@@ -317,6 +330,59 @@
                         }
                     }
                 });
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.cancel-order').on('click', function() {
+                var invoice_no = $(this).data('invoice');
+                var button = $(this); // Reference to the clicked button
+
+                if (confirm('Are you sure you want to cancel this order?')) {
+                    $.ajax({
+                        url: "{{ route('user.order-cancel') }}",
+                        type: "POST",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            invoice_no: invoice_no
+                        },
+                        success: function(response) {
+                            if (response.code == 1) {
+                                // Show success message using iziToast
+                                iziToast.success({
+                                    title: 'Success',
+                                    position: 'topRight',
+                                    message: response.success_message,
+                                });
+
+                                // Update the order status and button dynamically
+                                $('#order-' + invoice_no).find('td:eq(2)').text('Cancelled');
+                                button.removeClass('btn-danger')
+                                    .addClass('btn-secondary')
+                                    .prop('disabled', true)
+                                    .text('Cancelled');
+                            } else if (response.code == 0) {
+                                // Show error message using iziToast
+                                iziToast.error({
+                                    title: 'Error',
+                                    position: 'topRight',
+                                    message: response.error_message,
+                                });
+                            }
+                        },
+                        error: function(xhr) {
+                            // Handle any server errors
+                            iziToast.error({
+                                title: 'Error',
+                                position: 'topRight',
+                                message: 'An error occurred: ' + xhr.status + ' ' + xhr
+                                    .statusText,
+                            });
+                        }
+                    });
+                }
             });
         });
     </script>
