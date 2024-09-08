@@ -231,26 +231,27 @@
                                     <div class="row gy-3">
 
                                         <div class="col-md-6">
-                                                <label for="sender_phone_number" class="form-label">Phone</label>
-                                                <div class="input-group mb-2">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text">+88</div>
-                                                    </div>
-                                                    <input type="number" name="sender_phone_number" class="form-control" id="sender_phone_number">
+                                            <label for="sender_phone_number" class="form-label">Phone</label>
+                                            <div class="input-group mb-2">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">+88</div>
                                                 </div>
-                                                <div class="invalid-feedback">
-                                                    Sender number is required.
-                                                </div>
-                                                @error('sender_phone_number')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
+                                                <input type="number" name="sender_phone_number" class="form-control"
+                                                    id="sender_phone_number">
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Sender number is required.
+                                            </div>
+                                            @error('sender_phone_number')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
 
                                             {{-- <label for="sender_phone_number" class="form-label">Sender Phone
                                                 Number</label>
                                             <input type="number" name="sender_phone_number"
                                                 class="form-control @error('sender_phone_number') is-invalid @enderror"
                                                 id="sender_phone_number" placeholder=""> --}}
-                                            
+
                                         </div>
 
                                         <div class="col-md-6">
@@ -280,6 +281,21 @@
                             </div>
 
 
+                            <div class="confirm_info">
+                                <input type="hidden" name="shipping_cost" id="form_shipping_cost_value">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="shipping_cost_check"
+                                        id="insideDhaka" checked>
+                                    <label class="form-check-label" for="insideDhaka">Inside Dhaka</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="shipping_cost_check"
+                                        id="outsideDhaka">
+                                    <label class="form-check-label" for="outsideDhaka">Outside Dhaka</label>
+                                </div>
+                            </div>
+
+
                             @if (session('cart'))
                                 @php
                                     $totalQuantity = 0;
@@ -306,7 +322,7 @@
                                     $totalProductPrice = $totalSellingPrice - $totalDiscount;
                                 @endphp
                             @endif
-                            <div class="checkout-summary">
+                            {{-- <div class="checkout-summary">
                                 <h5>Checkout Summary</h5>
                                 <div class="summary-row mb-0">
                                     <span>Original Product Price</span>
@@ -327,7 +343,33 @@
                                     <span>{{ number_format($totalProductPrice, 2) }} BDT</span>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Order Now</button>
+                            </div> --}}
+                            <div class="checkout-summary">
+                                <h5>Checkout Summary</h5>
+                                <div class="summary-row mb-0">
+                                    <span>Original Product Price</span>
+                                    <span>{{ number_format($totalSellingPrice, 2) }} BDT</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="text-muted" style="font-size: 12px;">({{ $totalQuantity }} Items)</span>
+                                </div>
+                                @if ($totalDiscount > 0)
+                                    <div class="summary-row">
+                                        <span>Product Discount</span>
+                                        <span>- {{ number_format($totalDiscount, 2) }} BDT</span>
+                                    </div>
+                                @endif
+                                <div class="summary-row">
+                                    <span>Shipping Cost</span>
+                                    <span id="shippingCost">0 BDT</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Total Product Price</span>
+                                    <span id="totalProductPrice">{{ number_format($totalProductPrice, 2) }} BDT</span>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Order Now</button>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -335,3 +377,44 @@
         </div>
     </section>
 @endsection
+
+@push('script')
+    <script>
+        $(document).ready(function() {
+            // Initial total product price from server-side
+            var initialTotalProductPrice = {{ $totalProductPrice }};
+
+            // Function to update the summary
+            function updateSummary() {
+                let shippingCost = 0;
+
+                // Determine the shipping cost based on selected option
+                if ($('#insideDhaka').is(':checked')) {
+                    shippingCost = 70;
+                } else if ($('#outsideDhaka').is(':checked')) {
+                    shippingCost = 120;
+                }
+
+                // Update the shipping cost in the summary
+                $('#shippingCost').text(shippingCost + ' BDT');
+
+                // Compute total product price after discount and add shipping cost
+                let totalProductPrice = initialTotalProductPrice + shippingCost;
+
+                // Update the total product price in the summary
+                $('#totalProductPrice').text(totalProductPrice + ' BDT');
+                $('#form_shipping_cost_value').val(shippingCost);
+            }
+
+
+
+            // Bind the updateSummary function to radio button change events
+            $('input[name="shipping_cost_check"]').on('change', function() {
+                updateSummary();
+            });
+
+            // Initialize summary on page load
+            updateSummary();
+        });
+    </script>
+@endpush

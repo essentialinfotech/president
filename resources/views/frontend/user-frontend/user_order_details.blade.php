@@ -38,8 +38,11 @@
                                                     <label>Quantity </label>
                                                 </td>
 
-                                                <td class="col-md-3">
+                                                <td class="col-md-2">
                                                     <label>Price </label>
+                                                </td>
+                                                <td class="col-md-2">
+                                                    <label>Sub Total </label>
                                                 </td>
 
                                             </tr>
@@ -80,8 +83,12 @@
                                                         <label>{{ $item->qty }} </label>
                                                     </td>
 
-                                                    <td class="col-md-3">
-                                                        <label>{{ $item->price }} BDT <br> Total =
+                                                    <td class="col-md-2">
+                                                        <label>{{ $item->price }} BDT
+                                                        </label>
+                                                    </td>
+                                                    <td class="col-md-2">
+                                                        <label>
                                                             {{ $item->price * $item->qty }}
                                                             BDT
                                                         </label>
@@ -90,7 +97,7 @@
                                                 </tr>
                                             @endforeach
                                             <tr>
-                                                <td colspan="5" class="text-right"><strong>Grand Total:</strong></td>
+                                                <td colspan="6" class="text-right"><strong>Grand Total:</strong></td>
                                                 <td>{{ $grandTotal }} BDT</td>
                                             </tr>
 

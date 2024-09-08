@@ -323,29 +323,30 @@ unset($__errorArgs, $__bag); ?>
                                     <div class="row gy-3">
 
                                         <div class="col-md-6">
-                                                <label for="sender_phone_number" class="form-label">Phone</label>
-                                                <div class="input-group mb-2">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text">+88</div>
-                                                    </div>
-                                                    <input type="number" name="sender_phone_number" class="form-control" id="sender_phone_number">
+                                            <label for="sender_phone_number" class="form-label">Phone</label>
+                                            <div class="input-group mb-2">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">+88</div>
                                                 </div>
-                                                <div class="invalid-feedback">
-                                                    Sender number is required.
-                                                </div>
-                                                <?php $__errorArgs = ['sender_phone_number'];
+                                                <input type="number" name="sender_phone_number" class="form-control"
+                                                    id="sender_phone_number">
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Sender number is required.
+                                            </div>
+                                            <?php $__errorArgs = ['sender_phone_number'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                                    <span class="text-danger"><?php echo e($message); ?></span>
-                                                <?php unset($message);
+                                                <span class="text-danger"><?php echo e($message); ?></span>
+                                            <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
 
                                             
-                                            
+
                                         </div>
 
                                         <div class="col-md-6">
@@ -389,6 +390,21 @@ unset($__errorArgs, $__bag); ?>
                             </div>
 
 
+                            <div class="confirm_info">
+                                <input type="hidden" name="shipping_cost" id="form_shipping_cost_value">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="shipping_cost_check"
+                                        id="insideDhaka" checked>
+                                    <label class="form-check-label" for="insideDhaka">Inside Dhaka</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="shipping_cost_check"
+                                        id="outsideDhaka">
+                                    <label class="form-check-label" for="outsideDhaka">Outside Dhaka</label>
+                                </div>
+                            </div>
+
+
                             <?php if(session('cart')): ?>
                                 <?php
                                     $totalQuantity = 0;
@@ -415,6 +431,7 @@ unset($__errorArgs, $__bag); ?>
                                     $totalProductPrice = $totalSellingPrice - $totalDiscount;
                                 ?>
                             <?php endif; ?>
+                            
                             <div class="checkout-summary">
                                 <h5>Checkout Summary</h5>
                                 <div class="summary-row mb-0">
@@ -422,9 +439,7 @@ unset($__errorArgs, $__bag); ?>
                                     <span><?php echo e(number_format($totalSellingPrice, 2)); ?> BDT</span>
                                 </div>
                                 <div class="summary-row">
-                                    <span class="text-muted" style="font-size: 12px;">(<?php echo e($totalQuantity); ?>
-
-                                        Items)</span>
+                                    <span class="text-muted" style="font-size: 12px;">(<?php echo e($totalQuantity); ?> Items)</span>
                                 </div>
                                 <?php if($totalDiscount > 0): ?>
                                     <div class="summary-row">
@@ -433,11 +448,16 @@ unset($__errorArgs, $__bag); ?>
                                     </div>
                                 <?php endif; ?>
                                 <div class="summary-row">
+                                    <span>Shipping Cost</span>
+                                    <span id="shippingCost">0 BDT</span>
+                                </div>
+                                <div class="summary-row">
                                     <span>Total Product Price</span>
-                                    <span><?php echo e(number_format($totalProductPrice, 2)); ?> BDT</span>
+                                    <span id="totalProductPrice"><?php echo e(number_format($totalProductPrice, 2)); ?> BDT</span>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Order Now</button>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -445,5 +465,46 @@ unset($__errorArgs, $__bag); ?>
         </div>
     </section>
 <?php $__env->stopSection(); ?>
+
+<?php $__env->startPush('script'); ?>
+    <script>
+        $(document).ready(function() {
+            // Initial total product price from server-side
+            var initialTotalProductPrice = <?php echo e($totalProductPrice); ?>;
+
+            // Function to update the summary
+            function updateSummary() {
+                let shippingCost = 0;
+
+                // Determine the shipping cost based on selected option
+                if ($('#insideDhaka').is(':checked')) {
+                    shippingCost = 70;
+                } else if ($('#outsideDhaka').is(':checked')) {
+                    shippingCost = 120;
+                }
+
+                // Update the shipping cost in the summary
+                $('#shippingCost').text(shippingCost + ' BDT');
+
+                // Compute total product price after discount and add shipping cost
+                let totalProductPrice = initialTotalProductPrice + shippingCost;
+
+                // Update the total product price in the summary
+                $('#totalProductPrice').text(totalProductPrice + ' BDT');
+                $('#form_shipping_cost_value').val(shippingCost);
+            }
+
+
+
+            // Bind the updateSummary function to radio button change events
+            $('input[name="shipping_cost_check"]').on('change', function() {
+                updateSummary();
+            });
+
+            // Initialize summary on page load
+            updateSummary();
+        });
+    </script>
+<?php $__env->stopPush(); ?>
 
 <?php echo $__env->make('frontend.master_dashboard', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\EIT2024\BagsLaravelWebsites\PresidentWebsite - size variant\resources\views/frontend/pages/checkout/index.blade.php ENDPATH**/ ?>

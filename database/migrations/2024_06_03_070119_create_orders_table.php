@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('transaction_id')->nullable();
             $table->string('sender_phone_number')->nullable();
             $table->float('amount', 8, 2);
+            $table->float('shipping_cost', 8, 2)->nullable();
             $table->string('order_number')->nullable();
             $table->string('invoice_no');
             $table->string('order_date');

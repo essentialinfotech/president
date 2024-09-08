@@ -38,8 +38,11 @@
                                                     <label>Quantity </label>
                                                 </td>
 
-                                                <td class="col-md-3">
+                                                <td class="col-md-2">
                                                     <label>Price </label>
+                                                </td>
+                                                <td class="col-md-2">
+                                                    <label>Sub Total </label>
                                                 </td>
 
                                             </tr>
@@ -80,8 +83,12 @@
                                                         <label><?php echo e($item->qty); ?> </label>
                                                     </td>
 
-                                                    <td class="col-md-3">
-                                                        <label><?php echo e($item->price); ?> BDT <br> Total =
+                                                    <td class="col-md-2">
+                                                        <label><?php echo e($item->price); ?> BDT 
+                                                        </label>
+                                                    </td> 
+                                                    <td class="col-md-2">
+                                                        <label>
                                                             <?php echo e($item->price * $item->qty); ?>
 
                                                             BDT
@@ -91,7 +98,7 @@
                                                 </tr>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             <tr>
-                                                <td colspan="5" class="text-right"><strong>Grand Total:</strong></td>
+                                                <td colspan="6" class="text-right"><strong>Grand Total:</strong></td>
                                                 <td><?php echo e($grandTotal); ?> BDT</td>
                                             </tr>
 
