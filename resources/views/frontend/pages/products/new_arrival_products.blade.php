@@ -4,8 +4,6 @@
     {{-- Flow Cart --}}
     @include('frontend.home.flow_cart')
 
-
-
     <!-- ***** Products Area Starts ***** -->
     <section class="section">
         <div class="container">
@@ -24,18 +22,6 @@
                     @include('frontend.pages.products.partials.product_sidebar')
                 </div>
                 <div class="col-lg-9 col-md-12">
-                    {{-- <div class="row product_area">
-                        @foreach ($new_arrivals as $product)
-                            <div class="col-lg-4 col-md-6 col-6 single_item">
-                                @include('frontend.pages.products.partials.product_item')
-                            </div>
-                        @endforeach
-
-
-                        <div class="col-lg-12">
-
-                        </div>
-                    </div> --}}
                     <div class="row m-0 product_area" id="products">
                         @foreach ($global_products->take(12) as $product)
                             @include('frontend.home.partials.load_product', ['product' => $product])

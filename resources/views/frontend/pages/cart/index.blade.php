@@ -1,20 +1,11 @@
 @extends('frontend.master_dashboard')
 
 @section('main')
-    <style>
-        .alert {
-            width: fit-content;
-            position: absolute;
-            top: 60px;
-            right: 0;
-            transition: 3s;
-            z-index: 999;
-        }
-    </style>
     <section style="margin-top: 100px;">
         <div class="cart_page">
             <div class="container my-5">
                 <div class="">
+                   
                     @if (session('success'))
                         <div class="alert alert-success" id="success-alert">
                             {{ session('success') }}

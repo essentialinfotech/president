@@ -26,15 +26,16 @@ class ContactController extends Controller
                 'required',
                 'string',
                 'max:255',
-                'regex:/^[a-zA-Z][a-zA-Z0-9]*$/',
+                'regex:/^[a-zA-Z][a-zA-Z0-9 ]*$/',
             ],
             'email' => 'required|email',
-            'phone' => 'required',
+            'phone' => 'required|digits:11',
             'message' => 'required',
         ], [
             'name.regex' => 'The name must be start with a letter.',
             'email.email' => 'Enter Your Valid Email',
             'email.required' => 'Email Field is Required',
+            'phone' => 'The Phone Number is Invalid!',
             'phone.required' => 'Phone Field is Required',
             'message' => 'Message Field is Required'
         ]);

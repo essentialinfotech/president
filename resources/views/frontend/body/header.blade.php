@@ -56,7 +56,7 @@
         }
     }
 
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: 1260px) {
 
         .search_box_overlay .overlay-content {
             width: 100%;
@@ -94,10 +94,6 @@
 
         <!-- ***** Menu Start ***** -->
         <ul class="nav">
-
-
-
-
 
             <li class="scroll-to-section">
                 <a href="{{ route('home') }}" class="{{ Route::is('home') ? 'active' : '' }}">Home</a>
@@ -144,9 +140,10 @@
             <li><a href="{{ route('contact') }}" class="{{ Route::is('contact') ? 'active' : '' }}">Contact Us</a>
             </li>
             <li>
-                <button class="btn" onclick="openNav()">
+                <button class="btn" aria-label="Search" onclick="openNav()">
                     <i class="fas fa-search" style="font-size: 20px;"></i>
                 </button>
+                
             </li>
             @if (Auth::check())
                 <li class="submenu">
@@ -177,7 +174,7 @@
         </ul>
         <button class="btn search_mobile_btn" onclick="openNav()">
             <i class="fas fa-search"></i>
-        </button>
+        </button>        
         <a class='menu-trigger'>
             <span>Menu</span>
         </a>
@@ -269,3 +266,32 @@
         document.getElementById("myNav").style.width = "0%";
     }
 </script>
+
+@push('script')
+    <script>
+        $(document).ready(function() {
+            // Toggle submenu on click
+            $('.submenu > a').click(function(e) {
+                e.preventDefault(); // Prevent the default anchor behavior
+
+                // Check if submenu is already visible
+                var $submenu = $(this).siblings('ul');
+                var $otherSubmenus = $('.submenu ul').not($submenu);
+
+                // Close other open submenus
+                $otherSubmenus.slideUp();
+
+                // Toggle current submenu
+                $submenu.slideToggle();
+            });
+
+            // Close submenus when clicking outside of them
+            $(document).click(function(e) {
+                var target = $(e.target);
+                if (!target.closest('.submenu').length) {
+                    $('.submenu ul').slideUp(); // Close all submenus
+                }
+            });
+        });
+    </script>
+@endpush

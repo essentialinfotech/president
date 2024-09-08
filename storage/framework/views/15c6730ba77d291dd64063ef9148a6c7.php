@@ -4,8 +4,6 @@
     
     <?php echo $__env->make('frontend.home.flow_cart', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
-
-
     <!-- ***** Products Area Starts ***** -->
     <section class="section">
         <div class="container">
@@ -24,7 +22,6 @@
                     <?php echo $__env->make('frontend.pages.products.partials.product_sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                 </div>
                 <div class="col-lg-9 col-md-12">
-                    
                     <div class="row m-0 product_area" id="products">
                         <?php $__currentLoopData = $global_products->take(12); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php echo $__env->make('frontend.home.partials.load_product', ['product' => $product], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>

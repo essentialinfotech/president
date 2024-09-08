@@ -33,18 +33,24 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label for="email">Your Email</label>
-                                            <input type="email" name="email" id="email" class="form-control" placeholder="Your email">
+                                            <input type="email" name="email" id="email" class="form-control"
+                                                placeholder="Your email">
                                             <span class="text-danger error-text email_error"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-3">
-                                            <label for="phone">Phone Number</label>
-                                            <input type="number" name="phone" id="phone" class="form-control"
-                                                placeholder="Phone Number">
+                                            <label for="phone" class="form-label">Phone</label>
+                                            <div class="input-group mb-2">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">+88</div>
+                                                </div>
+                                                <input type="number" name="phone" class="form-control" id="phone" >
+                                            </div>
                                             <span class="text-danger error-text phone_error"></span>
                                         </div>
-                                    </div>
+                                    </div> 
+
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label for="message">Message</label>

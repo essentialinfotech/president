@@ -1061,6 +1061,13 @@ header
   z-index: -1;
   transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
 }
+@media (max-width: 768px) {
+  .header-area .main-nav .nav li.submenu ul {
+      left: 0; /* Ensure submenu is fully visible */
+      width: 100%;
+  }
+}
+
 
 .header-area .main-nav .nav li.submenu ul li {
   margin-left: 0px;
@@ -1116,6 +1123,23 @@ header
   right: 40px;
   display: none;
 }
+/* /////// */
+@media (max-width: 768px) {
+  .header-area .main-nav .menu-trigger {
+      display: block;
+  }
+
+  .header-area .main-nav .nav {
+      display: none;
+  }
+
+  .header-area .main-nav .nav.active {
+      display: block;
+  }
+}
+
+/* /////// */
+
 
 .background-header .main-nav .menu-trigger {
   top: 23px;
@@ -1191,7 +1215,7 @@ header
 .header-area .main-nav .menu-trigger.active span,
 .header-area .main-nav .menu-trigger.active span:before,
 .header-area .main-nav .menu-trigger.active span:after {
-  background-color: transparent;
+  background: transparent;
   width: 100%;
 }
 
@@ -1218,6 +1242,19 @@ header
 .background-header .main-nav .menu-trigger.active span:after {
   background-color: #1e1e1e;
 }
+.menu-trigger.active span {
+  background: transparent;
+}
+
+.menu-trigger.active span:before {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+.menu-trigger.active span:after {
+  transform: rotate(-45deg);
+  bottom: 0;
+}
 
 .header-area.header-sticky {
   min-height: 80px;
@@ -1242,7 +1279,7 @@ header
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1260px) {
   .header-area .main-nav .logo {
     color: #1e1e1e;
     width: 35%;
@@ -1366,7 +1403,7 @@ header
 
 
 
-@media (min-width: 767px) {
+@media (min-width: 1261px) {
   .header-area .main-nav .nav {
     display: flex !important;
   }
@@ -2864,7 +2901,7 @@ Single Product Page
 .product_price {
   display: inline-block;
   font-size: 18px;
-  color: #fe4c50;
+  color: #252525;
   font-weight: 500;
   line-height: 30px;
 }
@@ -3031,6 +3068,30 @@ Single Product Page
     text-transform: uppercase;
     color: #ffffff;
     background: #252525;
+  }
+
+  .banner .banner_content a {
+    font-size: 12px;
+  }
+
+  .banner_slider {
+    height: 137px !important;
+  }
+
+  .banner .banner_content h4 {
+    font-size: 20px;
+  }
+
+  .section-heading h2 {
+    margin-top: 30px;
+  }
+
+  .main-banner {
+    padding-top: 83px;
+  }
+
+  .main-banner .left-content .inner-content h4 {
+    font-size: 25px;
   }
 }
 

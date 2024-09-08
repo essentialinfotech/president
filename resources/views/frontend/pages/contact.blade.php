@@ -5,7 +5,6 @@
 @section('twitter_image', $page_data['contact_banner'])
 @section('main')
 
-    {{-- ////////////////////////////////////// --}}
     <!-- ***** Main Banner Area Start ***** -->
     <div class="about-page-heading" id="top"
         style=" background-image: url({{ asset($global_page_item->contact_banner) }});">
@@ -21,67 +20,73 @@
     </div>
     <!-- ***** Main Banner Area End ***** -->
 
-    <!-- ***** Contact Area Starts ***** -->
-    <div class="contact-us">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    {!! $page_data->contact_map !!}
-                </div>
-                <div class="col-lg-6" style="background: #eeeeee;">
-                    <div class="section-heading">
-                        <h2>Need Assistance? Let's Talk</h2>
+ 
+
+
+    <section style="margin-top: 100px;">
+        <div class="cart_page">
+            <div class="container my-5">
+                <div class="row">
+                    <div class="col-lg-6">
+                        {!! $page_data->contact_map !!}
                     </div>
-                    <form action="{{ route('contact-sendmail') }}" method="post" id="contact" class="form_contact_ajax">
-                        @csrf
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label for="name">Full Name</label>
-                                    <input type="text" id="name" name="name" class="form-control"
-                                        placeholder="Your Name">
-                                    <span class="text-danger error-text name_error"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label for="email">Your Email</label>
-                                    <input type="email" name="email" id="email" placeholder="Your email">
-                                    <span class="text-danger error-text email_error"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label for="phone">Phone Number</label>
-                                    <input type="number" name="phone" id="phone" class="form-control"
-                                        placeholder="Phone Number">
-                                    <span class="text-danger error-text phone_error"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="mb-3">
-                                    <label for="message">Message</label>
-                                    <textarea name="message" id="message" class="form-control my-0" placeholder="Your Message" rows="5"></textarea>
-                                    <span class="text-danger error-text message_error"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <fieldset>
-                                    <button type="submit" id="form-submit" class="main-dark-button"><i
-                                            class="fa fa-paper-plane"></i></button>
-                                </fieldset>
-                            </div>
+                    <div class="col-lg-6" style="background: #eeeeee;">
+                        <div class="section-heading">
+                            <h2>Need Assistance? Let's Talk</h2>
                         </div>
-                    </form>
+                        <form action="{{ route('contact-sendmail') }}" method="post" id="contact"
+                            class="form_contact_ajax">
+                            @csrf
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="name">Full Name</label>
+                                        <input type="text" id="name" name="name" class="form-control"
+                                            placeholder="Your Name">
+                                        <span class="text-danger error-text name_error"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="email">Your Email</label>
+                                        <input type="email" name="email" id="email" placeholder="Your email">
+                                        <span class="text-danger error-text email_error"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="phone" class="form-label">Phone</label>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">+88</div>
+                                            </div>
+                                            <input type="number" name="phone" class="form-control" id="phone">
+                                        </div>
+                                        <span class="text-danger error-text phone_error"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <label for="message">Message</label>
+                                        <textarea name="message" id="message" class="form-control my-0" placeholder="Your Message" rows="5"></textarea>
+                                        <span class="text-danger error-text message_error"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <fieldset>
+                                        <button type="submit" id="form-submit" class="main-dark-button"><i
+                                                class="fa fa-paper-plane"></i></button>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- ***** Contact Area Ends ***** -->
+    </section>
 
 
-
-    {{-- Send Mail --}}
 
 @endsection
 

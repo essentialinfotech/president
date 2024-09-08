@@ -92,7 +92,6 @@
                                                 value="<?php echo e(Auth::user()->email); ?>">
                                             <span id="email_error" class="text-danger"></span>
                                         </div>
-                                        
                                         <div class="mb-3">
                                             <label for="phone" class="form-label">Phone</label>
                                             <div class="input-group mb-2">

@@ -16,6 +16,16 @@
             display: block;
         }
 
+        @media (max-width: 768px) {
+            .timeline-image {
+                width: auto;
+            }
+
+            .timeline-overlay {
+                width: 104%!important;
+            }
+        }
+
         .timeline-overlay {
             position: absolute;
             top: 0;
@@ -143,7 +153,8 @@
                         <div class="col-md-12">
                             <div class="d-flex">
                                 <div class="timeline-year text-muted">1995</div>
-                                <p class="ml-4">First President trolley case with telescopic handle and integrated wheel system introduced.
+                                <p class="ml-4">First President trolley case with telescopic handle and integrated wheel
+                                    system introduced.
                                 </p>
                             </div>
                         </div>

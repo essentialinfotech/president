@@ -15,6 +15,15 @@
             height: auto;
             display: block;
         }
+        @media (max-width: 768px) {
+            .timeline-image {
+                width: auto;
+            }
+
+            .timeline-overlay {
+                width: 104%!important;
+            }
+        }
 
         .timeline-overlay {
             position: absolute;

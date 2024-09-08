@@ -25,13 +25,22 @@
 
     <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/lightbox.css')); ?>">
     <!-- Toast -->
-    
-    
-    <!-- Toast -->
-    
+    <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/iziToast.min.css')); ?>">
+
     
     <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/slick-theme.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/slick.css')); ?>">
+
+    <style>
+        .alert {
+            width: fit-content;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            transition: 3s;
+            z-index: 999;
+        }
+    </style>
 
 </head>
 
@@ -83,7 +92,8 @@
     <script src="<?php echo e(asset('frontend/assets/js/Isotope/isotope.pkgd.min.js')); ?>"></script>
     <script src="<?php echo e(asset('frontend/assets/js/filter.js')); ?>"></script>
     <script src="<?php echo e(asset('frontend/assets/js/quantity.js')); ?>"></script>
-
+    <!-- Toast -->
+    <script src="<?php echo e(asset('frontend/assets/js/iziToast.min.js')); ?>"></script>
     <!-- Global Init -->
     <script src="<?php echo e(asset('frontend/assets/js/cart.js')); ?>"></script>
     
@@ -97,37 +107,57 @@
 
 
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var successAlert = document.getElementById('success-alert');
+            if (successAlert) {
+                setTimeout(function() {
+                    successAlert.style.display = 'none';
+                }, 5000); // 10000 milliseconds = 10 seconds
+            }
+        });
+    </script>
 
 
 
-    <?php if($errors->any()): ?>
-        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <script>
-                iziToast.error({
-                    title: 'Error',
-                    position: 'topRight',
-                    message: '<?php echo e($error); ?>',
-                });
-            </script>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-    <?php endif; ?>
+    <script>
+        let currentPage = 1; // Start with the first page
+        const productsPerPage = 12; // Number of products per page
 
-    <?php if(session()->get('error')): ?>
-        <script>
-            iziToast.error({
-                title: 'Error',
-                message: '<?php echo e(session()->get('error')); ?>',
+        $(document).on('click', '#loadMore', function() {
+            currentPage++; // Increment the page number
+            $.ajax({
+                url: '<?php echo e(route('load.more.products')); ?>', // Adjust the route to match your web.php
+                method: 'GET',
+                data: {
+                    page: currentPage,
+                    per_page: productsPerPage
+                },
+                success: function(response) {
+                    // Convert the HTML string into jQuery elements
+                    const newProducts = $(response.html);
+
+                    // Hide the new products initially
+                    newProducts.hide();
+
+                    // Append them to the container
+                    $('#products').append(newProducts);
+
+                    // Fade in the new products smoothly
+                    newProducts.fadeIn(600);
+
+                    // Remove the "Show More" button if there are no more products to load
+                    if (response.remaining <= 0) {
+                        $('#loadMore').remove();
+                    }
+                },
+                error: function(xhr) {
+                    console.error(xhr.responseText); // Log any error messages for debugging
+                }
             });
-        </script>
-    <?php endif; ?>
-    <?php if(session()->get('success')): ?>
-        <script>
-            iziToast.success({
-                position: 'topRight',
-                message: '<?php echo e(session()->get('success')); ?>',
-            });
-        </script>
-    <?php endif; ?>
+        });
+    </script>
+
     <?php echo $__env->yieldPushContent('script'); ?>
 </body>
 
