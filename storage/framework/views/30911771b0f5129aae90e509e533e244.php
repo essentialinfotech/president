@@ -35,6 +35,7 @@
                         Product</a></li>
                 <li> <a href="<?php echo e(route('admin.product-section')); ?>"><i class="bx bx-right-arrow-alt"></i>Product
                         Section</a></li>
+                <li> <a href="<?php echo e(route('admin.shipping-cost')); ?>"><i class="bx bx-right-arrow-alt"></i>Shipping Cost Setup</a></li>
             </ul>
         </li>
         <li>

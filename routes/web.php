@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminReportController;
 use App\Http\Controllers\Admin\AdminReturnController;
 use App\Http\Controllers\Admin\AdminSettingController;
+use App\Http\Controllers\Admin\AdminShippingCostController;
 use App\Http\Controllers\Admin\AdminSocialItemController;
 use App\Http\Controllers\Admin\AdminYoutubeVideoController;
 use App\Http\Controllers\AdminController;
@@ -188,7 +189,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('admin/products/variant-update/{id}', [AdminProductController::class, 'UpateVariant'])->name('admin.product-variant-update');
     Route::get('admin/products/variant-delete/{id}', [AdminProductController::class, 'DeleteVariant'])->name('admin.product-variant-delete');
 
-
+    // Shipping Cost
+    Route::get('/admin/shipping-costs', [AdminShippingCostController::class, 'editShippingCosts'])->name('admin.shipping-cost');
+    Route::post('/admin/shipping-costs', [AdminShippingCostController::class, 'updateShippingCosts'])->name('admin.shipping-cost-update');
 
     //  Social-Items
     Route::resource('admin/social-items', AdminSocialItemController::class);

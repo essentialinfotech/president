@@ -51,15 +51,6 @@
                     <div class="single_product_pics">
                         <div class="row">
                             <div class="col-lg-2 thumbnails_col order-lg-1 order-2">
-                                {{-- <div class="single_product_thumbnails" style="overflow-y: scroll;">
-                                    <ul>
-                                        @foreach ($product->multi_photos as $key => $multi_photo)
-                                            <li class="mb-2 h-100 {{ $key == 0 ? 'active' : '' }}"><img
-                                                    src="{{ asset($multi_photo->photo_name) }}" alt=""
-                                                    data-image="{{ asset($multi_photo->photo_name) }}"></li>
-                                        @endforeach
-                                    </ul>
-                                </div> --}}
                                 <div class="single_product_thumbnails">
                                     <ul>
                                         @foreach ($product->multi_photos as $key => $multi_photo)

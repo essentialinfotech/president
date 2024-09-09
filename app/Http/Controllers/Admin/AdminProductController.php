@@ -278,7 +278,7 @@ class AdminProductController extends Controller
     public function DeleteVariant($id)
     {
         $variant = ProductVariant::find($id);
-        $variantSizes = ProductVariantSize::where('product_variant_id', $id)->get();
+        $variantSizes = ProductVariantSize::where('product_variant_id', $variant->id)->get();
 
         foreach ($variantSizes as $size) {
             $size->delete();

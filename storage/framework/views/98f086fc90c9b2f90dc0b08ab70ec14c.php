@@ -467,41 +467,36 @@ unset($__errorArgs, $__bag); ?>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startPush('script'); ?>
+    
     <script>
         $(document).ready(function() {
-            // Initial total product price from server-side
+            // Set the dynamic shipping costs from PHP
+            var insideDhakaCost = <?php echo e($insideDhakaCost); ?>;
+            var outsideDhakaCost = <?php echo e($outsideDhakaCost); ?>;
             var initialTotalProductPrice = <?php echo e($totalProductPrice); ?>;
 
-            // Function to update the summary
             function updateSummary() {
                 let shippingCost = 0;
 
-                // Determine the shipping cost based on selected option
                 if ($('#insideDhaka').is(':checked')) {
-                    shippingCost = 70;
+                    shippingCost = insideDhakaCost;
                 } else if ($('#outsideDhaka').is(':checked')) {
-                    shippingCost = 120;
+                    shippingCost = outsideDhakaCost;
                 }
 
-                // Update the shipping cost in the summary
                 $('#shippingCost').text(shippingCost + ' BDT');
 
-                // Compute total product price after discount and add shipping cost
                 let totalProductPrice = initialTotalProductPrice + shippingCost;
-
-                // Update the total product price in the summary
                 $('#totalProductPrice').text(totalProductPrice + ' BDT');
+
+                // Update hidden input for shipping cost
                 $('#form_shipping_cost_value').val(shippingCost);
             }
 
-
-
-            // Bind the updateSummary function to radio button change events
             $('input[name="shipping_cost_check"]').on('change', function() {
                 updateSummary();
             });
 
-            // Initialize summary on page load
             updateSummary();
         });
     </script>

@@ -379,7 +379,7 @@
 @endsection
 
 @push('script')
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             // Initial total product price from server-side
             var initialTotalProductPrice = {{ $totalProductPrice }};
@@ -414,6 +414,38 @@
             });
 
             // Initialize summary on page load
+            updateSummary();
+        });
+    </script> --}}
+    <script>
+        $(document).ready(function() {
+            // Set the dynamic shipping costs from PHP
+            var insideDhakaCost = {{ $insideDhakaCost }};
+            var outsideDhakaCost = {{ $outsideDhakaCost }};
+            var initialTotalProductPrice = {{ $totalProductPrice }};
+
+            function updateSummary() {
+                let shippingCost = 0;
+
+                if ($('#insideDhaka').is(':checked')) {
+                    shippingCost = insideDhakaCost;
+                } else if ($('#outsideDhaka').is(':checked')) {
+                    shippingCost = outsideDhakaCost;
+                }
+
+                $('#shippingCost').text(shippingCost + ' BDT');
+
+                let totalProductPrice = initialTotalProductPrice + shippingCost;
+                $('#totalProductPrice').text(totalProductPrice + ' BDT');
+
+                // Update hidden input for shipping cost
+                $('#form_shipping_cost_value').val(shippingCost);
+            }
+
+            $('input[name="shipping_cost_check"]').on('change', function() {
+                updateSummary();
+            });
+
             updateSummary();
         });
     </script>

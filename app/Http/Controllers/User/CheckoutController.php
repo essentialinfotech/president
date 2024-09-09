@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\ShippingCost;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,9 +19,10 @@ class CheckoutController extends Controller
         if (empty($cart)) {
             return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
         }
+        $insideDhakaCost = ShippingCost::where('location', 'inside_dhaka')->first()->cost;
+        $outsideDhakaCost = ShippingCost::where('location', 'outside_dhaka')->first()->cost;
 
-
-        return view('frontend.pages.checkout.index', compact('cart'));
+        return view('frontend.pages.checkout.index', compact('cart','insideDhakaCost', 'outsideDhakaCost'));
     }
     
 
