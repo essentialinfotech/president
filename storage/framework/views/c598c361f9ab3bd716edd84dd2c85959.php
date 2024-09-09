@@ -51,7 +51,6 @@
                     <div class="single_product_pics">
                         <div class="row">
                             <div class="col-lg-2 thumbnails_col order-lg-1 order-2">
-                                
                                 <div class="single_product_thumbnails">
                                     <ul>
                                         <?php $__currentLoopData = $product->multi_photos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $multi_photo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

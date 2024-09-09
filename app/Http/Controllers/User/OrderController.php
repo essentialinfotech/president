@@ -13,9 +13,9 @@ class OrderController extends Controller
     {
         $order = Order::where('invoice_no', $request->invoice_no)->first();
 
-        if ($order && $order->status != 'Cancelled') {
+        if ($order && $order->status != 'cancel') {
             // Update order status and cancel date
-            $order->status = 'Cancelled';
+            $order->status = 'cancel';
             $order->cancel_date = Carbon::now()->format('d F Y');
             $order->save();
 

@@ -35,7 +35,8 @@
                         Product</a></li>
                 <li> <a href="{{ route('admin.product-section') }}"><i class="bx bx-right-arrow-alt"></i>Product
                         Section</a></li>
-                <li> <a href="{{ route('admin.shipping-cost') }}"><i class="bx bx-right-arrow-alt"></i>Shipping Cost Setup</a></li>
+                <li> <a href="{{ route('admin.shipping-cost') }}"><i class="bx bx-right-arrow-alt"></i>Shipping Cost
+                        Setup</a></li>
             </ul>
         </li>
         <li>
@@ -46,6 +47,7 @@
             </a>
             <ul>
                 <li> <a href="{{ route('pending.order') }}"><i class="bx bx-right-arrow-alt"></i>Pending Orders</a></li>
+                <li> <a href="{{ route('admin.cancel.order') }}"><i class="bx bx-right-arrow-alt"></i>Cancel Orders</a></li>
                 <li> <a href="{{ route('admin.confirmed.order') }}"><i class="bx bx-right-arrow-alt"></i>Confirm
                         Orders</a></li>
                 <li> <a href="{{ route('admin.processing.order') }}"><i class="bx bx-right-arrow-alt"></i>Processing
@@ -116,6 +118,13 @@
                     <a href="{{ route('admin.about-page') }}"><i class="bx bx-right-arrow-alt"></i>About Page</a>
                 </li>
             </ul>
+        </li>
+        <li>
+            <a href="{{ route('admin.customers') }}">
+                <div class="parent-icon"><i class='bx bxs-user-voice'></i>
+                </div>
+                <div class="menu-title">All Customer</div>
+            </a>
         </li>
         <li>
             <a href="{{ route('admin.contact-page') }}">

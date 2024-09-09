@@ -84,9 +84,9 @@
                                                     </td>
 
                                                     <td class="col-md-2">
-                                                        <label><?php echo e($item->price); ?> BDT 
+                                                        <label><?php echo e($item->price); ?> BDT
                                                         </label>
-                                                    </td> 
+                                                    </td>
                                                     <td class="col-md-2">
                                                         <label>
                                                             <?php echo e($item->price * $item->qty); ?>

@@ -11,6 +11,7 @@ use App\Models\ProductVariantSize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 class AdminOrderController extends Controller
 {
@@ -20,6 +21,9 @@ class AdminOrderController extends Controller
         $orders = Order::where('status', 'pending')->orderBy('id', 'DESC')->get();
         return view('backend.orders.pending_orders', compact('orders'));
     } // End Method 
+
+
+
 
 
     public function AdminOrderDetails($order_id)
@@ -34,6 +38,11 @@ class AdminOrderController extends Controller
         return view('backend.orders.admin_order_details', compact('order', 'orderItem'));
     } // End Method 
 
+    public function AdminCancelOrder()
+    {
+        $orders = Order::where('status', 'cancel')->orderBy('id', 'DESC')->get();
+        return view('backend.orders.cancel_orders', compact('orders'));
+    } // End Method 
 
     public function AdminConfirmedOrder()
     {
@@ -55,6 +64,21 @@ class AdminOrderController extends Controller
         return view('backend.orders.delivered_orders', compact('orders'));
     } // End Method 
 
+
+    public function PendingToCancel($order_id)
+    {
+        Order::findOrFail($order_id)->update([
+            'status' => 'cancel',
+            'cancel_date' => Carbon::now()->format('d F Y'),
+        ]);
+
+        $notification = array(
+            'message' => 'Order Cancel Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('admin.cancel.order')->with($notification);
+    } // End Method 
 
     public function PendingToConfirm($order_id)
     {

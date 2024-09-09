@@ -1,5 +1,5 @@
-@extends('admin.admin_dashboard')
-@section('admin')
+
+<?php $__env->startSection('admin'); ?>
     <div class="page-content">
         <!--breadcrumb-->
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
@@ -22,12 +22,12 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex flex-column align-items-center text-center">
-                                    <img src="{{ @Auth::user()->photo ? asset('upload/admin_images/' . Auth::user()->photo) : asset('adminbackend/assets/images/avatars/avatar-2.png') }}"
+                                    <img src="<?php echo e(@Auth::user()->photo ? asset('upload/admin_images/' . Auth::user()->photo) : asset('adminbackend/assets/images/avatars/avatar-2.png')); ?>"
                                         alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
                                     <div class="mt-3">
-                                        <h4>{{ Auth::user()->name }}</h4>
-                                        <p class="text-secondary mb-1">{{ Auth::user()->username }}</p>
-                                        <p class="text-muted font-size-sm">{{ Auth::user()->address }}</p>
+                                        <h4><?php echo e(Auth::user()->name); ?></h4>
+                                        <p class="text-secondary mb-1"><?php echo e(Auth::user()->username); ?></p>
+                                        <p class="text-muted font-size-sm"><?php echo e(Auth::user()->address); ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -36,9 +36,9 @@
                     <div class="col-lg-8">
                         <div class="card">
                             <div class="card-body">
-                                <form action="{{ route('admin.profile.store') }}" method="post"
+                                <form action="<?php echo e(route('admin.profile.store')); ?>" method="post"
                                     enctype="multipart/form-data">
-                                    @csrf
+                                    <?php echo csrf_field(); ?>
 
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
@@ -46,11 +46,25 @@
                                         </div>
                                         <div class="col-sm-9 text-secondary">
                                             <input type="text" name="name"
-                                                class="form-control @error('name') is-invalid @enderror"
-                                                value="{{ Auth::user()->name }}" />
-                                            @error('name')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
+                                                class="form-control <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                                                value="<?php echo e(Auth::user()->name); ?>" />
+                                            <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <div class="text-danger"><?php echo e($message); ?></div>
+                                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -59,11 +73,25 @@
                                         </div>
                                         <div class="col-sm-9 text-secondary">
                                             <input type="text" name="email"
-                                                class="form-control @error('email') is-invalid @enderror"
-                                                value="{{ Auth::user()->email }}" />
-                                            @error('email')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
+                                                class="form-control <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                                                value="<?php echo e(Auth::user()->email); ?>" />
+                                            <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <div class="text-danger"><?php echo e($message); ?></div>
+                                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -76,11 +104,18 @@
                                                     <div class="input-group-text">+88</div>
                                                 </div>
                                                 <input type="number" name="phone" class="form-control" id="phone"
-                                                    value="{{ Auth::user()->phone }}">
+                                                    value="<?php echo e(Auth::user()->phone); ?>">
                                             </div>
-                                            @error('phone')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
+                                            <?php $__errorArgs = ['phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <div class="text-danger"><?php echo e($message); ?></div>
+                                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -89,7 +124,7 @@
                                         </div>
                                         <div class="col-sm-9 text-secondary">
                                             <input type="text" name="address" class="form-control"
-                                                value="{{ Auth::user()->address }}" />
+                                                value="<?php echo e(Auth::user()->address); ?>" />
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -106,7 +141,7 @@
                                         </div>
                                         <div class="col-sm-9 text-secondary">
                                             <img id="profile-photo"
-                                                src="{{ @Auth::user()->photo ? asset('upload/admin_images/' . Auth::user()->photo) : asset('upload/no_image.jpg') }}"
+                                                src="<?php echo e(@Auth::user()->photo ? asset('upload/admin_images/' . Auth::user()->photo) : asset('upload/no_image.jpg')); ?>"
                                                 alt="profile-photo" style="width: 100px;">
                                         </div>
                                     </div>
@@ -124,4 +159,6 @@
             </div>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.admin_dashboard', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\EIT2024\BagsLaravelWebsites\PresidentWebsite - size variant\resources\views/admin/admin_profile_view.blade.php ENDPATH**/ ?>

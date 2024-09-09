@@ -38,11 +38,23 @@ class UserController extends Controller
     public function UserProfileStore(Request $request)
     {
         // Validation
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'phone' => 'required',
-        ]);
+        $request->validate(
+            [
+                // 'name' => 'required',
+                'name' => [
+                    'required',
+                    'string',
+                    'max:255',
+                    'regex:/^[a-zA-Z][a-zA-Z0-9 ]*$/',
+                ],
+                'email' => 'required|email|unique:users,email,' . Auth::user()->id,
+                'phone' => 'required|digits:11',
+            ],
+            [
+                'name.regex' => 'Please enter a valid name using letters and spaces only',
+                'phone' => 'The Phone Number is Invalid!',
+            ]
+        );
 
         $data = User::find(Auth::user()->id);
         $data->name = $request->name;

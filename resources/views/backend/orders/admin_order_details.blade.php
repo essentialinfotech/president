@@ -93,12 +93,6 @@
                                 <th>{{ $order->payment_method }}</th>
                             </tr>
 
-
-                            {{-- <tr>
-                                <th>Transx ID:</th>
-                                <th>{{ $order->transaction_id }}</th>
-                            </tr> --}}
-
                             <tr>
                                 <th>Invoice:</th>
                                 <th class="text-danger">{{ $order->invoice_no }}</th>
@@ -113,14 +107,18 @@
                                 <th>Order Status:</th>
                                 <th><span class="badge bg-danger" style="font-size: 15px;">{{ $order->status }}</span></th>
                             </tr>
-
-
                             <tr>
                                 <th> </th>
                                 <th>
                                     @if ($order->status == 'pending')
                                         <a href="{{ route('pending-confirm', $order->id) }}"
-                                            class="btn btn-block btn-success" id="confirm">Confirm Order</a>
+                                            class="btn btn-block btn-success" id="confirm"
+                                            onclick="return confirm('Are you sure you want to Confirm this order?');">Confirm
+                                            Order</a>
+                                        <a href="{{ route('pending-cancel', $order->id) }}"
+                                            class="btn btn-block btn-success" id="cancel"
+                                            onclick="return confirm('Are you sure you want to Cancel this order?');">Cancel
+                                            Order</a>
                                     @elseif($order->status == 'confirm')
                                         <a href="{{ route('confirm-processing', $order->id) }}"
                                             class="btn btn-block btn-success" id="processing">Processing Order</a>
@@ -128,9 +126,6 @@
                                         <a href="{{ route('processing-delivered', $order->id) }}"
                                             class="btn btn-block btn-success" id="delivered">Delivered Order</a>
                                     @endif
-
-
-
                                 </th>
                             </tr>
 
@@ -178,15 +173,24 @@
                                         <label>Quantity </label>
                                     </td>
 
-                                    <td class="col-md-3">
+                                    <td class="col-md-2">
                                         <label>Price </label>
+                                    </td>
+
+                                    <td class="col-md-2">
+                                        <label>Sub Total </label>
                                     </td>
 
                                 </tr>
 
-
+                                @php
+                                    $grandTotal = 0;
+                                @endphp
                                 @foreach ($orderItem as $item)
                                     @php
+                                        $totalPrice = $item->price * $item->qty;
+                                        $grandTotal += $totalPrice;
+
                                         // Get the variant based on the color (if applicable) and product ID
                                         $variant = $item->product->product_variants
                                             ->where('color', $item->color)
@@ -229,13 +233,22 @@
                                             <label>{{ $item->qty }} </label>
                                         </td>
 
-                                        <td class="col-md-3">
-                                            <label>{{ $item->price }} BDT <br> Total = {{ $item->price * $item->qty }}
+                                        <td class="col-md-2">
+                                            <label>{{ $item->price }} BDT
+                                            </label>
+                                        </td>
+
+                                        <td class="col-md-2">
+                                            <label>{{ $item->price * $item->qty }}
                                                 BDT
                                             </label>
                                         </td>
                                     </tr>
                                 @endforeach
+                                <tr>
+                                    <td colspan="8" class="text-end"><strong>Grand Total:</strong></td>
+                                    <td>{{ $grandTotal }} BDT</td>
+                                </tr>
 
                             </tbody>
                         </table>

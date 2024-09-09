@@ -93,9 +93,6 @@
                                 <th><?php echo e($order->payment_method); ?></th>
                             </tr>
 
-
-                            
-
                             <tr>
                                 <th>Invoice:</th>
                                 <th class="text-danger"><?php echo e($order->invoice_no); ?></th>
@@ -110,14 +107,18 @@
                                 <th>Order Status:</th>
                                 <th><span class="badge bg-danger" style="font-size: 15px;"><?php echo e($order->status); ?></span></th>
                             </tr>
-
-
                             <tr>
                                 <th> </th>
                                 <th>
                                     <?php if($order->status == 'pending'): ?>
                                         <a href="<?php echo e(route('pending-confirm', $order->id)); ?>"
-                                            class="btn btn-block btn-success" id="confirm">Confirm Order</a>
+                                            class="btn btn-block btn-success" id="confirm"
+                                            onclick="return confirm('Are you sure you want to Confirm this order?');">Confirm
+                                            Order</a>
+                                        <a href="<?php echo e(route('pending-cancel', $order->id)); ?>"
+                                            class="btn btn-block btn-success" id="cancel"
+                                            onclick="return confirm('Are you sure you want to Cancel this order?');">Cancel
+                                            Order</a>
                                     <?php elseif($order->status == 'confirm'): ?>
                                         <a href="<?php echo e(route('confirm-processing', $order->id)); ?>"
                                             class="btn btn-block btn-success" id="processing">Processing Order</a>
@@ -125,9 +126,6 @@
                                         <a href="<?php echo e(route('processing-delivered', $order->id)); ?>"
                                             class="btn btn-block btn-success" id="delivered">Delivered Order</a>
                                     <?php endif; ?>
-
-
-
                                 </th>
                             </tr>
 
@@ -175,15 +173,24 @@
                                         <label>Quantity </label>
                                     </td>
 
-                                    <td class="col-md-3">
+                                    <td class="col-md-2">
                                         <label>Price </label>
+                                    </td>
+
+                                    <td class="col-md-2">
+                                        <label>Sub Total </label>
                                     </td>
 
                                 </tr>
 
-
+                                <?php
+                                    $grandTotal = 0;
+                                ?>
                                 <?php $__currentLoopData = $orderItem; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <?php
+                                        $totalPrice = $item->price * $item->qty;
+                                        $grandTotal += $totalPrice;
+
                                         // Get the variant based on the color (if applicable) and product ID
                                         $variant = $item->product->product_variants
                                             ->where('color', $item->color)
@@ -226,14 +233,23 @@
                                             <label><?php echo e($item->qty); ?> </label>
                                         </td>
 
-                                        <td class="col-md-3">
-                                            <label><?php echo e($item->price); ?> BDT <br> Total = <?php echo e($item->price * $item->qty); ?>
+                                        <td class="col-md-2">
+                                            <label><?php echo e($item->price); ?> BDT
+                                            </label>
+                                        </td>
+
+                                        <td class="col-md-2">
+                                            <label><?php echo e($item->price * $item->qty); ?>
 
                                                 BDT
                                             </label>
                                         </td>
                                     </tr>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <tr>
+                                    <td colspan="8" class="text-end"><strong>Grand Total:</strong></td>
+                                    <td><?php echo e($grandTotal); ?> BDT</td>
+                                </tr>
 
                             </tbody>
                         </table>

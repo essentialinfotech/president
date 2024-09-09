@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\Admin\AdminBlogController;
+use App\Http\Controllers\Admin\AdminCustomerController;
 use App\Http\Controllers\Admin\AdminGalleryController;
 use App\Http\Controllers\Admin\AdminHomePageController;
 use App\Http\Controllers\Admin\AdminOrderController;
@@ -207,6 +208,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/pending/order', 'PendingOrder')->name('pending.order');
         Route::get('/admin/order/details/{order_id}', 'AdminOrderDetails')->name('admin.order.details');
 
+        Route::get('/admin/cancel/order', 'AdminCancelOrder')->name('admin.cancel.order');
         Route::get('/admin/confirmed/order', 'AdminConfirmedOrder')->name('admin.confirmed.order');
 
         Route::get('/admin/processing/order', 'AdminProcessingOrder')->name('admin.processing.order');
@@ -214,12 +216,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/admin/delivered/order', 'AdminDeliveredOrder')->name('admin.delivered.order');
 
         Route::get('/pending/confirm/{order_id}', 'PendingToConfirm')->name('pending-confirm');
+        Route::get('/pending/cancel/{order_id}', 'PendingToCancel')->name('pending-cancel');
         Route::get('/confirm/processing/{order_id}', 'ConfirmToProcess')->name('confirm-processing');
 
         Route::get('/processing/delivered/{order_id}', 'ProcessToDelivered')->name('processing-delivered');
 
         Route::get('/admin/invoice/download/{order_id}', 'AdminInvoiceDownload')->name('admin.invoice.download');
     });
+
+    Route::get('/admin/all-customer',[AdminCustomerController::class,'AllCustomer'])->name('admin.customers');
 
 
 

@@ -93,8 +93,6 @@
                     <div>
                         <h5 class="mb-0">Pending Orders</h5>
                     </div>
-                    <div class="font-22 ms-auto"><i class="bx bx-dots-horizontal-rounded"></i>
-                    </div>
                 </div>
                 <hr>
                 <div class="table-responsive">
@@ -126,9 +124,14 @@
                                     </td>
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
                         </tbody>
                     </table>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php echo e($orders->links('pagination::bootstrap-5')); ?>
+
+                    </div>
                 </div>
             </div>
         </div>

@@ -15,7 +15,7 @@ class AdminController extends Controller
 {
     public function AdminDashboard()
     {
-        $data['orders'] = Order::latest()->get();
+        $data['orders'] = Order::latest()->paginate(12);
         return view('admin.index', $data);
     }
 
@@ -31,9 +31,38 @@ class AdminController extends Controller
 
     public function AdminProfileStore(Request $request)
     {
+        // Validation
+        $request->validate(
+            [
+                // 'name' => 'required',
+                'name' => [
+                    'required',
+                    'string',
+                    'max:255',
+                    'regex:/^[a-zA-Z][a-zA-Z0-9 ]*$/',
+                ],
+                'email' => 'required|email|unique:users,email,' . Auth::user()->id,
+            ],
+            [
+                'name.regex' => 'Please enter a valid name using letters and spaces only',
+            ]
+        );
+
         $data = User::find(Auth::user()->id);
         $data->name = $request->name;
         $data->email = $request->email;
+
+        if ($request->phone) {
+            $request->validate(
+                [
+                    'phone' => 'required|digits:11',
+                ],
+                [
+                    'phone' => 'The Phone Number is Invalid!',
+                    'phone.required' => 'The Phone Number is Required!',
+                ]
+            );
+        }
         $data->phone = $request->phone;
         // $data->address = $request->address;
 
