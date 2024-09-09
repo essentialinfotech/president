@@ -97,8 +97,11 @@
                                             <h6 class="mb-0">Photo</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="file" name="photo" class="form-control"
+                                            <input type="file" name="photo" class="form-control @error('photo') is-invalid @enderror"
                                                 onchange="document.getElementById('profile-photo').src = window.URL.createObjectURL(this.files[0])" />
+                                            @error('photo')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="row mb-3">

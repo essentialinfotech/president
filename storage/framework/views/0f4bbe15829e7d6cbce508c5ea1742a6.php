@@ -15,7 +15,7 @@
                             data-bs-toggle="dropdown" aria-expanded="false"> <i class='bx bx-category'></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
-                           
+
                         </div>
                     </li>
                     <li class="nav-item dropdown dropdown-large d-none">
@@ -32,7 +32,7 @@
                                 </div>
                             </a>
                             <div class="header-notifications-list">
-                               
+
                             </div>
                             <a href="javascript:;">
                                 <div class="text-center msg-footer">View All Notifications</div>
@@ -53,8 +53,8 @@
                                 </div>
                             </a>
                             <div class="header-message-list">
-                               
-                        </div>
+
+                            </div>
                     </li>
                 </ul>
             </div>
@@ -75,14 +75,8 @@
                     <li><a class="dropdown-item" href="<?php echo e(route('admin.change.password')); ?>"><i
                                 class="bx bx-cog"></i><span>Change Password</span></a>
                     </li>
-                    <li><a class="dropdown-item" href="javascript:;"><i
+                    <li><a class="dropdown-item" href="<?php echo e(route('admin.dashboard')); ?>"><i
                                 class='bx bx-home-circle'></i><span>Dashboard</span></a>
-                    </li>
-                    <li><a class="dropdown-item" href="javascript:;"><i
-                                class='bx bx-dollar-circle'></i><span>Earnings</span></a>
-                    </li>
-                    <li><a class="dropdown-item" href="javascript:;"><i
-                                class='bx bx-download'></i><span>Downloads</span></a>
                     </li>
                     <li>
                         <div class="dropdown-divider mb-0"></div>

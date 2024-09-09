@@ -87,7 +87,7 @@ unset($__errorArgs, $__bag); ?>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 text-end"> <a
-                                                    href="authentication-forgot-password.html">Forgot Password ?</a>
+                                                    href="<?php echo e(route('password.request')); ?>">Forgot Password ?</a>
                                             </div>
                                             <div class="col-12">
                                                 <div class="d-grid">

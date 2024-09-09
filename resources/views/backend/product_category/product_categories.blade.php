@@ -25,7 +25,7 @@
         <!--end breadcrumb-->
         <hr />
         <div class="card">
-            @if ($errors->any())
+            {{-- @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
                         @foreach ($errors->all() as $error)
@@ -33,7 +33,7 @@
                         @endforeach
                     </ul>
                 </div>
-            @endif
+            @endif --}}
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -229,7 +229,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save Category</button>
                     </div>
                 </form>
             </div>

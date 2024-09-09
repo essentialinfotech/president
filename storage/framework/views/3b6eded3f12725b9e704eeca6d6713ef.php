@@ -77,7 +77,7 @@
     <!-- Bootstrap JS -->
     <script src="<?php echo e(asset('adminbackend/assets/js/bootstrap.bundle.min.js')); ?>"></script>
     <!--plugins-->
- 
+
     <script src="<?php echo e(asset('adminbackend/assets/plugins/simplebar/js/simplebar.min.js')); ?>"></script>
     <script src="<?php echo e(asset('adminbackend/assets/plugins/metismenu/js/metisMenu.min.js')); ?>"></script>
     <script src="<?php echo e(asset('adminbackend/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js')); ?>"></script>
@@ -108,8 +108,19 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+    
+
     <?php if(Session::has('message')): ?>
         <script>
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "timeOut": "2000",
+                "extendedTimeOut": "1000",
+                "fadeOut": 1000,
+                "fadeIn": 300
+            };
+
             var type = "<?php echo e(Session::get('alert-type', 'info')); ?>";
             switch (type) {
                 case 'info':
@@ -127,6 +138,23 @@
             }
         </script>
     <?php endif; ?>
+
+    <?php if($errors->any()): ?>
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "timeOut": "4000",
+                "extendedTimeOut": "2000",
+                "fadeOut": 1000,
+                "fadeIn": 300
+            };
+
+            toastr.error("<?php echo e(implode('\n', $errors->all())); ?>");
+        </script>
+    <?php endif; ?>
+
+
 
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>

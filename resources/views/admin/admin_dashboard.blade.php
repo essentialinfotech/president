@@ -77,7 +77,7 @@
     <!-- Bootstrap JS -->
     <script src="{{ asset('adminbackend/assets/js/bootstrap.bundle.min.js') }}"></script>
     <!--plugins-->
- 
+
     <script src="{{ asset('adminbackend/assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
     <script src="{{ asset('adminbackend/assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
     <script src="{{ asset('adminbackend/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
@@ -109,8 +109,46 @@
     {{-- Toastr Js --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+    {{-- @if (Session::has('message'))
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "timeOut": "2000", // Default timeout (5 seconds)
+                "extendedTimeOut": "1000", // Extended timeout when hovering
+                "fadeOut": 1000, // Fade out duration
+                "fadeIn": 300 // Fade in duration
+            };
+
+            var type = "{{ Session::get('alert-type', 'info') }}";
+            switch (type) {
+                case 'info':
+                    toastr.info("{{ Session::get('message') }}");
+                    break;
+                case 'success':
+                    toastr.success("{{ Session::get('message') }}");
+                    break;
+                case 'warning':
+                    toastr.warning("{{ Session::get('message') }}");
+                    break;
+                case 'error':
+                    toastr.error("{{ Session::get('message') }}");
+                    break;
+            }
+        </script>
+    @endif --}}
+
     @if (Session::has('message'))
         <script>
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "timeOut": "2000",
+                "extendedTimeOut": "1000",
+                "fadeOut": 1000,
+                "fadeIn": 300
+            };
+
             var type = "{{ Session::get('alert-type', 'info') }}";
             switch (type) {
                 case 'info':
@@ -128,6 +166,23 @@
             }
         </script>
     @endif
+
+    @if ($errors->any())
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "timeOut": "4000",
+                "extendedTimeOut": "2000",
+                "fadeOut": 1000,
+                "fadeIn": 300
+            };
+
+            toastr.error("{{ implode('\n', $errors->all()) }}");
+        </script>
+    @endif
+
+
 
     {{-- Sweet Alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>

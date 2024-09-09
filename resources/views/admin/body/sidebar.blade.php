@@ -1,8 +1,8 @@
 <div class="sidebar-wrapper" data-simplebar="true">
     <div class="sidebar-header">
-        <div>
+        <a href="{{ route('admin.dashboard') }}">
             <img src="{{ asset($global_setting_data->logo) }}" class="logo-icon w-75" alt="logo icon">
-        </div>
+        </a>
         <div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
         </div>
     </div>
@@ -47,7 +47,8 @@
             </a>
             <ul>
                 <li> <a href="{{ route('pending.order') }}"><i class="bx bx-right-arrow-alt"></i>Pending Orders</a></li>
-                <li> <a href="{{ route('admin.cancel.order') }}"><i class="bx bx-right-arrow-alt"></i>Cancel Orders</a></li>
+                <li> <a href="{{ route('admin.cancel.order') }}"><i class="bx bx-right-arrow-alt"></i>Cancel Orders</a>
+                </li>
                 <li> <a href="{{ route('admin.confirmed.order') }}"><i class="bx bx-right-arrow-alt"></i>Confirm
                         Orders</a></li>
                 <li> <a href="{{ route('admin.processing.order') }}"><i class="bx bx-right-arrow-alt"></i>Processing

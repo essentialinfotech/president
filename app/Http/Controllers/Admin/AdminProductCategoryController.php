@@ -22,7 +22,7 @@ class AdminProductCategoryController extends Controller
      */
     public function index()
     {
-        $data['product_categories'] = ProductCategory::get();
+        $data['product_categories'] = ProductCategory::latest()->get();
         return view('backend.product_category.product_categories', $data);
     }
 
@@ -43,7 +43,15 @@ class AdminProductCategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:product_categories',
+            'name' => [
+                'required',
+                'string',
+                'unique:product_categories',
+                'max:255',
+                'regex:/^[a-zA-Z][a-zA-Z0-9 ]*$/',
+            ],
+        ], [
+            'name.regex' => 'Please enter a valid name using letters and spaces only',
         ]);
         $data = new ProductCategory();
 
@@ -69,14 +77,23 @@ class AdminProductCategoryController extends Controller
         $data->is_top = $request->is_top;
         $data->is_banner = $request->is_banner;
         $data->order = $request->order;
-        $data->save();
+        if ($data->save()) {
+            $notification = array(
+                'message' => 'Data Saved Successfully',
+                'alert-type' => 'success'
+            );
+        } else {
+            $notification = array(
+                'message' => 'The name has already been taken',
+                'alert-type' => 'warning'
+            );
+        }
 
-        $notification = array(
-            'message' => 'Data Saved Successfully',
-            'alert-type' => 'success'
-        );
+
         return redirect()->back()->with($notification);
     }
+
+
 
     /**
      * Display the specified resource.

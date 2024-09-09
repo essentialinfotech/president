@@ -67,6 +67,10 @@ class AdminController extends Controller
         // $data->address = $request->address;
 
         if ($request->file('photo')) {
+            $request->validate([
+                'photo' => 'required|mimes:jpeg,png,jpg,gif,bmp,svg,webp|max:20480', // 20MB max size
+            ]);
+
             $file = $request->file('photo');
             @unlink(public_path('upload/admin_images/' . $data->photo));
             $filename = date('YmdHi') . $file->getClientOriginalName();
