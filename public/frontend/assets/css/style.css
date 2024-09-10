@@ -1062,10 +1062,12 @@ header
   z-index: -1;
   transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
 }
+
 @media (max-width: 768px) {
   .header-area .main-nav .nav li.submenu ul {
-      left: 0; /* Ensure submenu is fully visible */
-      width: 100%;
+    left: 0;
+    /* Ensure submenu is fully visible */
+    width: 100%;
   }
 }
 
@@ -1124,18 +1126,19 @@ header
   right: 40px;
   display: none;
 }
+
 /* /////// */
 @media (max-width: 768px) {
   .header-area .main-nav .menu-trigger {
-      display: block;
+    display: block;
   }
 
   .header-area .main-nav .nav {
-      display: none;
+    display: none;
   }
 
   .header-area .main-nav .nav.active {
-      display: block;
+    display: block;
   }
 }
 
@@ -1243,6 +1246,7 @@ header
 .background-header .main-nav .menu-trigger.active span:after {
   background-color: #1e1e1e;
 }
+
 .menu-trigger.active span {
   background: transparent;
 }
@@ -1409,6 +1413,42 @@ header
     display: flex !important;
   }
 }
+
+/*  Dropdown menus scroll able*/
+.header-area .main-nav .nav li.submenu ul {
+  position: absolute;
+  box-shadow: 0 2px 28px 0 rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  top: 50px;
+  right: 0;
+  opacity: 0;
+  transform: translateY(+2em);
+  visibility: hidden;
+  z-index: -1;
+  transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+
+  /* Dynamically set height based on viewport */
+  max-height: calc(65vh - 65px);
+  /* Hide scrollbar but keep scrolling */
+  overflow-y: scroll;
+  scrollbar-width: none;
+  /* For Firefox */
+}
+
+.header-area .main-nav .nav li.submenu ul::-webkit-scrollbar {
+  display: none;
+  /* For Chrome, Safari, and Opera */
+}
+
+.header-area .main-nav .nav li.submenu:hover ul {
+  visibility: visible;
+  opacity: 1;
+  z-index: 1;
+  transform: translateY(0%);
+  transition-delay: 0s, 0s, 0.3s;
+  background: #ffffff;
+}
+
 
 
 /* 
