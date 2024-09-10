@@ -249,16 +249,7 @@
         });
     </script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var successAlert = document.getElementById('success-alert');
-            if (successAlert) {
-                setTimeout(function() {
-                    successAlert.style.display = 'none';
-                }, 5000); // 10000 milliseconds = 10 seconds
-            }
-        });
-    </script>
+ 
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('frontend.master_dashboard', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\EIT2024\BagsLaravelWebsites\PresidentWebsite - size variant\resources\views/frontend/pages/cart/index.blade.php ENDPATH**/ ?>

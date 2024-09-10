@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -73,7 +74,7 @@ class UserController extends Controller
         $data->save();
 
         $notification = array(
-            'message' => 'User Profile Updated Successfully',
+            'message' => 'User Profile Created Successfully',
             'alert-type' => 'success'
         );
         return redirect()->back()->with($notification);
@@ -102,8 +103,11 @@ class UserController extends Controller
     public function UserUpdateProfile(Request $request)
     {
         // Validation
-        $request->validate(
+        $validator = Validator::make(
+            $request->all(),
             [
+                // $request->validate(
+                //     [
                 // 'name' => 'required',
                 'name' => [
                     'required',
@@ -120,36 +124,46 @@ class UserController extends Controller
             ]
         );
 
-        // Update the new password
-        User::whereId(auth()->user()->id)->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address
-        ]);
+        if (!$validator->passes()) {
+            return response()->json(['code' => 0, 'error_message' => $validator->errors()->toArray()]);
+        } else {
+            // Update the new password
+            User::whereId(auth()->user()->id)->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->address
+            ]);
 
-        return back()->with("status", "Profile Updated Successfully");
+            return response()->json(['code' => 1, 'success_message' => 'Profile Updated Successfully']);
+        }
     }
 
 
     public function UserUpdatePassword(Request $request)
     {
         // Validation
-        $request->validate([
-            'old_password' => 'required',
-            'new_password' => 'required|confirmed'
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'old_password' => 'required',
+                'new_password' => 'required|confirmed'
+            ]
+        );
 
         // Match The Old Password
         if (!Hash::check($request->old_password, auth()->user()->password)) {
             return response()->json(['message' => "Old Password Doesn't Match!!"], 401);
         }
 
-        // Update the new password
-        User::whereId(auth()->user()->id)->update([
-            'password' => Hash::make($request->new_password)
-        ]);
-
-        return response()->json(['status' => "Password Changed Successfully"]);
+        if (!$validator->passes()) {
+            return response()->json(['code' => 0, 'error_message' => $validator->errors()->toArray()]);
+        } else {
+            // Update the new password
+            User::whereId(auth()->user()->id)->update([
+                'password' => Hash::make($request->new_password)
+            ]);
+            return response()->json(['code' => 1, 'success_message' => 'Password Changed Successfully']);
+        }
     }
 }

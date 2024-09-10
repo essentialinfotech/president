@@ -143,7 +143,7 @@
                 <button class="btn" aria-label="Search" onclick="openNav()">
                     <i class="fas fa-search" style="font-size: 20px;"></i>
                 </button>
-                
+
             </li>
             <?php if(Auth::check()): ?>
                 <li class="submenu">
@@ -174,7 +174,7 @@
         </ul>
         <button class="btn search_mobile_btn" onclick="openNav()">
             <i class="fas fa-search"></i>
-        </button>        
+        </button>
         <a class='menu-trigger'>
             <span>Menu</span>
         </a>
@@ -268,23 +268,67 @@
             $('.submenu > a').click(function(e) {
                 e.preventDefault(); // Prevent the default anchor behavior
 
-                // Check if submenu is already visible
+                // Get the current submenu <ul> and check if it is already open
                 var $submenu = $(this).siblings('ul');
                 var $otherSubmenus = $('.submenu ul').not($submenu);
 
-                // Close other open submenus
-                $otherSubmenus.slideUp();
+                // Close other open submenus and remove their active class
+                $otherSubmenus.slideUp().removeClass('active');
 
                 // Toggle current submenu
                 $submenu.slideToggle();
+
+                // Add or remove active class based on visibility of the current submenu
+                if ($submenu.is(':visible')) {
+                    $submenu.addClass('active');
+                } else {
+                    $submenu.removeClass('active');
+                }
+
+                // Prevent event propagation to document click handler
+                e.stopPropagation();
             });
 
             // Close submenus when clicking outside of them
             $(document).click(function(e) {
                 var target = $(e.target);
                 if (!target.closest('.submenu').length) {
-                    $('.submenu ul').slideUp(); // Close all submenus
+                    $('.submenu ul').slideUp().removeClass(
+                        'active'); // Close all submenus and remove active class
                 }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Function to enable hover effect on small devices
+            function enableHoverOnSmallDevices() {
+                if ($(window).width() > 1260) {
+                    $('.submenu').hover(
+                        function() {
+                            // On mouse enter, open the submenu and add 'active' class
+                            var $submenu = $(this).find('ul');
+                            $submenu.stop(true, true).slideDown().addClass('active');
+                        },
+                        function() {
+                            // On mouse leave, close the submenu and remove 'active' class
+                            var $submenu = $(this).find('ul');
+                            $submenu.stop(true, true).slideUp().removeClass('active');
+                        }
+                    );
+                } else {
+                    // Remove hover events for larger devices
+                    $('.submenu').off('mouseenter mouseleave');
+                }
+            }
+
+            // Run the function on page load
+            enableHoverOnSmallDevices();
+
+            // Run the function on window resize to handle dynamic resizing
+            $(window).resize(function() {
+                enableHoverOnSmallDevices();
             });
         });
     </script>

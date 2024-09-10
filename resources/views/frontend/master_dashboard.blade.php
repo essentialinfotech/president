@@ -113,7 +113,7 @@
             if (successAlert) {
                 setTimeout(function() {
                     successAlert.style.display = 'none';
-                }, 5000); // 10000 milliseconds = 10 seconds
+                }, 2000); // 10000 milliseconds = 10 seconds
             }
         });
     </script>

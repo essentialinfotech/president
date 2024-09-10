@@ -86,11 +86,6 @@
                                 <div class="card-body">
                                     <h4 class="card-title">Profile</h4>
 
-                                    
-                                    <div id="profileAlertMessage" class="alert" role="alert" style="display: none;">
-                                    </div>
-                                    
-
                                     <form id="updateProfileForm" action="<?php echo e(route('user.update.profile')); ?>" method="POST">
                                         <?php echo csrf_field(); ?>
                                         <div class="mb-3">
@@ -133,7 +128,11 @@
                                 <div class="card-body">
                                     <h4 class="card-title">Change Password</h4>
                                     
-                                    <div id="alertMessage" role="alert" style=""></div>
+                                    <div id="alertMessage" class="alert" role="alert" style="display: none;">
+                                    </div>
+                                    
+
+                                    
                                     
                                     <form id="updatePasswordForm" action="<?php echo e(route('user.update.password')); ?>"
                                         method="POST">
@@ -274,10 +273,27 @@ unset($__errorArgs, $__bag); ?>"
                     data: $(this).serialize(), // Serialize form data
                     success: function(response) {
                         // Handle success
-                        $('#alertMessage').text('Password changed successfully!')
-                            .addClass("alert-success")
-                            .removeClass("alert-danger")
-                            .show();
+                        // $('#alertMessage').text('Password changed successfully!')
+                        //     .addClass("alert-success")
+                        //     .removeClass("alert-danger")
+                        //     .show();
+                        if (response.code == 1) {
+                            // Show success message using iziToast
+                            iziToast.success({
+                                title: 'Success',
+                                position: 'topRight',
+                                message: response.success_message,
+                            });
+
+
+                        } else if (response.code == 0) {
+                            // Show error message using iziToast
+                            iziToast.error({
+                                title: 'Error',
+                                position: 'topRight',
+                                message: response.error_message,
+                            });
+                        }
                     },
                     error: function(response) {
                         // Handle validation errors
@@ -315,18 +331,30 @@ unset($__errorArgs, $__bag); ?>"
                 $('#name_error').text('');
                 $('#email_error').text('');
                 $('#phone_error').text('');
-                $('#profileAlertMessage').hide().removeClass("alert-success alert-danger");
 
                 $.ajax({
                     url: $(this).attr('action'), // The form action URL
                     method: $(this).attr('method'), // The form method (POST)
                     data: $(this).serialize(), // Serialize form data
                     success: function(response) {
-                        // Handle success
-                        $('#profileAlertMessage').text('Profile Updated Successfully!')
-                            .addClass("alert-success")
-                            .removeClass("alert-danger")
-                            .show();
+                        if (response.code == 1) {
+                            // Show success message using iziToast
+                            iziToast.success({
+                                title: 'Success',
+                                position: 'topRight',
+                                message: response.success_message,
+                            });
+
+
+                        } else if (response.code == 0) {
+                            // Show error message using iziToast
+                            iziToast.error({
+                                title: 'Error',
+                                position: 'topRight',
+                                message: response.error_message,
+                            });
+                        }
+
                     },
                     error: function(response) {
                         // Handle validation errors
@@ -341,12 +369,6 @@ unset($__errorArgs, $__bag); ?>"
                             if (errors.phone) {
                                 $('#phone_error').text(errors.phone[0]);
                             }
-                        } else {
-                            $('#profileAlertMessage').text(
-                                    'An error occurred. Please try again.')
-                                .addClass("alert-danger")
-                                .removeClass("alert-success")
-                                .show();
                         }
                     }
                 });

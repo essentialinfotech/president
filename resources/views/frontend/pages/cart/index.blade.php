@@ -246,14 +246,5 @@
         });
     </script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var successAlert = document.getElementById('success-alert');
-            if (successAlert) {
-                setTimeout(function() {
-                    successAlert.style.display = 'none';
-                }, 5000); // 10000 milliseconds = 10 seconds
-            }
-        });
-    </script>
+ 
 @endsection
