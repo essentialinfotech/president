@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 03, 2024 at 11:34 AM
+-- Generation Time: Sep 10, 2024 at 11:36 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.2.0
 
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -140,8 +140,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (29, '2024_01_24_140718_create_about_items_table', 15),
 (33, '2024_02_05_062408_create_galleries_table', 18),
 (34, '2024_02_05_134707_create_youtube_videos_table', 19),
+(59, '2024_09_09_094143_create_shipping_costs_table', 25),
+(58, '2024_08_26_141716_create_product_variant_sizes_table', 25),
 (44, '2024_01_22_064748_create_products_table', 23),
-(46, '2024_05_29_100948_create_product_variants_table', 23),
+(57, '2024_05_29_100948_create_product_variants_table', 25),
 (53, '2024_06_03_070119_create_orders_table', 24),
 (54, '2024_06_03_070244_create_order_items_table', 24);
 
@@ -154,11 +156,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE IF NOT EXISTS `orders` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED DEFAULT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `adress` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `post_code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `notes` text COLLATE utf8mb4_unicode_ci,
   `payment_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -166,6 +168,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `transaction_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sender_phone_number` text COLLATE utf8mb4_unicode_ci,
   `amount` double(8,2) NOT NULL,
+  `shipping_cost` float DEFAULT NULL,
   `order_number` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `invoice_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `order_date` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -184,7 +187,17 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `name`, `email`, `phone`, `address`, `post_code`, `notes`, `payment_type`, `payment_method`, `transaction_id`, `sender_phone_number`, `amount`, `shipping_cost`, `order_number`, `invoice_no`, `order_date`, `order_month`, `order_year`, `confirmed_date`, `processing_date`, `picked_date`, `shipped_date`, `delivered_date`, `cancel_date`, `return_date`, `return_reason`, `return_order`, `status`, `created_at`, `updated_at`) VALUES
+(1, 2, 'username', 'user@email.com', '01912395149', 'dfgdfgdfg', NULL, NULL, NULL, 'Cash On Delivery', NULL, NULL, 1010.00, 10, '66de98a5e11b7', 'CUST54905797', '09 September 2024', 'September', '2024', NULL, NULL, NULL, NULL, NULL, '09 September 2024', NULL, NULL, NULL, 'cancel', '2024-09-09 06:41:41', '2024-09-09 06:41:59'),
+(2, 2, 'username', 'user@email.com', '01912395149', 'dfgdfgdfg', NULL, NULL, NULL, 'Cash On Delivery', NULL, NULL, 600.00, 100, '66de99f4908e0', 'CUST10119356', '09 September 2024', 'September', '2024', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'pending', '2024-09-09 06:47:16', '2024-09-09 06:47:16'),
+(3, 2, 'username', 'user@email.com', '01912395149', 'dfgdfgdfg', NULL, NULL, NULL, 'bKash', NULL, NULL, 510.00, 10, '66de9a66d9882', 'CUST78604524', '09 September 2024', 'September', '2024', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'pending', '2024-09-09 06:49:10', '2024-09-09 06:49:10'),
+(4, 2, 'username', 'user@email.com', '01912395149', 'dfgdfgdfg', NULL, NULL, NULL, 'Cash On Delivery', NULL, NULL, 510.00, 10, '66dea39e18f6e', 'CUST50651326', '09 September 2024', 'September', '2024', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'pending', '2024-09-09 07:28:30', '2024-09-09 07:28:30');
 
 -- --------------------------------------------------------
 
@@ -206,7 +219,18 @@ CREATE TABLE IF NOT EXISTS `order_items` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `order_items_order_id_foreign` (`order_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `color`, `size`, `image`, `qty`, `price`, `created_at`, `updated_at`) VALUES
+(1, 1, 145, 'Black', 'XXL', 'upload/product/1809692452750361.jfif', '1', 500.00, '2024-09-09 06:41:41', '2024-09-09 06:41:41'),
+(2, 1, 145, 'Gray', 'XXL', 'upload/product/1809693157626108.png', '1', 500.00, '2024-09-09 06:41:41', '2024-09-09 06:41:41'),
+(3, 2, 145, 'Gray', 'XXL', 'upload/product/1809693157626108.png', '1', 500.00, '2024-09-09 06:47:16', '2024-09-09 06:47:16'),
+(4, 3, 145, 'Gray', 'XXL', 'upload/product/1809693157626108.png', '1', 500.00, '2024-09-09 06:49:10', '2024-09-09 06:49:10'),
+(5, 4, 145, 'Gray', 'XXL', 'upload/product/1809693157626108.png', '1', 500.00, '2024-09-09 07:28:30', '2024-09-09 07:28:30');
 
 -- --------------------------------------------------------
 
@@ -250,7 +274,7 @@ CREATE TABLE IF NOT EXISTS `page_items` (
 --
 
 INSERT INTO `page_items` (`id`, `about_heading`, `about_short_description`, `about_banner`, `about_seo_title`, `about_seo_meta_description`, `contact_heading`, `contact_short_description`, `contact_banner`, `contact_map`, `contact_seo_title`, `contact_seo_meta_description`, `term_condition_heading`, `term_condition_short_description`, `term_condition_banner`, `term_condition_seo_title`, `term_condition_seo_meta_description`, `term_condition_details`, `privacy_policy_heading`, `privacy_policy_short_description`, `privacy_policy_banner`, `privacy_policy_seo_title`, `privacy_policy_seo_meta_description`, `privacy_policy_details`, `created_at`, `updated_at`) VALUES
-(1, 'About Us', 'President Luggage has built a positive reputation globally  and Bangladesh is no exception. President Luggage offers Bangladeshi travellers the perfect blend of quality, style, innovation, and reliability  With its track record of excellence and customer satisfaction, President Luggage has garnered trust and admiration from travellers across Bangladesh.', 'upload/banner/1799640256029943.png', 'About Essential-Infotech Shop1 |  E-commerce Solution', 'E-commerce Solution', 'Ready to Get Started?', 'Speak directly to an Essential-Infotech representative to discuss your business opportunities!', 'upload/banner/1799470676258368.png', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14594.130748583118!2d90.3909307!3d23.8707225!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c5d8d8cbae23%3A0xb9d070d503afe8a0!2sESSENTIAL%20INFO-TECH!5e0!3m2!1sen!2sbd!4v1706952376494!5m2!1sen!2sbd\" width=\"100%\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>', 'Contact Essential-Infotech', 'Essential-Infotech provides IT Solutions including web development, software solutions and mobile application, also digital marketing & back-office support.', 'Terms & Conditions', 'Terms & ConditionsTerms & ConditionsTerms & ConditionsTerms & Conditions', 'upload/banner/1799640987047709.png', 'Terms & Conditions of Essential-Infotech', 'Terms & Conditions', '<div class=\"node-header\" style=\"box-sizing: border-box; position: relative; padding-right: 0px; padding-left: 0px; justify-content: space-between; color: #4a4a4a; font-family: \'Open Sans\', sans-serif; font-size: 14px; background-color: #ffffff;\">\r\n<div id=\"min-overide\" style=\"box-sizing: border-box; width: calc(100% - 48px); float: left;\">\r\n<h2 id=\"What_Are_Terms_And_Conditions_Agreements\" style=\"margin-right: 0px; margin-bottom: 1.75rem; margin-left: 0px; font-weight: 700; font-size: clamp(2rem, 4vw, 2.75rem); line-height: clamp(2.75rem, 4vw, 3.5rem); color: rgb(4, 12, 26); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: normal;\">What are Terms and Conditions Agreements?</h2><h1 style=\"font-size: 1.75em; margin-right: 0px; margin-bottom: 8px; margin-left: 0px; line-height: 1.25; color: rgb(0, 0, 0);\"><p style=\"margin-right: 0px; margin-bottom: 1.5rem; margin-left: 0px; color: rgb(4, 12, 26); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 19.2px; letter-spacing: normal;\">A Terms and Conditions agreement acts as a legal contract between you (the company) and the user. It\'s where you&nbsp;<span style=\"font-weight: 700;\">maintain your rights</span>&nbsp;to exclude users from your app in the event that they abuse your website/app, set out the rules for using your service and note other important details and disclaimers.</p></h1></div></div><div class=\"field field--name-field-sections field--type-entity-reference-revisions field--label-hidden field__items\" style=\"box-sizing: border-box; clear: left; color: #4a4a4a; font-family: \'Open Sans\', sans-serif; font-size: 14px; background-color: #ffffff;\"><div class=\"field__item\" style=\"box-sizing: border-box;\"><div class=\"paragraph paragraph--type-legacy paragraph--view-mode-default ds-1col clearfix\" style=\"box-sizing: border-box;\"><div class=\"ds-1col section section-11386 clearfix\" style=\"box-sizing: border-box;\"><div class=\"clearfix text-formatted field field--name-field-content field--type-text-long field--label-hidden field__item\" style=\"box-sizing: border-box;\"><ul style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1em; padding: 0px 0px 0px 24px; list-style-position: initial; list-style-image: initial;\">\r\n</ul>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>', 'Privacy Policy', 'Privacy PolicyPrivacy PolicyPrivacy PolicyPrivacy Policy', 'upload/banner/1799641037512959.png', 'Privacy Policy', 'Privacy Policy', '<h2 id=\"what-is-a-privacy-policy\" style=\"box-sizing: border-box; border: 0px solid; --tw-border-spacing-x: 0; --tw-border-spacing-y: 0; --tw-translate-x: 0; --tw-translate-y: 0; --tw-rotate: 0; --tw-skew-x: 0; --tw-skew-y: 0; --tw-scale-x: 1; --tw-scale-y: 1; --tw-scroll-snap-strictness: proximity; --tw-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ring-color: #3b82f680; --tw-ring-offset-shadow: 0 0 #0000; --tw-ring-shadow: 0 0 #0000; --tw-shadow: 0 0 #0000; --tw-shadow-colored: 0 0 #0000; font-size: 40px; margin: 1.2em 0px 1em; line-height: 1.1em; letter-spacing: -0.025em; color: #1f1e33; font-family: Helvetica, Arial, sans-serif;\"><span style=\"font-size: 19px; letter-spacing: normal;\">A&nbsp;</span><span style=\"border: 0px solid; --tw-border-spacing-x: 0; --tw-border-spacing-y: 0; --tw-translate-x: 0; --tw-translate-y: 0; --tw-rotate: 0; --tw-skew-x: 0; --tw-skew-y: 0; --tw-scale-x: 1; --tw-scale-y: 1; --tw-pan-x: ; --tw-pan-y: ; --tw-pinch-zoom: ; --tw-scroll-snap-strictness: proximity; --tw-gradient-from-position: ; --tw-gradient-via-position: ; --tw-gradient-to-position: ; --tw-ordinal: ; --tw-slashed-zero: ; --tw-numeric-figure: ; --tw-numeric-spacing: ; --tw-numeric-fraction: ; --tw-ring-inset: ; --tw-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ring-color: #3b82f680; --tw-ring-offset-shadow: 0 0 #0000; --tw-ring-shadow: 0 0 #0000; --tw-shadow: 0 0 #0000; --tw-shadow-colored: 0 0 #0000; --tw-blur: ; --tw-brightness: ; --tw-contrast: ; --tw-grayscale: ; --tw-hue-rotate: ; --tw-invert: ; --tw-saturate: ; --tw-sepia: ; --tw-drop-shadow: ; --tw-backdrop-blur: ; --tw-backdrop-brightness: ; --tw-backdrop-contrast: ; --tw-backdrop-grayscale: ; --tw-backdrop-hue-rotate: ; --tw-backdrop-invert: ; --tw-backdrop-opacity: ; --tw-backdrop-saturate: ; --tw-backdrop-sepia: ; font-weight: bolder; font-size: 19px; letter-spacing: normal;\">website’s privacy policy</span><span style=\"font-size: 19px; letter-spacing: normal;\">&nbsp;outlines if and how you collect, use, share, or sell your visitors’ personal information and is required under laws like the General Data Privacy Regulation (GDPR) and the California Consumer Privacy Act (CCPA).</span><br></h2>', NULL, '2024-08-08 18:25:51');
+(1, 'About Us', 'President Luggage has built a positive reputation globally  and Bangladesh is no exception. President Luggage offers Bangladeshi travellers the perfect blend of quality, style, innovation, and reliability  With its track record of excellence and customer satisfaction, President Luggage has garnered trust and admiration from travellers across Bangladesh.', 'upload/banner/1799640256029943.png', 'About Essential-Infotech Shop1 |  E-commerce Solution', 'E-commerce Solution', 'Ready to Get Started?', 'Speak directly to an Essential-Infotech representative to discuss your business opportunities!', 'upload/banner/1809244164290575.jpg', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14594.130748583118!2d90.3909307!3d23.8707225!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c5d8d8cbae23%3A0xb9d070d503afe8a0!2sESSENTIAL%20INFO-TECH!5e0!3m2!1sen!2sbd!4v1706952376494!5m2!1sen!2sbd\" width=\"100%\" height=\"100%\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>', 'Contact Essential-Infotech', 'Essential-Infotech provides IT Solutions including web development, software solutions and mobile application, also digital marketing & back-office support.', 'Terms & Conditions', 'Terms & ConditionsTerms & ConditionsTerms & ConditionsTerms & Conditions', 'upload/banner/1799640987047709.png', 'Terms & Conditions of Essential-Infotech', 'Terms & Conditions', '<div class=\"node-header\" style=\"box-sizing: border-box; position: relative; padding-right: 0px; padding-left: 0px; justify-content: space-between; color: #4a4a4a; font-family: \'Open Sans\', sans-serif; font-size: 14px; background-color: #ffffff;\">\r\n<div id=\"min-overide\" style=\"box-sizing: border-box; width: calc(100% - 48px); float: left;\">\r\n<h2 id=\"What_Are_Terms_And_Conditions_Agreements\" style=\"margin-right: 0px; margin-bottom: 1.75rem; margin-left: 0px; font-weight: 700; font-size: clamp(2rem, 4vw, 2.75rem); line-height: clamp(2.75rem, 4vw, 3.5rem); color: rgb(4, 12, 26); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: normal;\">What are Terms and Conditions Agreements?</h2><h1 style=\"font-size: 1.75em; margin-right: 0px; margin-bottom: 8px; margin-left: 0px; line-height: 1.25; color: rgb(0, 0, 0);\"><p style=\"margin-right: 0px; margin-bottom: 1.5rem; margin-left: 0px; color: rgb(4, 12, 26); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 19.2px; letter-spacing: normal;\">A Terms and Conditions agreement acts as a legal contract between you (the company) and the user. It\'s where you&nbsp;<span style=\"font-weight: 700;\">maintain your rights</span>&nbsp;to exclude users from your app in the event that they abuse your website/app, set out the rules for using your service and note other important details and disclaimers.</p></h1></div></div><div class=\"field field--name-field-sections field--type-entity-reference-revisions field--label-hidden field__items\" style=\"box-sizing: border-box; clear: left; color: #4a4a4a; font-family: \'Open Sans\', sans-serif; font-size: 14px; background-color: #ffffff;\"><div class=\"field__item\" style=\"box-sizing: border-box;\"><div class=\"paragraph paragraph--type-legacy paragraph--view-mode-default ds-1col clearfix\" style=\"box-sizing: border-box;\"><div class=\"ds-1col section section-11386 clearfix\" style=\"box-sizing: border-box;\"><div class=\"clearfix text-formatted field field--name-field-content field--type-text-long field--label-hidden field__item\" style=\"box-sizing: border-box;\"><ul style=\"box-sizing: border-box; margin-top: 0px; margin-bottom: 1em; padding: 0px 0px 0px 24px; list-style-position: initial; list-style-image: initial;\">\r\n</ul>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>', 'Privacy Policy', 'Privacy PolicyPrivacy PolicyPrivacy PolicyPrivacy Policy', 'upload/banner/1799641037512959.png', 'Privacy Policy', 'Privacy Policy', '<h2 id=\"what-is-a-privacy-policy\" style=\"box-sizing: border-box; border: 0px solid; --tw-border-spacing-x: 0; --tw-border-spacing-y: 0; --tw-translate-x: 0; --tw-translate-y: 0; --tw-rotate: 0; --tw-skew-x: 0; --tw-skew-y: 0; --tw-scale-x: 1; --tw-scale-y: 1; --tw-scroll-snap-strictness: proximity; --tw-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ring-color: #3b82f680; --tw-ring-offset-shadow: 0 0 #0000; --tw-ring-shadow: 0 0 #0000; --tw-shadow: 0 0 #0000; --tw-shadow-colored: 0 0 #0000; font-size: 40px; margin: 1.2em 0px 1em; line-height: 1.1em; letter-spacing: -0.025em; color: #1f1e33; font-family: Helvetica, Arial, sans-serif;\"><span style=\"font-size: 19px; letter-spacing: normal;\">A&nbsp;</span><span style=\"border: 0px solid; --tw-border-spacing-x: 0; --tw-border-spacing-y: 0; --tw-translate-x: 0; --tw-translate-y: 0; --tw-rotate: 0; --tw-skew-x: 0; --tw-skew-y: 0; --tw-scale-x: 1; --tw-scale-y: 1; --tw-pan-x: ; --tw-pan-y: ; --tw-pinch-zoom: ; --tw-scroll-snap-strictness: proximity; --tw-gradient-from-position: ; --tw-gradient-via-position: ; --tw-gradient-to-position: ; --tw-ordinal: ; --tw-slashed-zero: ; --tw-numeric-figure: ; --tw-numeric-spacing: ; --tw-numeric-fraction: ; --tw-ring-inset: ; --tw-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ring-color: #3b82f680; --tw-ring-offset-shadow: 0 0 #0000; --tw-ring-shadow: 0 0 #0000; --tw-shadow: 0 0 #0000; --tw-shadow-colored: 0 0 #0000; --tw-blur: ; --tw-brightness: ; --tw-contrast: ; --tw-grayscale: ; --tw-hue-rotate: ; --tw-invert: ; --tw-saturate: ; --tw-sepia: ; --tw-drop-shadow: ; --tw-backdrop-blur: ; --tw-backdrop-brightness: ; --tw-backdrop-contrast: ; --tw-backdrop-grayscale: ; --tw-backdrop-hue-rotate: ; --tw-backdrop-invert: ; --tw-backdrop-opacity: ; --tw-backdrop-saturate: ; --tw-backdrop-sepia: ; font-weight: bolder; font-size: 19px; letter-spacing: normal;\">website’s privacy policy</span><span style=\"font-size: 19px; letter-spacing: normal;\">&nbsp;outlines if and how you collect, use, share, or sell your visitors’ personal information and is required under laws like the General Data Privacy Regulation (GDPR) and the California Consumer Privacy Act (CCPA).</span><br></h2>', NULL, '2024-09-04 06:01:32');
 
 -- --------------------------------------------------------
 
@@ -435,8 +459,8 @@ INSERT INTO `products` (`id`, `product_category_id`, `product_name`, `product_sl
 (141, '10', 'Trolley Travel Bag PM 236-Q - 22\"', 'trolley-travel-bag-pm-236-q-22', '236-Q - 22\"', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:55:56', '2024-08-22 23:55:56'),
 (142, '9', 'Trolley Case 919- 28\"', 'trolley-case-919-28', 'QQ 919', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:56:36', '2024-08-22 23:56:36'),
 (143, '10', 'Trolley Travel Bag PM 236-Q - 24\"', 'trolley-travel-bag-pm-236-q-24', '236-Q - 24\"', NULL, NULL, NULL, NULL, '1', '2024-08-22 23:57:59', '2024-08-22 23:58:58'),
-(144, '9', 'Trolley Case 8786- 28\"', 'trolley-case-8786-28', '8786', NULL, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer', '<h2 style=\"margin: 11pt 0px; padding: 0px; font-size: 16pt; font-weight: 700; line-height: 1.45; color: rgb(0, 0, 0); font-family: Roboto, -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; letter-spacing: normal; white-space-collapse: break-spaces;\"><span data-spm-anchor-id=\"a2a0e.pdp_revamp.product_detail.i1.60e56fafPEgDNJ\" style=\"margin: 0px; padding: 0px; color: rgb(33, 33, 33); background-color: rgb(250, 250, 250); font-size: 10.5pt;\">Product details of 4 Layers Simple Shoe Rack Folding Shoe Cabinet Multi-layer Shoes Storage Organizer Space-Saving Shoes Shelf Door Color Matching Cabinets</span></h2><ul style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 10px; padding: 0px; list-style-position: initial; list-style-image: initial; font-family: Roboto, -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; font-size: 12px; letter-spacing: normal; white-space-collapse: break-spaces;\"><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">Step 1:</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Product Title: Simple Shoe Rack Folding Shoe Cabinet Multi-layer Shoes Storage Organizer</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Material: Polyurethane</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Category Path: Furniture &amp; Decor&gt;Storage &amp; Organisation&gt;Shoe Organisers</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">Step 2:</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Shoe Rack</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Folding</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Multi-layer</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Space-Saving</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Door Color Matching</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">Step 3:</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">• Simple Shoe Rack with Multi-layer Storage for Space-Saving.</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">• Folding design for easy storage and portability.</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">• Made of durable polyurethane material for long-lasting use.</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">• Door color matching cabinets for a stylish and organized look.</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">Step 4:</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">• Informative and accurate product highlights provided.</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">Step 5:</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div data-spm-anchor-id=\"a2a0e.pdp_revamp.product_detail.i0.60e56fafPEgDNJ\" style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">• Thank you for using our product highlights generator!</span></div></li></ul>', NULL, '1', '2024-08-24 16:53:42', '2024-09-03 11:06:28'),
-(145, '12', 'bundle product', 'bundle-product', '7787878', NULL, 'dsdsrf', '<p>dsfdsfdsf</p>', 'Yes', '1', '2024-09-03 11:09:24', '2024-09-03 11:09:24');
+(144, '9', 'Trolley Case 8786- 28\"', 'trolley-case-8786-28', '8786', NULL, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer', '<h2 style=\"margin: 11pt 0px; padding: 0px; font-size: 16pt; font-weight: 700; line-height: 1.45; color: rgb(0, 0, 0); font-family: Roboto, -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; letter-spacing: normal; white-space-collapse: break-spaces;\"><span data-spm-anchor-id=\"a2a0e.pdp_revamp.product_detail.i1.60e56fafPEgDNJ\" style=\"margin: 0px; padding: 0px; color: rgb(33, 33, 33); background-color: rgb(250, 250, 250); font-size: 10.5pt;\">Product details of 4 Layers Simple Shoe Rack Folding Shoe Cabinet Multi-layer Shoes Storage Organizer Space-Saving Shoes Shelf Door Color Matching Cabinets</span></h2><ul style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 10px; padding: 0px; list-style-position: initial; list-style-image: initial; font-family: Roboto, -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; font-size: 12px; letter-spacing: normal; white-space-collapse: break-spaces;\"><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">Step 1:</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Product Title: Simple Shoe Rack Folding Shoe Cabinet Multi-layer Shoes Storage Organizer</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Material: Polyurethane</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Category Path: Furniture &amp; Decor&gt;Storage &amp; Organisation&gt;Shoe Organisers</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">Step 2:</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Shoe Rack</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Folding</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Multi-layer</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Space-Saving</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">- Door Color Matching</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">Step 3:</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">• Simple Shoe Rack with Multi-layer Storage for Space-Saving.</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">• Folding design for easy storage and portability.</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">• Made of durable polyurethane material for long-lasting use.</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">• Door color matching cabinets for a stylish and organized look.</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">Step 4:</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">• Informative and accurate product highlights provided.</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">Step 5:</span></div></li><li style=\"margin: 0px; padding: 0px;\"><div data-spm-anchor-id=\"a2a0e.pdp_revamp.product_detail.i0.60e56fafPEgDNJ\" style=\"margin: 0px; padding: 0px; line-height: 1.7;\"><span style=\"margin: 0px; padding: 0px; font-size: 10.5pt;\">• Thank you for using our product highlights generator!</span></div></li></ul>', 'No', '1', '2024-08-24 16:53:42', '2024-09-04 07:02:53'),
+(145, '12', 'bundle product', 'bundle-product', '7787878', NULL, 'dsdsrf', '<p>dsfdsfdsf</p>', 'Yes', '1', '2024-09-03 11:09:24', '2024-09-09 04:58:05');
 
 -- --------------------------------------------------------
 
@@ -456,23 +480,30 @@ CREATE TABLE IF NOT EXISTS `product_categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `product_categories`
 --
 
 INSERT INTO `product_categories` (`id`, `name`, `slug`, `photo`, `is_top`, `is_banner`, `order`, `created_at`, `updated_at`) VALUES
-(12, 'School Bag', 'school-bag', 'upload/product_category/1808065576107224.jpg', 'Yes', 'Yes', 2, '2024-08-22 15:48:22', '2024-08-22 15:56:26'),
+(12, 'School Bag', 'school-bag', 'upload/product_category/1808065576107224.jpg', 'Yes', 'Yes', 2, '2024-08-22 15:48:22', '2024-09-09 10:50:52'),
 (11, 'Office Bag', 'office-bag', 'upload/product_category/1808065528092927.jpg', 'Yes', 'Yes', 3, '2024-08-22 15:47:36', '2024-08-22 15:56:37'),
 (9, 'Trolley Case', 'trolley-case', 'upload/product_category/1808065403013364.png', 'Yes', 'No', 6, '2024-08-22 15:45:38', '2024-08-22 15:56:52'),
-(10, 'Trolley Travel Bag', 'trolley-travel-bag', 'upload/product_category/1808065497784505.jpg', 'Yes', 'Yes', 1, '2024-08-22 15:47:07', '2024-08-22 15:56:07'),
+(10, 'Trolley Travel Bag', 'trolley-travel-bag', 'upload/product_category/1808065497784505.jpg', 'Yes', 'Yes', 1, '2024-08-22 15:47:07', '2024-09-04 09:12:34'),
 (13, 'Shoulder Bag', 'shoulder-bag', 'upload/product_category/1808065604828394.jpg', 'Yes', 'No', 10, '2024-08-22 15:48:49', '2024-08-22 15:55:49'),
 (14, 'Pilot Case', 'pilot-case', 'upload/product_category/1808065643140877.png', 'Yes', 'No', 7, '2024-08-22 15:49:26', '2024-08-22 15:59:42'),
 (15, 'Suit Case', 'suit-case', 'upload/product_category/1808065700392470.jpeg', 'Yes', 'No', 5, '2024-08-22 15:50:20', '2024-08-22 15:57:31'),
 (16, 'Waist Bag', 'waist-bag', 'upload/product_category/1808065929448488.png', 'Yes', 'No', 9, '2024-08-22 15:53:59', '2024-08-22 15:53:59'),
 (17, 'Accessories', 'accessories', 'upload/product_category/1808066019847087.png', 'Yes', 'Yes', 4, '2024-08-22 15:55:26', '2024-08-22 15:55:26'),
-(18, 'Brief Case', 'brief-case', 'upload/product_category/1808066412098560.png', 'Yes', 'No', 8, '2024-08-22 16:00:37', '2024-08-22 16:01:40');
+(18, 'Brief Case', 'brief-case', 'upload/product_category/1808066412098560.png', 'Yes', 'No', 8, '2024-08-22 16:00:37', '2024-08-22 16:01:40'),
+(19, 'cxzcxzc', 'cxzcxzc', 'upload/product_category/1809715588044891.png', 'Yes', 'Yes', NULL, '2024-09-09 10:54:37', '2024-09-09 10:54:37'),
+(20, 'one', 'one', 'upload/product_category/1809778051599158.jpg', 'Yes', 'Yes', NULL, '2024-09-10 03:27:27', '2024-09-10 03:27:27'),
+(21, 'sdfdsfdsfdsfds', 'sdfdsfdsfdsfds', 'upload/product_category/1809778071669647.jpg', 'Yes', 'Yes', NULL, '2024-09-10 03:27:45', '2024-09-10 03:27:45'),
+(22, 'Two', 'two', 'upload/product_category/1809778096703950.jpg', 'Yes', 'Yes', NULL, '2024-09-10 03:28:09', '2024-09-10 03:28:09'),
+(23, 'Three', 'three', 'upload/product_category/1809778108994991.jpg', 'Yes', 'Yes', NULL, '2024-09-10 03:28:21', '2024-09-10 03:28:21'),
+(24, 'Four', 'four', 'upload/product_category/1809778135069865.jpg', 'Yes', 'Yes', NULL, '2024-09-10 03:28:45', '2024-09-10 03:28:45'),
+(25, 'Five', 'five', 'upload/product_category/1809778165757251.jpg', 'Yes', 'Yes', NULL, '2024-09-10 03:29:15', '2024-09-10 03:29:15');
 
 -- --------------------------------------------------------
 
@@ -893,17 +924,15 @@ CREATE TABLE IF NOT EXISTS `product_variants` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `product_variants_product_id_foreign` (`product_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=308 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `product_variants`
 --
 
 INSERT INTO `product_variants` (`id`, `product_id`, `color`, `photo`, `created_at`, `updated_at`) VALUES
-(307, 145, 'Gray', 'upload/product/1809172938213427.jpeg', '2024-09-03 11:09:25', '2024-09-03 11:09:25'),
-(306, 145, 'Blue', 'upload/product/1809172937999311.jpeg', '2024-09-03 11:09:25', '2024-09-03 11:09:25'),
-(305, 144, 'Blue', 'upload/product/1809172753212023.jpeg', '2024-09-03 11:06:28', '2024-09-03 11:06:28'),
-(302, 20, 'blue', 'upload/product/1808873148996617.png', '2024-08-31 03:44:25', '2024-08-31 03:44:25');
+(1, 145, 'Black', 'upload/product/1809692452750361.jfif', '2024-09-09 04:46:53', '2024-09-09 04:46:53'),
+(2, 145, 'Gray', 'upload/product/1809693157626108.png', '2024-09-09 04:58:05', '2024-09-09 04:58:05');
 
 -- --------------------------------------------------------
 
@@ -915,30 +944,23 @@ DROP TABLE IF EXISTS `product_variant_sizes`;
 CREATE TABLE IF NOT EXISTS `product_variant_sizes` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `product_variant_id` bigint UNSIGNED NOT NULL,
-  `size` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `size` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `quantity` int NOT NULL,
-  `selling_price` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `discount_price` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `selling_price` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `discount_price` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `product_variant_sizes_product_variant_id_foreign` (`product_variant_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `product_variant_sizes`
 --
 
 INSERT INTO `product_variant_sizes` (`id`, `product_variant_id`, `size`, `quantity`, `selling_price`, `discount_price`, `created_at`, `updated_at`) VALUES
-(14, 303, 'XXL', 15, '500', '450', '2024-09-03 06:21:34', '2024-09-03 06:21:34'),
-(13, 302, 'L', 15, '500', NULL, '2024-08-31 03:44:25', '2024-08-31 03:44:25'),
-(15, 303, 'M', 8, '600', NULL, '2024-09-03 06:21:34', '2024-09-03 06:21:34'),
-(16, 304, 'S', 5, '8000', NULL, '2024-09-03 06:21:35', '2024-09-03 06:21:35'),
-(17, 304, 'L', 12, '8030.75', '7030.75', '2024-09-03 06:21:35', '2024-09-03 06:21:35'),
-(18, 305, 'L', 4, '500', NULL, '2024-09-03 11:06:28', '2024-09-03 11:06:28'),
-(19, 305, 'XL', 8, '600', NULL, '2024-09-03 11:06:28', '2024-09-03 11:06:28'),
-(20, 306, 'default', 12, '100', NULL, '2024-09-03 11:09:25', '2024-09-03 11:09:25'),
-(21, 307, 'default', 4, '500', NULL, '2024-09-03 11:09:25', '2024-09-03 11:09:25');
+(1, 1, 'XXL', 4, '500', NULL, '2024-09-09 04:46:53', '2024-09-09 04:46:53'),
+(2, 2, 'XXL', 4, '500', NULL, '2024-09-09 04:58:05', '2024-09-09 04:58:05');
 
 -- --------------------------------------------------------
 
@@ -977,6 +999,30 @@ CREATE TABLE IF NOT EXISTS `settings` (
 
 INSERT INTO `settings` (`id`, `title`, `logo`, `favicon`, `phone_1`, `phone_2`, `email`, `address`, `us_address`, `us_phone_1`, `us_phone_2`, `map_link`, `meta_keyword`, `meta_description`, `footer_logo`, `footer_text`, `footer_copyright_by`, `footer_copyright_url`, `created_at`, `updated_at`) VALUES
 (1, 'President | Essential-Infotech', 'upload/logo.webp', 'upload/favicon.webp', '+880 1810150561', '+880 9614881148', 'info@essential-infotech.com', 'Garib-E-Newaz Avenue, Sector#13, Uttara, Dhaka 1230', '1567 Kimball Road, Arab, AL 35016', '+1 (844)-644-1744', NULL, 'https://maps.app.goo.gl/tcgZqMDbrevJcYN57', 'call center service, website, software development, BPO service provider, virtual assistance', 'Essential-Infotech is a BPO service provider, offering call center service, outsource back office support, website, app, software development, & IT Solutions.', 'upload/footer_logo.webp', 'We are a leading IT company experienced in innovative development and design solutions. We have a unique, out-of-the-box approach to cope with custom clients\' needs and demands. Success is essential to your business; so are we!', 'Essential-Infotech', 'https://essential-infotech.com', NULL, '2024-06-26 14:03:30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shipping_costs`
+--
+
+DROP TABLE IF EXISTS `shipping_costs`;
+CREATE TABLE IF NOT EXISTS `shipping_costs` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `location` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cost` decimal(8,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `shipping_costs`
+--
+
+INSERT INTO `shipping_costs` (`id`, `location`, `cost`, `created_at`, `updated_at`) VALUES
+(1, 'inside_dhaka', '10.00', NULL, '2024-09-09 04:55:09'),
+(2, 'outside_dhaka', '100.00', NULL, '2024-09-09 04:51:03');
 
 -- --------------------------------------------------------
 
@@ -1020,6 +1066,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `photo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
   `role` enum('admin','user') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user',
   `status` enum('active','inactive') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1027,26 +1074,28 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `username`, `email`, `email_verified_at`, `password`, `photo`, `phone`, `role`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', NULL, 'admin@email.com', NULL, '$2y$12$QZGqQgLjxQ7hrztPOk70sOPrYT6O9kyfZIE/k7qI3C5yeUmP0hrmS', '202405190840favicon.png', NULL, 'admin', 'active', NULL, '2024-01-14 04:47:02', '2024-05-19 02:40:27'),
-(2, 'username', NULL, 'user@email.com', NULL, '$2y$12$BrkiVfaHwtdXxwFSNdkOQ.o6Irf1ZLG2S/kQV5sWhpm/9n.6Kmg2q', NULL, '0245454545', 'user', 'active', 'J3xqoQm3byJQ3dRqAMHbwd4anuP7NqWt6hd0GFHGbwn8ePeePekBRW5UPPY2', '2024-01-14 06:35:54', '2024-09-03 06:10:26'),
-(3, 'new User', NULL, 'nuser@email.com', NULL, '$2y$12$s3F2jxPhoAUkD7qzN3s17OvvJSmwKPVnxvRYgAFZNRPjDWXpqVj8S', NULL, NULL, 'user', 'active', NULL, '2024-06-20 04:14:28', '2024-06-20 04:14:28'),
-(4, 'nnuser', NULL, 'nnuser@email.com', NULL, '$2y$12$4xEETzlZY1HvhERdquqsNeBrdfB3AoR6Tup2qLynUqTqYRNlZ4x7S', NULL, NULL, 'user', 'active', NULL, '2024-06-20 04:41:37', '2024-06-20 04:41:37'),
-(5, 'Shamanta Jaman Shammi', NULL, '96shammi@gmail.com', NULL, '$2y$12$K8wFSioVuWhaOkFMhNbgge1q1UhaGws6WpfThn53VC50lyJAO0KXq', NULL, NULL, 'user', 'active', NULL, '2024-06-24 14:36:22', '2024-06-24 14:36:22'),
-(6, 'Tasnia Tabassum Esha', NULL, 'eshatasniatabassum@gmail.com', NULL, '$2y$12$LyHAguWkKBTfhxp66ElkvuSa1ycmTYtTfE1DfOsfcukMFuYQb.qJK', NULL, '01775546967', 'user', 'active', NULL, '2024-06-24 14:36:52', '2024-06-24 14:37:26'),
-(7, 'Mostahid Ahmed', NULL, 'mostahidahmed34@gmail.com', NULL, '$2y$12$4E7iafhePL7XJ1Mb8bhPnOAohJG1qu4mSFllU7M2IA4FkJ9uLRzxO', NULL, NULL, 'user', 'active', NULL, '2024-06-24 14:37:35', '2024-06-24 14:37:35'),
-(8, 'Azmir Pair Mithi', NULL, 'azmirmithi368@gmail.com', NULL, '$2y$12$Ml5VsbNWlxPK.VMSpVFaXu6AAkeV590TZZ3VwJXgP9g1tCAatpzJq', NULL, NULL, 'user', 'active', NULL, '2024-06-24 14:37:37', '2024-06-24 15:33:14'),
-(9, 'Azmir Pair Mithi', NULL, 'humairajannat21@gmail.com', NULL, '$2y$12$RcdohBmq5MeEl6WENC7qgu4fn9wXXYlKeiYCVtYDfoNhy90IfvCe2', NULL, NULL, 'user', 'active', NULL, '2024-06-27 14:16:10', '2024-06-27 14:16:10'),
-(10, 'nregis', NULL, 'nregis@email.com', NULL, '$2y$12$rYttmhVBSJixG9GuUPxFq.ZDC17DbhB4htWfuTxAZUqz08CgqazXu', NULL, NULL, 'user', 'active', NULL, '2024-09-03 06:17:35', '2024-09-03 06:17:35'),
-(11, '12333', NULL, 'user1@email.com', NULL, '$2y$12$5o.wtsI.GVJHY72oQbA2XeFKVgb5epsnTxHtKrmxegZ/Sa2.dqY6m', NULL, NULL, 'user', 'active', NULL, '2024-09-03 08:32:05', '2024-09-03 08:32:05'),
-(12, '232323', NULL, 'user3@email.com', NULL, '$2y$12$HZlJommbe4yVQftXtoOv5.hwXyPRFSmb2drh.EcOAEtveULAackpu', NULL, NULL, 'user', 'active', NULL, '2024-09-03 08:40:16', '2024-09-03 08:40:16'),
-(13, 'R11111', NULL, 'user4@email.com', NULL, '$2y$12$flNkdL3xCIYvgYmtOw7Dy.DRkprE67HJ2lz0DvP9dwCd74TzyJtVW', NULL, '01609071300', 'user', 'active', NULL, '2024-09-03 08:58:38', '2024-09-03 09:38:38');
+INSERT INTO `users` (`id`, `name`, `username`, `email`, `email_verified_at`, `password`, `photo`, `phone`, `address`, `role`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', NULL, 'admin@email.com', NULL, '$2y$12$PmTcwL1V.i.Zrk7X8YZhieEPY4Z7k9RZWqWtIcD/oOAkjqEa0IsZ2', '202409091541287.jpg', NULL, 'dfg', 'admin', 'active', 'o5FzzEu3Nuu18saNFmbnS09LtSFex40dhLKKtEQYuRbizUiBkEIIicrwHxrO', '2024-01-14 04:47:02', '2024-09-09 10:16:15'),
+(2, 'username', NULL, 'user@email.com', NULL, '$2y$12$P.m71ovKMKjoZsU81QP2Juw.sHxtSe70CEjmP4VVmOQlEGOz2syyy', NULL, '01912395149', 'dfgdfgdfg', 'user', 'active', 'RckWrRDlflvVIhoeoTgnkvRjPAMsu5qLcvyN6l8EmvJmNW2DO4TOJefUyntZ', '2024-01-14 06:35:54', '2024-09-10 06:41:56'),
+(3, 'new User', NULL, 'nuser@email.com', NULL, '$2y$12$s3F2jxPhoAUkD7qzN3s17OvvJSmwKPVnxvRYgAFZNRPjDWXpqVj8S', NULL, NULL, NULL, 'user', 'active', NULL, '2024-06-20 04:14:28', '2024-06-20 04:14:28'),
+(4, 'nnuser', NULL, 'nnuser@email.com', NULL, '$2y$12$4xEETzlZY1HvhERdquqsNeBrdfB3AoR6Tup2qLynUqTqYRNlZ4x7S', NULL, NULL, NULL, 'user', 'active', NULL, '2024-06-20 04:41:37', '2024-06-20 04:41:37'),
+(5, 'Shamanta Jaman Shammi', NULL, '96shammi@gmail.com', NULL, '$2y$12$K8wFSioVuWhaOkFMhNbgge1q1UhaGws6WpfThn53VC50lyJAO0KXq', NULL, NULL, NULL, 'user', 'active', NULL, '2024-06-24 14:36:22', '2024-06-24 14:36:22'),
+(6, 'Tasnia Tabassum Esha', NULL, 'eshatasniatabassum@gmail.com', NULL, '$2y$12$LyHAguWkKBTfhxp66ElkvuSa1ycmTYtTfE1DfOsfcukMFuYQb.qJK', NULL, '01775546967', NULL, 'user', 'active', NULL, '2024-06-24 14:36:52', '2024-06-24 14:37:26'),
+(7, 'Mostahid Ahmed', NULL, 'mostahidahmed34@gmail.com', NULL, '$2y$12$4E7iafhePL7XJ1Mb8bhPnOAohJG1qu4mSFllU7M2IA4FkJ9uLRzxO', NULL, NULL, NULL, 'user', 'active', NULL, '2024-06-24 14:37:35', '2024-06-24 14:37:35'),
+(8, 'Azmir Pair Mithi', NULL, 'azmirmithi368@gmail.com', NULL, '$2y$12$Ml5VsbNWlxPK.VMSpVFaXu6AAkeV590TZZ3VwJXgP9g1tCAatpzJq', NULL, NULL, NULL, 'user', 'active', NULL, '2024-06-24 14:37:37', '2024-06-24 15:33:14'),
+(9, 'Azmir Pair Mithi', NULL, 'humairajannat21@gmail.com', NULL, '$2y$12$RcdohBmq5MeEl6WENC7qgu4fn9wXXYlKeiYCVtYDfoNhy90IfvCe2', NULL, NULL, NULL, 'user', 'active', NULL, '2024-06-27 14:16:10', '2024-06-27 14:16:10'),
+(10, 'nregis', NULL, 'nregis@email.com', NULL, '$2y$12$rYttmhVBSJixG9GuUPxFq.ZDC17DbhB4htWfuTxAZUqz08CgqazXu', NULL, NULL, NULL, 'user', 'active', NULL, '2024-09-03 06:17:35', '2024-09-03 06:17:35'),
+(11, '12333', NULL, 'user1@email.com', NULL, '$2y$12$5o.wtsI.GVJHY72oQbA2XeFKVgb5epsnTxHtKrmxegZ/Sa2.dqY6m', NULL, NULL, NULL, 'user', 'active', NULL, '2024-09-03 08:32:05', '2024-09-03 08:32:05'),
+(12, '232323', NULL, 'user3@email.com', NULL, '$2y$12$HZlJommbe4yVQftXtoOv5.hwXyPRFSmb2drh.EcOAEtveULAackpu', NULL, NULL, NULL, 'user', 'active', NULL, '2024-09-03 08:40:16', '2024-09-03 08:40:16'),
+(13, 'R11111', NULL, 'user4@email.com', NULL, '$2y$12$flNkdL3xCIYvgYmtOw7Dy.DRkprE67HJ2lz0DvP9dwCd74TzyJtVW', NULL, '01609071300', NULL, 'user', 'active', NULL, '2024-09-03 08:58:38', '2024-09-03 09:38:38'),
+(14, 'Rsfdsf', NULL, 'r@email.com', NULL, '$2y$12$q6guAYpWgLR4M1znF/Jy5.U2WvXFQKjaS6eIoi56sJxoOz/O/lkk.', NULL, NULL, NULL, 'user', 'active', NULL, '2024-09-05 05:25:40', '2024-09-05 05:25:40'),
+(15, 'sdfdsf', NULL, 'adminsdf@email.com', NULL, '$2y$12$B9eNfIvqpWW38GhI470YQuj96rhyZFHhjrKnu7ExVsYMIcmageyNW', NULL, NULL, NULL, 'user', 'active', NULL, '2024-09-10 06:38:10', '2024-09-10 06:38:10');
 
 -- --------------------------------------------------------
 
