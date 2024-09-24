@@ -27,14 +27,14 @@
 
                                     {{-- Start Alert message --}}
                                     @if (session('status'))
-                                        <div class="alert alert-success" role="alert">
-                                            {{ session('status') }}
-                                        </div>
-                                    @elseif (session('error'))
-                                        <div class="alert alert-danger" role="alert">
-                                            {{ session('error') }}
-                                        </div>
-                                    @endif
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert" id="session-alert">
+                                        {{ session('status') }}
+                                    </div>
+                                @elseif (session('error'))
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="session-alert">
+                                        {{ session('error') }}
+                                    </div>
+                                @endif
                                     {{-- End Alert message --}}
 
                                     <div class="row mb-3">

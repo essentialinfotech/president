@@ -29,8 +29,7 @@
                                         <div class="mt-2">
                                             <x-input-label for="email" :value="__('Email')" />
                                             <x-text-input id="email" class="form-control" type="email" name="email"
-                                                :value="old('email')" required autocomplete="username"
-                                                placeholder="Your Email" />
+                                                :value="old('email')" required autocomplete="email" placeholder="Your Email" />
                                             <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger" />
                                         </div>
 

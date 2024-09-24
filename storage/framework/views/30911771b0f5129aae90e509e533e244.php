@@ -57,20 +57,7 @@
                         Orders</a></li>
             </ul>
         </li>
-        <li>
-            <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon"><i class='lni lni-paperclip'></i>
-                </div>
-                <div class="menu-title">Return Order </div>
-            </a>
-            <ul>
-                <li> <a href="<?php echo e(route('return.request')); ?>"><i class="bx bx-right-arrow-alt"></i>Return Request</a>
-                </li>
-                <li> <a href="<?php echo e(route('complete.return.request')); ?>"><i class="bx bx-right-arrow-alt"></i>Complete
-                        Request</a>
-                </li>
-            </ul>
-        </li>
+        
         <li>
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class="lni lni-stats-up"></i>

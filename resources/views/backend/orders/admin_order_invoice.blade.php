@@ -143,13 +143,14 @@
     <table width="100%" style=" padding:0 10px 0 10px;">
         <tr>
             <td align="right">
-                <h2><span style="color: green;">Subtotal:</span>{{ $order->amount }} BDT</h2>
+                <h2><span style="color: green;">Subtotal:</span>{{ $order->amount - $order->shipping_cost }} BDT</h2>
+                <h2><span style="color: green;">Shipping Charge:</span>{{  $order->shipping_cost }} BDT</h2>
                 <h2><span style="color: green;">Total:</span> {{ $order->amount }} BDT</h2>
                 {{-- <h2><span style="color: green;">Full Payment PAID</h2> --}}
             </td>
         </tr>
     </table>
-    <div class="thanks mt-3">
+    <div class="thanks mt-5">
         <p>Thanks For Buying Products..!!</p>
     </div>
     <div class="authority float-right mt-5">

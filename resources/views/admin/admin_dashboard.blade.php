@@ -182,7 +182,12 @@
         </script>
     @endif
 
-
+    <script>
+        // Hide the session alert after 2 seconds (2000 milliseconds)
+        setTimeout(function() {
+            $('#session-alert').fadeOut('slow');
+        }, 2000);
+    </script>
 
     {{-- Sweet Alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>

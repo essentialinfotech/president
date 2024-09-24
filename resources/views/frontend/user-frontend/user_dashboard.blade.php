@@ -51,7 +51,7 @@
                                                 @foreach ($orders as $order)
                                                     <tr>
                                                         <td>{{ $order->invoice_no }}</td>
-                                                        <td>{{ $order->invoice_no }}</td>
+                                                        <td>{{ $order->created_at->format('d M Y') }}</td>
                                                         <td>{{ $order->status }}</td>
                                                         <td>{{ $order->amount }} BDT</td>
                                                         <td>

@@ -232,7 +232,7 @@
                             <i class="bx bx-plus"></i> Add Variant</button>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>

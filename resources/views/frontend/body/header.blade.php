@@ -306,7 +306,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             // Function to enable hover effect on small devices
             function enableHoverOnSmallDevices() {
@@ -337,5 +337,5 @@
                 enableHoverOnSmallDevices();
             });
         });
-    </script>
+    </script> --}}
 @endpush

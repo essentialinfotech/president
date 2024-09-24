@@ -132,7 +132,7 @@ class AdminPageController extends Controller
         if ($request->file('term_condition_banner')) {
             $request->validate(
                 [
-                    'term_condition_banner' => 'required|image|mimes:jpeg,JPG,jpg,png,gif,svg,webp,bmp',
+                    'term_condition_banner' => 'required|image|mimes:jpeg,JPG,jpg,png,gif,svg,webp,bmp |max:50000',
                 ]
             );
 

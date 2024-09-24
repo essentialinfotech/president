@@ -35,7 +35,7 @@
         .alert {
             width: fit-content;
             position: absolute;
-            top: 60px;
+            top: 0px;
             right: 0;
             transition: 3s;
             z-index: 999;

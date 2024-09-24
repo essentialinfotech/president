@@ -60,17 +60,7 @@
 			 
 		 
 		</tbody>
-		<tfoot>
-			<tr>
-				<th>Sl</th>
-				<th>Date </th>
-				<th>Invoice </th>
-				<th>Amount </th>
-				<th>Payment </th>
-				<th>State </th>
-				<th>Action</th> 
-			</tr>
-		</tfoot>
+	
 	</table>
 						</div>
 					</div>

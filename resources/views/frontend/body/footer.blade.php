@@ -29,6 +29,8 @@
                     <li><a href="{{ route('home') }}">Home Page</a></li>
                     {{-- <li><a href="{{ route('about') }}">About Us</a></li> --}}
                     <li><a href="{{ route('contact') }}">Contact Us</a></li>
+                    <li><a href="{{ route('privacy-policy') }}">Privecy Policy</a></li>
+                    <li><a href="{{ route('terms-conditions') }}">Term & Condition</a></li>
                 </ul>
             </div>
             <div class="col-lg-4">

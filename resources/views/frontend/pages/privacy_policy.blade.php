@@ -5,7 +5,8 @@
 @section('twitter_image', $page_data['privacy_policy_banner'])
 @section('main')
     <!-- Bread Curmb Section -->
-    <div class="breadcrumb-box"
+    <div 
+    class="about-page-heading " id="top"
         style=" background-image: url('{{ asset($page_data->privacy_policy_banner) }}');  background-position: center; background-repeat: no-repeat;background-size: cover;">
         <div class="container d-flex flex-column gap-2 align-items-center justify-content-center">
             <div class="head-title pb-2">

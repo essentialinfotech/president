@@ -56,8 +56,9 @@ class AdminReportController extends Controller
 
     public function SearchByUser(Request $request)
     {
+         $userName = User::where('id',$request->user)->first();
         $users = $request->user;
         $orders = Order::where('user_id', $users)->latest()->get();
-        return view('backend.report.report_by_user_show', compact('orders', 'users'));
+        return view('backend.report.report_by_user_show', compact('orders', 'users','userName'));
     } // End Method 
 }

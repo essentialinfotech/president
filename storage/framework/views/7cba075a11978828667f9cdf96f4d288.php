@@ -300,37 +300,6 @@
         });
     </script>
 
-    <script>
-        $(document).ready(function() {
-            // Function to enable hover effect on small devices
-            function enableHoverOnSmallDevices() {
-                if ($(window).width() > 1260) {
-                    $('.submenu').hover(
-                        function() {
-                            // On mouse enter, open the submenu and add 'active' class
-                            var $submenu = $(this).find('ul');
-                            $submenu.stop(true, true).slideDown().addClass('active');
-                        },
-                        function() {
-                            // On mouse leave, close the submenu and remove 'active' class
-                            var $submenu = $(this).find('ul');
-                            $submenu.stop(true, true).slideUp().removeClass('active');
-                        }
-                    );
-                } else {
-                    // Remove hover events for larger devices
-                    $('.submenu').off('mouseenter mouseleave');
-                }
-            }
-
-            // Run the function on page load
-            enableHoverOnSmallDevices();
-
-            // Run the function on window resize to handle dynamic resizing
-            $(window).resize(function() {
-                enableHoverOnSmallDevices();
-            });
-        });
-    </script>
+    
 <?php $__env->stopPush(); ?>
 <?php /**PATH E:\EIT2024\BagsLaravelWebsites\PresidentWebsite - size variant\resources\views/frontend/body/header.blade.php ENDPATH**/ ?>

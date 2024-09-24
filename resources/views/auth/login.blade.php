@@ -20,7 +20,7 @@
                                             <input type="email" name="email" class="form-control" id="inputEmailAddress"
                                                 placeholder="Your Email" required>
                                             @error('email')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                         <div class="col-12 mt-2">
@@ -33,7 +33,7 @@
                                                         class='fas fa-eye'></i></a>
                                             </div>
                                             @error('password')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                         {{-- <div class="col-md-6 mt-2">

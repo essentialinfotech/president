@@ -57,7 +57,7 @@
                         Orders</a></li>
             </ul>
         </li>
-        <li>
+        {{-- <li>
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class='lni lni-paperclip'></i>
                 </div>
@@ -70,7 +70,7 @@
                         Request</a>
                 </li>
             </ul>
-        </li>
+        </li> --}}
         <li>
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class="lni lni-stats-up"></i>

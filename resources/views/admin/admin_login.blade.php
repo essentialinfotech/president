@@ -47,7 +47,7 @@
                                                 <input type="email" name="email" class="form-control"
                                                     id="inputEmailAddress" placeholder="Email Address">
                                                 @error('email')
-                                                    <div class="alert alert-danger">{{ $message }}</div>
+                                                    <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                             <div class="col-12">
@@ -61,7 +61,7 @@
                                                             class='bx bx-hide'></i></a>
                                                 </div>
                                                 @error('password')
-                                                    <div class="alert alert-danger">{{ $message }}</div>
+                                                    <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                             <div class="col-md-6">
